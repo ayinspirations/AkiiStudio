@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
-import { ParallaxBackground } from "./ParallaxBackground";
 import { AvatarCompanion } from "./AvatarCompanion";
 import { HeroNav } from "./HeroNav";
 import { MagneticButton } from "@/components/MagneticButton";
@@ -29,19 +28,6 @@ export function Hero() {
 
   return (
     <section id="top" ref={sectionRef} className="relative h-[100dvh] w-full overflow-hidden">
-      <ParallaxBackground
-        targetRef={sectionRef}
-        src="/background/Hero_cloud.png"
-        factor={0.3}
-        priority
-      />
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[18vh]"
-        style={{ background: "linear-gradient(to bottom, transparent, #e4e5e7)" }}
-      />
-
       <motion.div
         style={{ opacity: contentOpacity, y: contentY }}
         className="absolute inset-0 z-10 flex flex-col"
