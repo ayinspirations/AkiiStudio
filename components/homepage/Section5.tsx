@@ -6,7 +6,7 @@ import { MagneticButton } from "@/components/MagneticButton";
 
 export function Section5() {
   return (
-    <ParallaxSection id="faq" bgSrc="/background/cloud_section5.png" factor={0.4}>
+    <ParallaxSection id="faq">
       <motion.p
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}

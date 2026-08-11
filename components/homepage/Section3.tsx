@@ -5,12 +5,7 @@ import { ParallaxSection } from "./ParallaxSection";
 
 export function Section3() {
   return (
-    <ParallaxSection
-      id="arbeiten"
-      bgSrc="/background/cloud_section3.png"
-      factor={0.4}
-      overlayColor="#b1b5af"
-    >
+    <ParallaxSection id="arbeiten">
       <motion.p
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
