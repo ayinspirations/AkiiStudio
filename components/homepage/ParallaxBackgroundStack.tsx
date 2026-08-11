@@ -11,12 +11,15 @@ type ParallaxBackgroundStackProps = {
   factor?: number;
 };
 
-// How much of the total scroll range (0-1) each crossfade dissolve spans.
-const OVERLAP = 0.07;
+// How far into each section's own scroll range (on each side of a seam) the
+// crossfade dissolve extends. Kept small so most of a section shows its own
+// image cleanly and only a brief window around the seam actually blends.
+const OVERLAP_FRACTION_OF_SECTION = 0.16;
 
 function buildOpacityRange(index: number, count: number, boundaries: number[]) {
   const start = boundaries[index];
   const end = boundaries[index + 1];
+  const overlap = (end - start) * OVERLAP_FRACTION_OF_SECTION;
   const isFirst = index === 0;
   const isLast = index === count - 1;
 
@@ -28,11 +31,11 @@ function buildOpacityRange(index: number, count: number, boundaries: number[]) {
   const output: number[] = [];
 
   if (!isFirst) {
-    input.push(start - OVERLAP, start + OVERLAP);
+    input.push(start - overlap, start + overlap);
     output.push(0, 1);
   }
   if (!isLast) {
-    input.push(end - OVERLAP, end + OVERLAP);
+    input.push(end - overlap, end + overlap);
     output.push(1, 0);
   }
 
@@ -68,7 +71,11 @@ function ParallaxLayer({
   const { input, output } = buildOpacityRange(index, count, boundaries);
   const opacity = useTransform(scrollYProgress, input, output);
 
-  const range = factor * 30;
+  // Kept gentle on purpose: several of these photos (the cloud shots
+  // especially) are mostly flat/featureless in their upper two-thirds with
+  // all the texture near the bottom, so a large drift can scroll a layer
+  // into its own blank area right as it needs to hand off to the next one.
+  const range = factor * 12;
   const y = useTransform(
     scrollYProgress,
     [boundaries[index], boundaries[index + 1]],
@@ -77,7 +84,7 @@ function ParallaxLayer({
 
   return (
     <motion.div style={{ opacity }} className="absolute inset-0">
-      <motion.div style={{ y }} className="absolute inset-x-0 -top-[20%] -bottom-[20%]">
+      <motion.div style={{ y }} className="absolute inset-x-0 -top-[25%] -bottom-[25%]">
         <Image src={src} alt="" fill priority={priority} sizes="100vw" className="object-cover" />
       </motion.div>
     </motion.div>
