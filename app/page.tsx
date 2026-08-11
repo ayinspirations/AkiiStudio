@@ -1,29 +1,17 @@
-import { Nav } from "@/components/Nav";
-import { Hero } from "@/components/Hero";
-import { TechMarquee } from "@/components/TechMarquee";
-import { Services } from "@/components/Services";
-import { Process } from "@/components/Process";
-import { AiAgentSpotlight } from "@/components/AiAgentSpotlight";
-import { Work } from "@/components/Work";
-import { Faq } from "@/components/Faq";
-import { ContactCta } from "@/components/ContactCta";
-import { Footer } from "@/components/Footer";
+import { Hero } from "@/components/homepage/Hero";
+import { Section2 } from "@/components/homepage/Section2";
+import { Section3 } from "@/components/homepage/Section3";
+import { Section4 } from "@/components/homepage/Section4";
+import { Section5 } from "@/components/homepage/Section5";
 
 export default function Home() {
   return (
-    <>
-      <Nav />
-      <main>
-        <Hero />
-        <TechMarquee />
-        <Services />
-        <Process />
-        <AiAgentSpotlight />
-        <Work />
-        <Faq />
-        <ContactCta />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <Hero />
+      <Section2 />
+      <Section3 />
+      <Section4 />
+      <Section5 />
+    </main>
   );
 }
