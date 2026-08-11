@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { AvatarGaze } from "@/components/homepage/AvatarCompanion";
+import type { GazeName } from "@/components/homepage/gazeAngles";
 
 export type HeroSequenceState = {
-  gaze: AvatarGaze;
+  gaze: GazeName;
   showLogo: boolean;
   showNav: boolean;
   showText: boolean;
@@ -49,10 +49,18 @@ const STEPS: Array<{ delay: number; patch: Partial<HeroSequenceState> }> = [
   { delay: 7100, patch: { gaze: "smile", idle: true } },
 ];
 
-export function useHeroSequence() {
+/**
+ * `ready` gates when the timer chain starts. The avatar loads asynchronously
+ * (a multi-MB 3D model), so starting the clock at mount rather than once the
+ * avatar can actually be seen would let the sequence race ahead of it on a
+ * slow connection or a cold dev-server compile.
+ */
+export function useHeroSequence(ready: boolean) {
   const [state, setState] = useState<HeroSequenceState>(INITIAL_STATE);
 
   useEffect(() => {
+    if (!ready) return;
+
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setState(FINAL_STATE);
       return;
@@ -67,7 +75,7 @@ export function useHeroSequence() {
     return () => {
       timers.forEach((id) => window.clearTimeout(id));
     };
-  }, []);
+  }, [ready]);
 
   return state;
 }

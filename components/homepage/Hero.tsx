@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
 import { AvatarCompanion } from "./AvatarCompanion";
+import { GAZE_ANGLES } from "./gazeAngles";
 import { HeroNav } from "./HeroNav";
 import { MagneticButton } from "@/components/MagneticButton";
 import { useHeroSequence } from "@/hooks/useHeroSequence";
-import { useIdleGaze } from "@/hooks/useIdleGaze";
+import { useIdleLook } from "@/hooks/useIdleLook";
 
 const tiles = [{ label: "5+ Jahre Erfahrung" }, { label: "30+ Projekte" }];
 
@@ -15,9 +16,10 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const avatarRef = useRef<HTMLDivElement>(null);
-  const sequence = useHeroSequence();
-  const idleGaze = useIdleGaze(avatarRef, sequence.idle);
-  const gaze = sequence.idle ? idleGaze : sequence.gaze;
+  const [avatarReady, setAvatarReady] = useState(false);
+  const sequence = useHeroSequence(avatarReady);
+  const idleLook = useIdleLook(avatarRef, sequence.idle);
+  const { yaw, pitch } = sequence.idle ? idleLook : GAZE_ANGLES[sequence.gaze];
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -93,8 +95,9 @@ export function Hero() {
           <div className="relative flex flex-1 items-center justify-center pb-8 sm:pb-0">
             <AvatarCompanion
               ref={avatarRef}
-              gaze={gaze}
-              priority
+              targetYaw={yaw}
+              targetPitch={pitch}
+              onReady={() => setAvatarReady(true)}
               className="h-28 w-28 sm:h-44 sm:w-44 lg:h-64 lg:w-64"
             />
 

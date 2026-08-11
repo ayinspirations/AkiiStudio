@@ -1,69 +1,90 @@
 "use client";
 
-import { forwardRef } from "react";
-import Image from "next/image";
-import { AnimatePresence, motion } from "motion/react";
+import { forwardRef, Suspense, useEffect, useImperativeHandle, useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
+import * as THREE from "three";
 
-export type AvatarGaze =
-  | "sleep"
-  | "smile"
-  | "up"
-  | "down"
-  | "left"
-  | "right"
-  | "upper_left"
-  | "upper_right"
-  | "lower_left"
-  | "lower_right"
-  | "react";
+// The model's own bounding box runs from y=0 (base) to y≈1.89 (hood top).
+const LOOK_HEIGHT = 0.943;
 
-const AVATAR_SRC: Record<AvatarGaze, string> = {
-  sleep: "/avatar/avatar_sleep.png",
-  smile: "/avatar/avatar_smile.png",
-  up: "/avatar/avatar_up.png",
-  down: "/avatar/avatar_down.png",
-  left: "/avatar/avatar_left.png",
-  right: "/avatar/avatar_right.png",
-  upper_left: "/avatar/avatar_upper_left.png",
-  upper_right: "/avatar/avatar_upper_right.png",
-  lower_left: "/avatar/avatar_lower_left.png",
-  lower_right: "/avatar/avatar_lower_right.png",
-  react: "/avatar/avatar_react.png",
-};
+function CameraRig() {
+  const { camera } = useThree();
+  useEffect(() => {
+    camera.lookAt(0, LOOK_HEIGHT, 0);
+  }, [camera]);
+  return null;
+}
+
+const MODEL_URL = "/avatar/base_basic_pbr-v1.glb";
+
+useGLTF.preload(MODEL_URL);
 
 type AvatarCompanionProps = {
-  gaze: AvatarGaze;
-  priority?: boolean;
+  targetYaw: number;
+  targetPitch: number;
+  /** Fires once after the model has actually loaded and mounted. */
+  onReady?: () => void;
   /** Must include the wrapper's width/height (e.g. Tailwind size utilities) */
   className?: string;
 };
 
+function Model({
+  targetYaw,
+  targetPitch,
+  onReady,
+}: {
+  targetYaw: number;
+  targetPitch: number;
+  onReady?: () => void;
+}) {
+  const { scene } = useGLTF(MODEL_URL);
+  const group = useRef<THREE.Group>(null);
+  const elapsed = useRef(0);
+
+  useEffect(() => {
+    onReady?.();
+    // Only ever fires once per mount — this component only renders after
+    // Suspense resolves, so there's no "loading" -> "loaded" transition to track.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useFrame((_, delta) => {
+    const g = group.current;
+    if (!g) return;
+    g.rotation.y = THREE.MathUtils.damp(g.rotation.y, targetYaw, 6, delta);
+    g.rotation.x = THREE.MathUtils.damp(g.rotation.x, targetPitch, 6, delta);
+    elapsed.current += delta;
+    g.position.y = Math.sin(elapsed.current * 1.1) * 0.02;
+  });
+
+  return (
+    <group ref={group}>
+      <primitive object={scene} />
+    </group>
+  );
+}
+
 export const AvatarCompanion = forwardRef<HTMLDivElement, AvatarCompanionProps>(
-  function AvatarCompanion(
-    { gaze, priority = false, className = "h-64 w-64" },
-    ref,
-  ) {
+  function AvatarCompanion({ targetYaw, targetPitch, onReady, className = "h-64 w-64" }, ref) {
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    useImperativeHandle(ref, () => wrapperRef.current as HTMLDivElement);
+
     return (
-      <div ref={ref} className={`relative select-none ${className}`}>
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={gaze}
-            initial={{ opacity: 0, scale: 1.035, filter: "blur(9px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, scale: 0.98, filter: "blur(9px)" }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={AVATAR_SRC[gaze]}
-              alt="Akii Studio Avatar"
-              fill
-              priority={priority}
-              sizes="(min-width: 1024px) 256px, (min-width: 640px) 176px, 112px"
-              className="object-contain drop-shadow-[0_24px_40px_rgba(20,30,25,0.18)]"
-            />
-          </motion.div>
-        </AnimatePresence>
+      <div ref={wrapperRef} className={`relative select-none ${className}`}>
+        <Canvas
+          camera={{ position: [0, LOOK_HEIGHT, 3.9], fov: 32 }}
+          gl={{ alpha: true, antialias: true }}
+          dpr={[1, 2]}
+        >
+          <CameraRig />
+          <ambientLight intensity={1} />
+          <directionalLight position={[2, 3, 2]} intensity={1.5} />
+          <directionalLight position={[-2, 1, -1.5]} intensity={0.5} />
+          <Suspense fallback={null}>
+            <Model targetYaw={targetYaw} targetPitch={targetPitch} onReady={onReady} />
+          </Suspense>
+        </Canvas>
       </div>
     );
   },
