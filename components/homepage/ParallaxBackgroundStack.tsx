@@ -9,17 +9,26 @@ type ParallaxBackgroundStackProps = {
   sources: string[];
   /** How much slower the background travels than the scroll, ~0.3-0.5 */
   factor?: number;
+  /**
+   * Optional custom scroll-progress boundaries (length sources.length + 1,
+   * monotonic 0→1) giving each layer a different share of the total scroll
+   * instead of splitting it evenly — e.g. letting the first couple of
+   * images lingerer longer. Defaults to an even split.
+   */
+  boundaries?: number[];
 };
 
-// How far into each section's own scroll range (on each side of a seam) the
-// crossfade dissolve extends. Kept small so most of a section shows its own
-// image cleanly and only a brief window around the seam actually blends.
-const OVERLAP_FRACTION_OF_SECTION = 0.16;
+// How far into each layer's own zone (on each side) the crossfade dissolve
+// extends, as a fraction of that zone's width. Kept close to the 0.5 limit
+// (at which a zone is blending for its entire span, with just an instant of
+// full clarity at its center) so the whole journey reads as one continuous,
+// unbroken dissolve rather than a series of distinct "transition moments".
+const OVERLAP_FRACTION_OF_ZONE = 0.47;
 
 function buildOpacityRange(index: number, count: number, boundaries: number[]) {
   const start = boundaries[index];
   const end = boundaries[index + 1];
-  const overlap = (end - start) * OVERLAP_FRACTION_OF_SECTION;
+  const overlap = (end - start) * OVERLAP_FRACTION_OF_ZONE;
   const isFirst = index === 0;
   const isLast = index === count - 1;
 
@@ -71,15 +80,14 @@ function ParallaxLayer({
   const { input, output } = buildOpacityRange(index, count, boundaries);
   const opacity = useTransform(scrollYProgress, input, output);
 
-  // Kept gentle on purpose: several of these photos (the cloud shots
-  // especially) are mostly flat/featureless in their upper two-thirds with
-  // all the texture near the bottom, so a large drift can scroll a layer
-  // into its own blank area right as it needs to hand off to the next one.
-  const range = factor * 12;
+  // Scrolling down should drift the background upward, at a slower rate
+  // than the foreground content — the classic parallax "lag", not a
+  // background that appears to scroll along with the page.
+  const range = factor * 16;
   const y = useTransform(
     scrollYProgress,
     [boundaries[index], boundaries[index + 1]],
-    [`-${range}%`, `${range}%`],
+    [`${range}%`, `-${range}%`],
   );
 
   return (
@@ -95,12 +103,14 @@ function ParallaxLayer({
  * Renders every section background as a fixed, viewport-filling stack and
  * cross-dissolves between neighbours as the page scrolls, instead of hard
  * cutting at each section boundary. Each layer also gets its own slow
- * parallax drift within its own active scroll range.
+ * parallax drift (upward, slower than the scroll) within its own active
+ * scroll range.
  */
 export function ParallaxBackgroundStack({
   containerRef,
   sources,
   factor = 0.35,
+  boundaries,
 }: ParallaxBackgroundStackProps) {
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -108,7 +118,8 @@ export function ParallaxBackgroundStack({
   });
 
   const count = sources.length;
-  const boundaries = Array.from({ length: count + 1 }, (_, i) => i / count);
+  const resolvedBoundaries =
+    boundaries ?? Array.from({ length: count + 1 }, (_, i) => i / count);
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden">
@@ -118,7 +129,7 @@ export function ParallaxBackgroundStack({
           src={src}
           index={i}
           count={count}
-          boundaries={boundaries}
+          boundaries={resolvedBoundaries}
           scrollYProgress={scrollYProgress}
           factor={factor}
           priority={i === 0}
