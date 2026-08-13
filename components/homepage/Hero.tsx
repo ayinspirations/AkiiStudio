@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
 import { AvatarCompanion } from "./AvatarCompanion";
-import { GAZE_ANGLES } from "./gazeAngles";
+import { GAZE_VIDEO_TIME, mouseXToVideoTime } from "./gazeVideo";
 import { HeroNav } from "./HeroNav";
 import { MagneticButton } from "@/components/MagneticButton";
 import { useHeroSequence } from "@/hooks/useHeroSequence";
@@ -18,8 +18,10 @@ export function Hero() {
   const avatarRef = useRef<HTMLDivElement>(null);
   const [avatarReady, setAvatarReady] = useState(false);
   const sequence = useHeroSequence(avatarReady);
-  const idleLook = useIdleLook(avatarRef, sequence.idle);
-  const { yaw, pitch } = sequence.idle ? idleLook : GAZE_ANGLES[sequence.gaze];
+  const idleOffsetX = useIdleLook(avatarRef, sequence.idle);
+  const targetTime = sequence.idle
+    ? mouseXToVideoTime(idleOffsetX)
+    : GAZE_VIDEO_TIME[sequence.gaze];
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -95,8 +97,7 @@ export function Hero() {
           <div className="relative flex flex-1 items-center justify-center pb-8 sm:pb-0">
             <AvatarCompanion
               ref={avatarRef}
-              targetYaw={yaw}
-              targetPitch={pitch}
+              targetTime={targetTime}
               onReady={() => setAvatarReady(true)}
               className="h-28 w-28 sm:h-44 sm:w-44 lg:h-64 lg:w-64"
             />

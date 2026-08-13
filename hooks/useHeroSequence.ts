@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { GazeName } from "@/components/homepage/gazeAngles";
+import type { GazeName } from "@/components/homepage/gazeVideo";
 
 export type HeroSequenceState = {
   gaze: GazeName;
@@ -49,17 +49,32 @@ const STEPS: Array<{ delay: number; patch: Partial<HeroSequenceState> }> = [
   { delay: 7100, patch: { gaze: "smile", idle: true } },
 ];
 
+// If the avatar hasn't signalled ready by itself within this long, start the
+// sequence anyway — a permanently blank hero (logo, nav, text all gated
+// behind it) is a worse failure mode than starting slightly early.
+const READY_FALLBACK_MS = 4000;
+
 /**
  * `ready` gates when the timer chain starts. The avatar loads asynchronously
- * (a multi-MB 3D model), so starting the clock at mount rather than once the
+ * (a multi-MB video), so starting the clock at mount rather than once the
  * avatar can actually be seen would let the sequence race ahead of it on a
  * slow connection or a cold dev-server compile.
  */
 export function useHeroSequence(ready: boolean) {
   const [state, setState] = useState<HeroSequenceState>(INITIAL_STATE);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
-    if (!ready) return;
+    if (ready) {
+      setStarted(true);
+      return;
+    }
+    const fallback = window.setTimeout(() => setStarted(true), READY_FALLBACK_MS);
+    return () => window.clearTimeout(fallback);
+  }, [ready]);
+
+  useEffect(() => {
+    if (!started) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setState(FINAL_STATE);
@@ -75,7 +90,7 @@ export function useHeroSequence(ready: boolean) {
     return () => {
       timers.forEach((id) => window.clearTimeout(id));
     };
-  }, [ready]);
+  }, [started]);
 
   return state;
 }
