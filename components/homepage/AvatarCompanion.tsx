@@ -78,14 +78,25 @@ export const AvatarCompanion = forwardRef<HTMLDivElement, AvatarCompanionProps>(
       return () => cancelAnimationFrame(frameId);
     }, []);
 
+    const softEdgeMask = {
+      maskImage: "radial-gradient(circle, black 38%, transparent 68%)",
+      WebkitMaskImage: "radial-gradient(circle, black 38%, transparent 68%)",
+    };
+
     return (
-      <div ref={wrapperRef} className={`relative select-none overflow-hidden ${className}`}>
+      // The footage sits on a plain black backdrop with no alpha channel, and
+      // the character's own face is nearly black too, so a colour/brightness
+      // key would eat into it — instead, a radial mask fades the backdrop out
+      // toward the edges so it dissolves into the page rather than ending in
+      // a hard black square (or circle).
+      <div ref={wrapperRef} className={`relative select-none ${className}`}>
         <video
           ref={videoRef}
           src={VIDEO_URL}
           muted
           playsInline
           preload="auto"
+          style={softEdgeMask}
           className="h-full w-full object-cover"
         />
       </div>
