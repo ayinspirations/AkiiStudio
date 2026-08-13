@@ -1,12 +1,14 @@
-// The rotation video isn't a continuous 360° spin — it's a single arc that
-// eases from facing right, through center, to facing left (and back), so the
-// whole useful range is one monotonic timeline: turnRight -> center -> turnLeft.
-// Timestamps were located by sampling frames directly (see PR description).
-export const VIDEO_URL = "/avatar/Character_head_rotating_360_degrees_202608131808.mp4";
+// Green-screen rotation clip. Not a continuous spin either — it rests at
+// center, dips into a left turn (~t=3s), returns to center, swings into a
+// stronger right turn (~t=8.1s), then returns to center at the loop point.
+// Timestamps were located objectively: sampling left/right pixel-brightness
+// asymmetry across every frame, then confirming the sign against extracted
+// frames (foreshortened eye = the side rotating away from camera).
+export const VIDEO_URL = "/avatar/avatar-head-greenscreen.mp4";
 
-export const T_TURN_RIGHT = 2.5;
-export const T_CENTER = 4.0;
-export const T_TURN_LEFT = 6.83;
+export const T_TURN_LEFT = 3.0;
+export const T_CENTER = 5.0;
+export const T_TURN_RIGHT = 8.1;
 
 export type GazeName = "sleep" | "smile" | "up" | "upper_left" | "upper_right" | "left" | "lower_right";
 

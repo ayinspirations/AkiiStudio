@@ -99,7 +99,7 @@ export function Hero() {
               ref={avatarRef}
               targetTime={targetTime}
               onReady={() => setAvatarReady(true)}
-              className="h-28 w-28 sm:h-44 sm:w-44 lg:h-64 lg:w-64"
+              className="aspect-[3/5] w-28 sm:w-44 lg:w-64"
             />
 
             <AnimatePresence>
