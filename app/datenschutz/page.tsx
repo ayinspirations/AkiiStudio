@@ -11,18 +11,18 @@ export default function DatenschutzPage() {
   return (
     <>
       <Nav />
-      <main className="mx-auto max-w-3xl px-4 pb-24 pt-40 sm:px-6 lg:px-10">
-        <h1 className="text-3xl font-medium tracking-tight sm:text-4xl">Datenschutzerklärung</h1>
-        <p className="mt-4 max-w-[60ch] rounded-2xl border border-hairline bg-white/[0.03] px-5 py-4 text-sm leading-relaxed text-muted-strong">
+      <main className="mx-auto max-w-3xl px-4 pb-24 pt-32 sm:px-6 lg:px-10">
+        <h1 className="display text-[2rem] sm:text-[2.75rem]">Datenschutzerklärung</h1>
+        <p className="mt-4 max-w-[60ch] rounded-[var(--radius-media)] border border-hairline bg-bright px-5 py-4 text-sm leading-relaxed text-soft">
           Platzhalter-Seite. Vor Veröffentlichung durch eine rechtsgültige,
           auf die tatsächlich eingesetzten Dienste (Hosting, Analyse,
           Kontaktformular, ggf. Cookies) zugeschnittene Datenschutzerklärung
           ersetzen, idealerweise mit anwaltlicher Prüfung.
         </p>
 
-        <div className="mt-10 space-y-8 text-[15px] leading-relaxed text-muted-strong">
+        <div className="mt-10 space-y-8 text-[15px] leading-relaxed text-soft">
           <section>
-            <h2 className="text-lg font-medium tracking-tight text-paper">1. Verantwortlicher</h2>
+            <h2 className="display-sm text-xl text-ink">1. Verantwortlicher</h2>
             <p className="mt-2">
               [Firmenname GmbH]
               <br />
@@ -33,7 +33,7 @@ export default function DatenschutzPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-medium tracking-tight text-paper">
+            <h2 className="display-sm text-xl text-ink">
               2. Erhebung und Speicherung personenbezogener Daten
             </h2>
             <p className="mt-2">
@@ -45,7 +45,7 @@ export default function DatenschutzPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-medium tracking-tight text-paper">3. Kontaktformular</h2>
+            <h2 className="display-sm text-xl text-ink">3. Kontaktformular</h2>
             <p className="mt-2">
               Wenn Sie uns über das Kontaktformular Anfragen zukommen lassen,
               werden Ihre Angaben aus dem Formular inklusive der von Ihnen
@@ -56,7 +56,7 @@ export default function DatenschutzPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-medium tracking-tight text-paper">4. Ihre Rechte</h2>
+            <h2 className="display-sm text-xl text-ink">4. Ihre Rechte</h2>
             <p className="mt-2">
               Sie haben jederzeit das Recht auf Auskunft, Berichtigung,
               Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit
@@ -67,7 +67,7 @@ export default function DatenschutzPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-medium tracking-tight text-paper">5. Hosting</h2>
+            <h2 className="display-sm text-xl text-ink">5. Hosting</h2>
             <p className="mt-2">
               [Name und Anschrift des Hosting-Anbieters ergänzen, sobald
               feststeht, wo die Website betrieben wird.]

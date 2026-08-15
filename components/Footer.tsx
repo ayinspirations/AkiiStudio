@@ -1,52 +1,50 @@
-import Link from "next/link";
-import { LinkedinLogo, InstagramLogo } from "@phosphor-icons/react/dist/ssr";
-import { navLinks } from "@/lib/content";
+import { Logo } from "@/components/Logo";
+import { legalLinks, navLinks, site } from "@/lib/content";
 
 export function Footer() {
-  const year = new Date().getFullYear();
-
   return (
-    <footer className="border-t border-hairline px-4 py-16 sm:px-6 lg:px-10">
-      <div className="mx-auto max-w-[1400px]">
+    <footer className="border-t border-hairline bg-bright">
+      <div className="mx-auto w-full max-w-[92rem] px-6 py-16 sm:px-10 sm:py-20 lg:px-14">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <span className="text-lg font-semibold tracking-tight text-paper">
-              Akii<span className="text-volt">Studio</span>
-            </span>
-            <p className="mt-4 max-w-[36ch] text-[15px] leading-relaxed text-muted-strong">
-              Digitalagentur für Webdesign, SEO, SaaS-Entwicklung und
-              individuelle KI-Agenten – aus Deutschland.
+            <Logo className="text-2xl text-ink" />
+            <p className="mt-5 max-w-[30ch] leading-relaxed text-soft">
+              {site.tagline} für moderne Marken und Unternehmen.
             </p>
-            <div className="mt-6 flex items-center gap-3">
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="AkiiStudio auf LinkedIn"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-muted-strong transition-colors duration-300 hover:text-paper"
-              >
-                <LinkedinLogo weight="light" className="h-4 w-4" />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="AkiiStudio auf Instagram"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-muted-strong transition-colors duration-300 hover:text-paper"
-              >
-                <InstagramLogo weight="light" className="h-4 w-4" />
-              </a>
-            </div>
           </div>
 
-          <div className="lg:col-span-3 lg:col-start-7">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-muted">Seite</p>
-            <ul className="mt-5 flex flex-col gap-3">
+          <nav aria-label="Footer" className="lg:col-span-4">
+            <h2 className="text-sm text-soft">Seite</h2>
+            <ul className="mt-5 space-y-3">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-[15px] text-muted-strong transition-colors duration-300 hover:text-paper"
+                    className="text-ink transition-colors duration-300 hover:text-olive"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="lg:col-span-3">
+            <h2 className="text-sm text-soft">Kontakt</h2>
+            <ul className="mt-5 space-y-3">
+              <li>
+                <a
+                  href={`mailto:${site.email}`}
+                  className="text-ink transition-colors duration-300 hover:text-olive"
+                >
+                  {site.email}
+                </a>
+              </li>
+              {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-soft transition-colors duration-300 hover:text-ink"
                   >
                     {link.label}
                   </a>
@@ -54,34 +52,11 @@ export function Footer() {
               ))}
             </ul>
           </div>
-
-          <div className="lg:col-span-3">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-muted">Rechtliches</p>
-            <ul className="mt-5 flex flex-col gap-3">
-              <li>
-                <Link
-                  href="/impressum"
-                  className="text-[15px] text-muted-strong transition-colors duration-300 hover:text-paper"
-                >
-                  Impressum
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/datenschutz"
-                  className="text-[15px] text-muted-strong transition-colors duration-300 hover:text-paper"
-                >
-                  Datenschutz
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t border-hairline pt-8 text-[13px] text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>© {year} AkiiStudio. Alle Rechte vorbehalten.</p>
-          <p>Made in Germany.</p>
-        </div>
+        <p className="mt-16 border-t border-hairline pt-8 text-[0.8125rem] text-soft">
+          © {new Date().getFullYear()} {site.fullName}
+        </p>
       </div>
     </footer>
   );

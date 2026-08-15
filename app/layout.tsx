@@ -1,62 +1,62 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { site } from "@/lib/content";
 import "./globals.css";
 
-const siteUrl = "https://akiistudio.de";
+const title = "Akii Studio · Webdesign und digitale Produkte";
+const description =
+  "Akii Studio gestaltet und entwickelt Websites, digitale Produkte und Automatisierung für moderne Marken und Unternehmen. Strategie, Design und Entwicklung aus einer Hand.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(site.url),
   title: {
-    default: "AkiiStudio — Webdesign, SEO, SaaS & KI-Agenten",
-    template: "%s — AkiiStudio",
+    default: title,
+    template: "%s · Akii Studio",
   },
-  description:
-    "AkiiStudio ist eine deutsche Digitalagentur für Webdesign, SEO, SaaS-Entwicklung und individuelle KI-Agenten. Ein Team, ein System, messbares Wachstum.",
+  description,
   keywords: [
     "Webdesign Agentur",
+    "Digitalagentur",
+    "digitale Produkte",
     "SEO Agentur",
-    "SaaS Entwicklung",
     "KI Agenten",
-    "AI Agents",
-    "Digitalagentur Deutschland",
+    "Webentwicklung Deutschland",
   ],
-  authors: [{ name: "AkiiStudio" }],
+  authors: [{ name: site.fullName }],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "de_DE",
-    url: siteUrl,
-    siteName: "AkiiStudio",
-    title: "AkiiStudio — Webdesign, SEO, SaaS & KI-Agenten",
-    description:
-      "Wir bauen Websites, SEO-Systeme, SaaS-Produkte und KI-Agenten, die euer Geschäft nach vorne bringen.",
+    url: site.url,
+    siteName: site.fullName,
+    title,
+    description,
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "AkiiStudio — Webdesign, SEO, SaaS & KI-Agenten",
-    description:
-      "Wir bauen Websites, SEO-Systeme, SaaS-Produkte und KI-Agenten, die euer Geschäft nach vorne bringen.",
-  },
+  twitter: { card: "summary_large_image", title, description },
   robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f3f1ed" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1815" },
+  ],
 };
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "AkiiStudio",
-  url: siteUrl,
-  description:
-    "Digitalagentur für Webdesign, SEO, SaaS-Entwicklung und individuelle KI-Agenten.",
+  name: site.fullName,
+  url: site.url,
+  email: site.email,
+  description,
   areaServed: "DE",
-  address: {
-    "@type": "PostalAddress",
-    addressCountry: "DE",
-  },
+  address: { "@type": "PostalAddress", addressCountry: "DE" },
   knowsAbout: [
     "Webdesign",
+    "Digitale Produkte",
     "Suchmaschinenoptimierung",
-    "SaaS-Entwicklung",
     "KI-Agenten",
   ],
 };
@@ -67,11 +67,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="grain relative overflow-x-hidden bg-ink text-paper">
+    <html
+      lang="de"
+      // Keeps in-page anchor scrolling smooth while route changes still jump
+      // to the top, which Next 16 no longer does by default.
+      data-scroll-behavior="smooth"
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+    >
+      <body className="grain relative overflow-x-hidden bg-paper text-ink">
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         {children}

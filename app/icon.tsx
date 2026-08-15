@@ -3,6 +3,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 64, height: 64 };
 export const contentType = "image/png";
 
+/** The lowercase mark, cut into the bone surface. */
 export default function Icon() {
   return new ImageResponse(
     (
@@ -13,23 +14,16 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#050607",
-          borderRadius: 14,
+          background: "#f3f1ed",
+          color: "#26241f",
+          fontFamily: "serif",
+          fontSize: 44,
+          paddingBottom: 6,
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            fontSize: 34,
-            fontWeight: 700,
-            color: "#39ffb0",
-            fontFamily: "sans-serif",
-          }}
-        >
-          A
-        </div>
+        a
       </div>
     ),
-    { ...size }
+    { ...size },
   );
 }

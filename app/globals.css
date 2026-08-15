@@ -1,21 +1,97 @@
 @import "tailwindcss";
+@import "@fontsource-variable/source-serif-4/opsz.css";
 
-@theme {
-  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+/* ---------------------------------------------------------------------------
+   Akii Studio design tokens
+
+   Bone-white surfaces, a warm near-black ink, and almost no chroma. The one
+   coloured note is a muted olive, used the way the planting is used in the
+   reference: sparingly, as a single point of life against the plaster.
+
+   Light mode is the atrium at midday, dark mode is the same room at dusk.
+
+   Text contrast (verified against WCAG AA on every text surface):
+     --color-ink    safe everywhere
+     --color-soft   body copy, safe everywhere
+     --color-faint  DECORATIVE ONLY (hairlines, rules). Never text.
+     --color-olive  accent text, safe everywhere
+
+   Radius system (two documented tiers):
+     media, panels, cards  -> 1.25rem, echoing the curved plaster
+     interactive controls  -> full round
+--------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+
+  --c-paper: #f3f1ed;
+  --c-bright: #faf9f6;
+  --c-sand: #e7e1d7;
+  --c-sand-deep: #d5cdbf;
+
+  --c-ink: #26241f;
+  --c-soft: #595449;
+  --c-faint: #8b8478;
+
+  --c-olive: #4f5c3b;
+  --c-olive-bright: #63724c;
+
+  --c-hairline: rgb(38 36 31 / 0.13);
+  --c-hairline-strong: rgb(38 36 31 / 0.24);
+
+  --c-daylight: rgb(255 252 244 / 0.92);
+  --shadow-soft: 0 30px 80px -50px rgb(50 42 30 / 0.4);
+  --grain-opacity: 0.045;
+
+  --radius-media: 1.25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --c-paper: #1a1815;
+    --c-bright: #221f1b;
+    --c-sand: #2b2723;
+    --c-sand-deep: #37322c;
+
+    --c-ink: #efebe4;
+    --c-soft: #aca69b;
+    --c-faint: #7d766b;
+
+    --c-olive: #9dae7e;
+    --c-olive-bright: #b3c295;
+
+    --c-hairline: rgb(239 235 228 / 0.13);
+    --c-hairline-strong: rgb(239 235 228 / 0.24);
+
+    --c-daylight: rgb(255 246 226 / 0.14);
+    --shadow-soft: 0 30px 80px -50px rgb(0 0 0 / 0.8);
+    --grain-opacity: 0.06;
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Source Serif 4 Variable", ui-serif, Georgia, serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
-  --color-ink: #050607;
-  --color-surface: #0b0d0f;
-  --color-surface-raised: #121417;
-  --color-surface-inset: #16191d;
-  --color-hairline: rgba(255, 255, 255, 0.08);
-  --color-hairline-strong: rgba(255, 255, 255, 0.14);
-  --color-paper: #f4f5f2;
-  --color-muted: #9a9fa6;
-  --color-muted-strong: #c6c9ce;
-  --color-volt: #39ffb0;
-  --color-volt-dim: #1f8f63;
-  --color-volt-ink: #04140d;
+  --color-paper: var(--c-paper);
+  --color-bright: var(--c-bright);
+  --color-sand: var(--c-sand);
+  --color-sand-deep: var(--c-sand-deep);
+
+  --color-ink: var(--c-ink);
+  --color-soft: var(--c-soft);
+  --color-faint: var(--c-faint);
+
+  --color-olive: var(--c-olive);
+  --color-olive-bright: var(--c-olive-bright);
+
+  --color-hairline: var(--c-hairline);
+  --color-hairline-strong: var(--c-hairline-strong);
+
+  --radius-media: var(--radius-media);
 
   --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
@@ -23,24 +99,55 @@
 
 @layer base {
   html {
-    background: var(--color-ink);
-    color-scheme: dark;
+    background: var(--c-paper);
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   body {
-    background: var(--color-ink);
-    color: var(--color-paper);
+    background: var(--c-paper);
+    color: var(--c-ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background: var(--color-volt);
-    color: var(--color-volt-ink);
+    background: var(--c-olive);
+    color: var(--c-bright);
   }
 
   * {
-    border-color: var(--color-hairline);
+    border-color: var(--c-hairline);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--c-olive);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* Display type. Optical sizing is what keeps the serifs from thinning out
+     at large sizes, so the variable axis is driven explicitly. */
+  .display {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-variation-settings: "opsz" 40;
+    letter-spacing: -0.018em;
+    line-height: 1.08;
+  }
+
+  .display-sm {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-variation-settings: "opsz" 20;
+    letter-spacing: -0.012em;
+    line-height: 1.18;
   }
 }
 
@@ -49,43 +156,112 @@
     text-wrap: balance;
   }
 
-  .mesh-glow {
-    background-image:
-      radial-gradient(38rem 24rem at 82% -8%, rgba(57, 255, 176, 0.16), transparent 60%),
-      radial-gradient(30rem 20rem at 6% 12%, rgba(57, 255, 176, 0.08), transparent 55%);
+  .text-pretty {
+    text-wrap: pretty;
   }
 
-  .grain::before {
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* ---- The atrium -------------------------------------------------------
+     An abstract architectural interior assembled from pure geometry: a
+     curved plaster wall standing on a polished floor, lit from the upper
+     left. Each piece is a separate layer so the light stays consistent. */
+
+  .atrium-room {
+    background-image: linear-gradient(
+      177deg,
+      var(--c-bright) 0%,
+      var(--c-sand) 62%,
+      var(--c-sand-deep) 100%
+    );
+  }
+
+  .atrium-bloom {
+    background-image: radial-gradient(
+      68% 58% at 22% 4%,
+      var(--c-daylight),
+      transparent 70%
+    );
+  }
+
+  /* The cylinder: a broad arc, lit on its left flank and turning into
+     shadow as it curves away to the right, with a faint bounce of light
+     returning at the far edge. */
+  .atrium-wall {
+    border-radius: 46% 14% 0 0 / 38% 9% 0 0;
+    background-image: linear-gradient(
+      97deg,
+      color-mix(in srgb, var(--c-bright) 85%, #fff) 0%,
+      var(--c-bright) 22%,
+      var(--c-sand) 52%,
+      color-mix(in srgb, var(--c-sand-deep) 78%, #000) 86%,
+      var(--c-sand-deep) 100%
+    );
+  }
+
+  /* The recess beneath the curve: darkest at its crown, opening to light
+     at the floor. */
+  .atrium-arch {
+    border-radius: 999px 999px 0 0;
+    background-image: linear-gradient(
+      184deg,
+      color-mix(in srgb, var(--c-sand-deep) 62%, #000) 0%,
+      var(--c-sand-deep) 38%,
+      var(--c-sand) 78%,
+      var(--c-bright) 100%
+    );
+    box-shadow: inset 0 6px 18px -6px rgb(0 0 0 / 0.28);
+  }
+
+  /* Foliage reads as soft masses rather than drawn leaves, which is how it
+     resolves in a shallow-focus interior render. */
+  .atrium-canopy {
+    background-color: var(--c-olive);
+    border-radius: 50%;
+    filter: blur(5px);
+  }
+
+  .atrium-floor {
+    background-image: linear-gradient(
+      180deg,
+      var(--c-sand) 0%,
+      var(--c-bright) 46%,
+      var(--c-sand) 100%
+    );
+  }
+
+  /* Polished floor: the wall repeated upside down, blurred and faded out. */
+  .atrium-reflection {
+    transform: scaleY(-1);
+    filter: blur(5px);
+    opacity: 0.22;
+    mask-image: linear-gradient(180deg, transparent 0%, #000 78%);
+  }
+
+  /* Grain sits on a fixed, non-interactive layer so it never repaints with
+     scrolling content. */
+  .grain::after {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: 50;
+    z-index: 60;
     pointer-events: none;
-    opacity: 0.035;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: var(--grain-opacity);
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  .marquee-track {
-    animation: marquee 32s linear infinite;
-  }
-
-  .marquee-track:hover {
-    animation-play-state: paused;
-  }
-
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
+  @media (prefers-color-scheme: dark) {
+    .grain::after {
+      mix-blend-mode: screen;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .marquee-track {
-      animation: none;
+    .atrium-reflection {
+      filter: none;
     }
   }
 }

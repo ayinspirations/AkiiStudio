@@ -1,127 +1,168 @@
+export const site = {
+  name: "akii",
+  fullName: "Akii Studio",
+  url: "https://akiistudio.de",
+  email: "hallo@akiistudio.de",
+  tagline: "Webdesign und digitale Produkte",
+};
+
 export const navLinks = [
-  { href: "#leistungen", label: "Leistungen" },
-  { href: "#arbeiten", label: "Arbeiten" },
-  { href: "#prozess", label: "Prozess" },
-  { href: "#faq", label: "FAQ" },
+  { href: "#loesungen", label: "Lösungen" },
+  { href: "#projekte", label: "Projekte" },
+  { href: "#ueber-uns", label: "Über uns" },
+  { href: "#kontakt", label: "Kontakt" },
 ];
 
-export const ctaLabel = "Projekt starten";
+/** One label per intent, used identically in the menu, hero, and footer. */
+export const ctaLabel = "Projekt anfragen";
 
-export const services = [
+export const hero = {
+  headline: "Digitale Lösungen, die bewegen.",
+  body: "Webdesign und digitale Produkte für moderne Marken und Unternehmen.",
+  cta: { href: "#loesungen", label: "Mehr erfahren" },
+};
+
+/**
+ * Drop a rendered interior at this path and the hero swaps the built-in
+ * architectural scene for the photograph. 2400x1800 or wider, warm plaster,
+ * light falling from the upper left. Leave as null to keep the scene.
+ */
+export const heroImage: string | null = null;
+
+export const intro = {
+  lead: "Wir gestalten und entwickeln digitale Auftritte, die ruhig wirken und präzise arbeiten.",
+  body: "Akii Studio verbindet Strategie, Design und Entwicklung unter einem Dach. Statt Bausteine von drei Dienstleistern zusammenzusetzen, entsteht alles an einem Ort, in einem Team, mit einer Handschrift.",
+};
+
+export const solutions = [
   {
     id: "webdesign",
-    icon: "PenNib",
     title: "Webdesign",
-    headline: "Design, das Vertrauen schafft",
-    body: "Marken-Websites, die in Sekunden laden, klar kommunizieren und auf jedem Gerät überzeugen.",
-    span: "lg",
+    body: "Marken-Websites, die schnell laden, klar führen und auf jedem Gerät bestehen. Von der Informationsarchitektur bis zum fertigen Design-System.",
+    items: ["Konzept & Wireframes", "Design-System", "Umsetzung in Next.js"],
   },
   {
-    id: "seo",
-    icon: "MagnifyingGlass",
-    title: "SEO",
-    headline: "Sichtbarkeit, die sich auszahlt",
-    body: "Technisches SEO, Content-Strategie und lokale Optimierung für nachhaltiges Ranking.",
-    span: "sm",
+    id: "digitale-produkte",
+    title: "Digitale Produkte",
+    body: "Vom Prototyp bis zum produktiven Betrieb. Wir bauen Anwendungen mit einem Stack, den euer Team später selbst weiterführen kann.",
+    items: ["Prototyp", "Full-Stack-Umsetzung", "Betrieb & Wartung"],
   },
   {
-    id: "saas",
-    icon: "Cube",
-    title: "SaaS-Entwicklung",
-    headline: "Produkte, die skalieren",
-    body: "Von der ersten Idee bis zum produktiven SaaS – Full-Stack-Entwicklung mit modernem Stack.",
-    span: "sm",
+    id: "sichtbarkeit",
+    title: "Sichtbarkeit",
+    body: "Technisches SEO, saubere Content-Struktur und lokale Optimierung, damit gefunden wird, was ihr aufgebaut habt.",
+    items: ["Technisches Audit", "Content-Struktur", "Local SEO"],
   },
   {
-    id: "ki-agenten",
-    icon: "Robot",
-    title: "KI-Agenten",
-    headline: "Automatisierung, die mitdenkt",
-    body: "Individuelle KI-Agenten für Support, Vertrieb und interne Abläufe – trainiert auf euren Daten.",
-    span: "lg",
-  },
-] as const;
-
-export const processSteps = [
-  {
-    index: "01",
-    title: "Kennenlernen",
-    body: "Wir verstehen euer Geschäft, eure Zielgruppe und den aktuellen Stand eurer digitalen Präsenz.",
-  },
-  {
-    index: "02",
-    title: "Konzept & Design",
-    body: "Struktur, Content-Strategie und visuelles Design entstehen gemeinsam – klar begründet, nicht dekorativ.",
-  },
-  {
-    index: "03",
-    title: "Entwicklung",
-    body: "Website, SaaS-Produkt oder KI-Agent werden mit modernem Stack gebaut und laufend getestet.",
-  },
-  {
-    index: "04",
-    title: "Launch & Wachstum",
-    body: "Nach dem Launch optimieren wir kontinuierlich anhand echter Daten – SEO, Conversion, Performance.",
+    id: "automatisierung",
+    title: "Automatisierung",
+    body: "Individuelle KI-Agenten für Support, Vertrieb und interne Abläufe, trainiert auf euren Daten und eingebettet in eure Systeme.",
+    items: ["Use-Case-Analyse", "Agent & Integration", "Monitoring"],
   },
 ];
 
-export const workItems = [
+export const projects = [
   {
     id: "ecommerce-relaunch",
-    category: "Webdesign · SEO",
     title: "E-Commerce Relaunch",
-    body: "Komplette Neuausrichtung von Design und Informationsarchitektur für einen deutschen Onlineshop.",
+    discipline: "Webdesign, Sichtbarkeit",
+    body: "Neuausrichtung von Design und Informationsarchitektur für einen deutschen Onlineshop. Sortiment, Filterlogik und Checkout wurden vollständig neu gedacht.",
+    scope: "Relaunch in zwölf Wochen",
   },
   {
-    id: "saas-dashboard",
-    category: "SaaS-Entwicklung",
+    id: "analytics-plattform",
     title: "Analytics-Plattform",
-    body: "Ein Self-Service-SaaS-Dashboard für Teams, von der ersten Zeile Code bis zum produktiven Rollout.",
+    discipline: "Digitale Produkte",
+    body: "Ein Self-Service-Dashboard für Teams, von der ersten Zeile Code bis zum produktiven Rollout inklusive Abrechnung und Rollenverwaltung.",
+    scope: "Vom Prototyp zur Produktion",
   },
   {
     id: "support-agent",
-    category: "KI-Agenten",
-    title: "KI-Support-Agent",
-    body: "Ein Agent, der Support-Anfragen automatisch beantwortet und komplexe Fälle sauber weiterleitet.",
+    title: "Support-Agent",
+    discipline: "Automatisierung",
+    body: "Ein Agent, der wiederkehrende Anfragen eigenständig beantwortet und komplexe Fälle mit vollständigem Kontext an das Team übergibt.",
+    scope: "Angebunden an bestehendes Ticketing",
   },
-] as const;
+];
+
+export const about = {
+  headline: "Ein kleines Team, das den ganzen Weg mitgeht.",
+  body: [
+    "Akii Studio arbeitet remote-first aus Deutschland. Für jedes Projekt stellen wir ein festes, kleines Team zusammen, statt Ansprechpartner durchzureichen.",
+    "Wir übernehmen Strategie, Design und Entwicklung selbst. Das verkürzt die Wege und sorgt dafür, dass am Ende auch gebaut wird, was vorher entworfen wurde.",
+  ],
+  facts: [
+    { label: "Erfahrung", value: "5+ Jahre" },
+    { label: "Projekte", value: "30+" },
+    { label: "Arbeitsweise", value: "Remote-first" },
+    { label: "Standort", value: "Deutschland" },
+  ],
+};
+
+export const processSteps = [
+  {
+    id: "kennenlernen",
+    title: "Kennenlernen",
+    body: "Wir verstehen euer Geschäft und den Stand eurer digitalen Präsenz. Am Ende steht ein klarer Umfang statt einer Wunschliste.",
+  },
+  {
+    id: "konzept",
+    title: "Konzept & Design",
+    body: "Struktur, Inhalte und visuelles Design entstehen gemeinsam. Jede Entscheidung ist begründet, nichts ist Dekoration.",
+  },
+  {
+    id: "umsetzung",
+    title: "Umsetzung",
+    body: "Gebaut und laufend getestet. Ihr seht jede Woche einen funktionierenden Stand statt einer Statusmeldung.",
+  },
+  {
+    id: "betrieb",
+    title: "Launch & Betrieb",
+    body: "Nach dem Launch optimieren wir anhand echter Daten weiter: Performance, Sichtbarkeit und Conversion.",
+  },
+];
 
 export const faqItems = [
   {
     question: "Wie lange dauert ein typisches Projekt?",
     answer:
-      "Eine neue Website dauert meist vier bis acht Wochen, ein SaaS-Produkt oder KI-Agent je nach Umfang zwei bis vier Monate. Nach dem Erstgespräch bekommt ihr einen konkreten Zeitplan.",
+      "Eine neue Website dauert meist vier bis acht Wochen, ein digitales Produkt je nach Umfang zwei bis vier Monate. Nach dem Erstgespräch bekommt ihr einen konkreten Zeitplan.",
   },
   {
     question: "Arbeitet ihr auch mit kleinen Unternehmen und Start-ups?",
     answer:
-      "Ja. Wir passen Umfang und Tempo an eure Größe an – vom ersten Web-Auftritt bis zur skalierenden SaaS-Plattform.",
+      "Ja. Wir passen Umfang und Tempo an eure Größe an, vom ersten Web-Auftritt bis zur skalierenden Plattform.",
   },
   {
-    question: "Was kostet eine neue Website oder ein KI-Agent?",
+    question: "Was kostet eine Zusammenarbeit?",
     answer:
       "Das hängt vom Umfang ab. Nach einem kurzen Kennenlerngespräch bekommt ihr ein konkretes, unverbindliches Angebot statt einer Pauschalzahl.",
   },
   {
-    question: "Übernehmt ihr auch Wartung und Weiterentwicklung nach dem Launch?",
+    question: "Übernehmt ihr auch Wartung und Weiterentwicklung?",
     answer:
-      "Ja, auf Wunsch betreuen wir Hosting, Sicherheit, SEO-Monitoring und Weiterentwicklung dauerhaft.",
+      "Ja. Auf Wunsch betreuen wir Hosting, Sicherheit, Monitoring und Weiterentwicklung dauerhaft.",
   },
   {
-    question: "Wo sitzt euer Team und mit wem arbeiten wir zusammen?",
+    question: "Wem gehört am Ende der Code und das Design?",
     answer:
-      "Wir arbeiten remote-first aus Deutschland und bilden für jedes Projekt ein festes, kleines Team statt wechselnder Ansprechpartner.",
+      "Euch. Ihr bekommt das vollständige Repository und alle Design-Dateien. Wir setzen auf verbreitete Technologien, damit ihr nicht an uns gebunden seid.",
   },
 ];
 
-export const techLogos = [
-  { slug: "nextdotjs", name: "Next.js" },
-  { slug: "react", name: "React" },
-  { slug: "typescript", name: "TypeScript" },
-  { slug: "vercel", name: "Vercel" },
-  { slug: "openai", name: "OpenAI" },
-  { slug: "anthropic", name: "Anthropic" },
-  { slug: "googlecloud", name: "Google Cloud" },
-  { slug: "postgresql", name: "PostgreSQL" },
-  { slug: "stripe", name: "Stripe" },
+export const contact = {
+  headline: "Erzählt uns von eurem Vorhaben.",
+  body: "Eine kurze Beschreibung reicht. Wir melden uns innerhalb von zwei Werktagen mit einer ehrlichen Einschätzung, ob und wie wir helfen können.",
+  budgets: [
+    "Unter 10.000 €",
+    "10.000 bis 25.000 €",
+    "25.000 bis 50.000 €",
+    "Über 50.000 €",
+    "Noch offen",
+  ],
+};
+
+export const legalLinks = [
+  { href: "/impressum", label: "Impressum" },
+  { href: "/datenschutz", label: "Datenschutz" },
 ];
