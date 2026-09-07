@@ -57,6 +57,13 @@
   --r-pill: 36px;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Einflugstrecke der Reveals. Auf dem Handy kurz, damit nichts weit aus
+     dem Bild heraus starten muss; am Desktop lang genug, dass die Richtung
+     lesbar ist. */
+  --r-shift: clamp(24px, 3.2vw, 56px);
+  /* Startgröße der Bilder beim Einblenden — sie setzen sich auf 1 zurück. */
+  --r-zoom: 1.09;
 }
 
 /* ---------- Hero display face ----------
@@ -750,12 +757,44 @@ body.menu-open { overflow: hidden; }
 .footer__bottom, .footer__bottom a { font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: #A2917C; }
 .footer__bottom a.ember { color: var(--ember); }
 
-/* ---------- Reveal ---------- */
-.r { opacity: 0; transform: translateY(26px); }
-.is-in.r, .r.is-in { opacity: 1; transform: none; transition: opacity 1s var(--ease), transform 1s var(--ease); }
+/* ---------- Reveal ----------
+   Jedes Element fliegt aus der Richtung ein, die zu seinem Platz im Layout
+   passt: Spalten von ihrer eigenen Seite, Überschriften von oben, Listen
+   und Formularzeilen von unten. `.r` allein bleibt der Standard (unten).
+   Die Richtungsklassen liegen hinter `.r`, haben dieselbe Spezifität und
+   gewinnen daher über die Quellreihenfolge. */
+.r { opacity: 0; transform: translate3d(0, var(--r-shift), 0); }
+.r--left   { transform: translate3d(calc(var(--r-shift) * -1), 0, 0); }
+.r--right  { transform: translate3d(var(--r-shift), 0, 0); }
+.r--top    { transform: translate3d(0, calc(var(--r-shift) * -1), 0); }
+.r--bottom { transform: translate3d(0, var(--r-shift), 0); }
+/* Für vollflächige Ebenen, die sich nicht verschieben dürfen (Hero-Bild) —
+   die würden sonst am Rand eine Lücke aufreißen. */
+.r--fade   { transform: none; }
+
+.is-in.r, .r.is-in {
+  opacity: 1; transform: none;
+  transition: opacity 1s var(--ease), transform 1s var(--ease);
+}
+
 .r-d1 { transition-delay: .08s; }
 .r-d2 { transition-delay: .16s; }
 .r-d3 { transition-delay: .24s; }
+.r-d4 { transition-delay: .32s; }
+.r-d5 { transition-delay: .40s; }
+.r-d6 { transition-delay: .48s; }
+
+/* ---------- Bild-Zoom ----------
+   Bilder starten leicht vergrößert und setzen sich beim Einblenden auf 1
+   zurück — die Bewegung läuft länger als die Deckkraft, damit sie nachklingt.
+   Der Startwert hängt bewusst an `:not(.is-in)`: sobald eingeblendet ist,
+   liegt von hier aus nichts mehr auf `transform`, und der Hover-Zoom der
+   Cases greift unverändert weiter. */
+.r-zoom img {
+  transform-origin: 50% 50%;
+  transition: transform 1.25s var(--ease), filter 1.25s var(--ease);
+}
+.r-zoom:not(.is-in) img { transform: scale(var(--r-zoom)); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -764,7 +803,10 @@ body.menu-open { overflow: hidden; }
     animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
   }
-  .r { opacity: 1; transform: none; }
+  .r, .r--left, .r--right, .r--top, .r--bottom, .r--fade {
+    opacity: 1; transform: none;
+  }
+  .r-zoom:not(.is-in) img { transform: none; }
 }
 
 /* ---------- Fitting the fold on small screens ---------- */
