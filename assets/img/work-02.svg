@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="w2-bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#241A12"/>
+      <stop offset="55%" stop-color="#3A2A1C"/>
+      <stop offset="100%" stop-color="#17100A"/>
+    </linearGradient>
+    <radialGradient id="w2-glow" cx="0.68" cy="0.3" r="0.6">
+      <stop offset="0%" stop-color="#F0E4D2" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#F0E4D2" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="w2-card" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#4A3626"/>
+      <stop offset="100%" stop-color="#2C1F15"/>
+    </linearGradient>
+    <linearGradient id="w2-line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C2551F"/>
+      <stop offset="100%" stop-color="#F0E4D2"/>
+    </linearGradient>
+    <filter id="w2-g" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#w2-bg)"/>
+  <rect width="1200" height="900" fill="url(#w2-glow)"/>
+
+  <!-- product surface: floating dashboard planes -->
+  <g>
+    <rect x="180" y="190" width="620" height="420" rx="12" fill="url(#w2-card)" stroke="#5C4632" stroke-width="1"/>
+    <rect x="220" y="230" width="150" height="10" rx="5" fill="#F0E4D2" opacity="0.55"/>
+    <rect x="220" y="258" width="90" height="8" rx="4" fill="#F0E4D2" opacity="0.25"/>
+    <path d="M220 520 L300 470 L380 496 L460 400 L540 434 L620 340 L760 380" fill="none" stroke="url(#w2-line)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#F0E4D2" opacity="0.14">
+      <rect x="220" y="556" width="540" height="1"/>
+      <rect x="220" y="452" width="540" height="1"/>
+      <rect x="220" y="348" width="540" height="1"/>
+    </g>
+    <circle cx="620" cy="340" r="6" fill="#C2551F"/>
+  </g>
+
+  <g>
+    <rect x="620" y="420" width="420" height="330" rx="12" fill="#54402C" stroke="#6C5540" stroke-width="1"/>
+    <rect x="660" y="462" width="120" height="9" rx="4" fill="#F0E4D2" opacity="0.5"/>
+    <g fill="#F0E4D2" opacity="0.2">
+      <rect x="660" y="512" width="340" height="8" rx="4"/>
+      <rect x="660" y="542" width="290" height="8" rx="4"/>
+      <rect x="660" y="572" width="320" height="8" rx="4"/>
+    </g>
+    <rect x="660" y="640" width="170" height="46" rx="23" fill="#F0E4D2"/>
+    <rect x="848" y="640" width="130" height="46" rx="23" fill="none" stroke="#F0E4D2" stroke-width="1" opacity="0.6"/>
+  </g>
+
+  <g stroke="#6C5F51" stroke-width="1" opacity="0.5">
+    <line x1="0" y1="120" x2="1200" y2="120" stroke-dasharray="2 10"/>
+    <line x1="0" y1="810" x2="1200" y2="810" stroke-dasharray="2 10"/>
+  </g>
+  <rect width="1200" height="900" filter="url(#w2-g)" opacity="0.2" style="mix-blend-mode:overlay"/>
+</svg>
