@@ -821,14 +821,37 @@ body.menu-open { overflow: hidden; }
   .svc__tags { display: none; }
   .svc__desc { font-size: 0.875rem; line-height: 1.45; }
 
-  /* two stacked cases per screen — the frames carry the whole panel, so
-     they are the first thing to give when the screen gets short */
+  /* Zwei gestapelte Cases pro Bildschirm. Vorher gab eine feste 2:1-Kachel
+     die Hoehe vor: die blieb flach (173px auf einem 844er Screen), waehrend
+     oben und unten je ~160px leer standen. Jetzt holt sich die Kachel den
+     Platz ueber svh, und die Zeile darunter bekommt nur noch, was Name und
+     Jahr brauchen. */
   .work__grid { gap: var(--s-4); }
-  .case__frame { aspect-ratio: 2 / 1; }
-  .case__meta { margin-top: var(--s-3); padding-top: var(--s-2); }
-  .case__name { font-size: 1rem; }
-  .case__tag { font-size: 0.625rem; }
-  .case__result { font-size: 0.8125rem; line-height: 1.4; margin-top: 4px; }
+  .case__frame {
+    /* Seitenverhaeltnis statt fester Hoehe: `height` ohne `aspect-ratio`
+       laesst die Kachel ihre Breite aus der Bildeigengroesse ableiten und
+       den Rahmen sprengen (539px in einem 390px breiten Panel).
+       `width: 100%` muss dazu, sonst zieht ein greifendes `max-height`
+       ueber das Seitenverhaeltnis die Breite mit zusammen.
+       Der Deckel ist das, was nach Meta-Zeile, Abstand und Panel-Polster
+       von der Bildschirmhoehe uebrig bleibt, geteilt durch die zwei
+       gestapelten Cases — so passt es auch quer und auf kurzen Screens,
+       ohne eine zweite Regel weiter unten. Die 240px sind dieses Budget
+       plus Luft, damit die obere Kachel nicht am Burger-Menue klebt: sie
+       setzt bei ~83px an, wie die Ueberschriften der anderen Panels. */
+    aspect-ratio: 5 / 4;
+    width: 100%;
+    max-height: calc((100svh - 240px) / 2);
+  }
+  .case__meta {
+    margin-top: var(--s-3); padding-top: var(--s-2); gap: var(--s-3);
+  }
+  .case__name { font-size: 0.9375rem; }
+  .case__tag { font-size: 0.625rem; letter-spacing: 0.16em; }
+  /* Der Ergebnissatz ist der erklaerende Teil — auf dem Handy gewinnt die
+     Kachel den Raum, Name und Jahr tragen die Zeile allein. Gleiche
+     Entscheidung wie beim zweiten Studio-Absatz weiter unten. */
+  .case__result { display: none; }
 
   /* Footer keeps what a phone actually needs: how to reach the studio,
      where to follow it, and the two legal links. */
@@ -899,7 +922,10 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 760px) and (max-height: 759px) {
   .studio__img { width: 52%; }
   .values li { padding-block: 7px; }
-  .case__frame { aspect-ratio: 21 / 9; }
+  /* Die Kachel braucht hier keine eigene Regel mehr: `max-height: 33svh`
+     oben deckelt sie ohnehin auf das, was der Screen hergibt. Das feste
+     21/9 hat sie zusaetzlich flachgedrueckt (148px statt 231px auf einem
+     700er Viewport), obwohl darueber und darunter Platz frei stand. */
   /* an open service still has to clear the fold on a 667pt screen */
   .svc__item { padding-block: var(--s-3); }
   .svc__desc { font-size: 0.8125rem; line-height: 1.4; }
