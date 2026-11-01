@@ -191,6 +191,7 @@
           apply(dest);
           animating = false;
           landedAt = performance.now();
+          landed();
         }
         sync();
       };
@@ -201,6 +202,19 @@
       if (animating || performance.now() - landedAt < EDGE_HOLD) return;
       glideTo(index + dir);
     };
+
+    /* Tells the rest of the page which panel is now on screen — the live
+       previews load only when their panel has been reached. */
+    const landed = () => {
+      const st = stops[index];
+      if (st) document.dispatchEvent(new CustomEvent('panel-landed', { detail: panels[st.panel] }));
+    };
+
+    /* An embedded site can call scrollIntoView/focus while it loads, which
+       would scroll this (locked) document and make the page jump. Pin it. */
+    window.addEventListener('scroll', () => {
+      if (window.scrollX || window.scrollY) window.scrollTo(0, 0);
+    }, { passive: true });
 
     measure();
     apply(stops[0].y);
@@ -361,19 +375,39 @@
     const ro = new ResizeObserver((entries) => entries.forEach((e) => fit(e.target)));
     lives.forEach((frame) => { fit(frame); ro.observe(frame); });
 
-    /* Load all previews right after the page itself has loaded, one after
-       another — by the time someone reaches the work panels the sites are
-       already rendered, instead of the tile appearing first and filling in
-       afterwards. */
+    /* Load on arrival: a preview starts loading only once its panel has been
+       reached (after the glide has finished, so the animation never competes
+       with a site booting up). It stays invisible until the site has loaded
+       and had a moment to paint and settle, then fades in. Once loaded it is
+       kept, so coming back never reloads or flashes. */
     const load = (frame) => {
       const f = frame.querySelector('iframe');
       if (f.src) return;
-      f.addEventListener('load', () => f.classList.add('is-loaded'), { once: true });
+      frame.classList.add('is-loading');
+      f.addEventListener('load', () => {
+        setTimeout(() => {
+          f.classList.add('is-loaded');
+          frame.classList.remove('is-loading');
+        }, 450);
+      }, { once: true });
       f.src = f.dataset.src;
     };
-    const start = () => lives.forEach((frame, i) => setTimeout(() => load(frame), 250 + i * 400));
-    if (document.readyState === 'complete') start();
-    else window.addEventListener('load', start, { once: true });
+    const loadIn = (panel) => {
+      if (!panel) return;
+      panel.querySelectorAll('.case__frame--live').forEach(load);
+    };
+
+    if (document.documentElement.classList.contains('paged')) {
+      document.addEventListener('panel-landed', (e) => loadIn(e.detail));
+    } else if ('IntersectionObserver' in window) {
+      /* no paging (reduced motion): load when the frame is actually visible */
+      const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { load(e.target); io.unobserve(e.target); }
+      }), { threshold: 0.35 });
+      lives.forEach((frame) => io.observe(frame));
+    } else {
+      lives.forEach(load);
+    }
   }
 
   /* ---- Year ---- */

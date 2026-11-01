@@ -90,6 +90,9 @@ html {
    animation, which showed up as a jitter before each move. Set from JS, so a
    failed script or reduced motion still leaves a normally scrollable page. */
 html.paged, html.paged body { height: 100%; overflow: hidden; }
+/* clip (where supported) cannot be scrolled programmatically either — an
+   embedded preview calling scrollIntoView can no longer shift the page */
+@supports (overflow: clip) { html.paged, html.paged body { overflow: clip; } }
 #stage { will-change: transform; }
 
 body {
@@ -599,14 +602,33 @@ body.menu-open { overflow: hidden; }
 }
 /* live frames keep their 16:10 shape — the iframe is scaled to fill it */
 .case__frame--live { max-height: none; max-width: calc(52svh * 1.6); }
+.case__frame--live {
+  /* own layer + strict containment: whatever the embedded site does while
+     it boots cannot repaint or reflow anything outside the tile */
+  contain: strict;
+  transform: translateZ(0);
+}
 .case__frame--live iframe {
   position: absolute; top: 0; left: 0;
-  border: 0; background: #fff;
+  border: 0; background: transparent;
   transform-origin: 0 0;
   pointer-events: none;
-  opacity: 0; transition: opacity .8s var(--ease);
+  opacity: 0; visibility: hidden;
+  transition: opacity .9s ease, visibility 0s linear .9s;
 }
-.case__frame--live iframe.is-loaded { opacity: 1; }
+.case__frame--live iframe.is-loaded {
+  opacity: 1; visibility: visible;
+  transition: opacity .9s ease, visibility 0s;
+}
+/* calm placeholder while a site loads: a slow light sweep over the tile */
+.case__frame--live::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.22) 50%, transparent 70%);
+  background-size: 250% 100%;
+  opacity: 0; transition: opacity .6s ease;
+}
+.case__frame--live.is-loading::after { opacity: 1; animation: tile-sweep 1.8s ease-in-out infinite; }
+@keyframes tile-sweep { from { background-position: 120% 0; } to { background-position: -120% 0; } }
 .case__live {
   position: absolute; bottom: var(--s-3); right: var(--s-3);
   display: inline-flex; align-items: center; gap: 6px;
