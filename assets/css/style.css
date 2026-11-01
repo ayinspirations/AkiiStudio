@@ -604,43 +604,13 @@ body.menu-open { overflow: hidden; }
 }
 .case:hover .case__frame img { transform: scale(1.045); }
 
-/* Live preview: the real site rendered at desktop width and scaled down to
-   the frame (scale set in main.js). Not interactive — the card is the link. */
-.case__frame--live::before {
-  content: attr(data-host);
-  position: absolute; inset: 0; display: grid; place-items: center;
-  font-size: var(--fs-label); letter-spacing: var(--track-label);
-  text-transform: uppercase; color: var(--drift);
+/* Case tiles show a screenshot of the site's hero: loaded with the page,
+   so the tile always arrives with its content — no loading state. */
+.case__frame--shot { max-height: none; max-width: calc(52svh * 1.6); }
+.case__frame--shot picture { display: block; width: 100%; height: 100%; }
+.case__frame--shot .case__poster {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 0;
 }
-/* live frames keep their 16:10 shape — the iframe is scaled to fill it */
-.case__frame--live { max-height: none; max-width: calc(52svh * 1.6); }
-.case__frame--live {
-  /* own layer + strict containment: whatever the embedded site does while
-     it boots cannot repaint or reflow anything outside the tile */
-  contain: strict;
-  transform: translateZ(0);
-}
-.case__frame--live iframe {
-  position: absolute; top: 0; left: 0;
-  border: 0; background: transparent;
-  transform-origin: 0 0;
-  pointer-events: none;
-  opacity: 0; visibility: hidden;
-  transition: opacity .6s ease, visibility 0s linear .6s;
-}
-.case__frame--live iframe.is-loaded:not(.is-held) {
-  opacity: 1; visibility: visible;
-  transition: opacity .7s ease, visibility 0s;
-}
-/* calm placeholder while a site loads: a slow light sweep over the tile */
-.case__frame--live::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.22) 50%, transparent 70%);
-  background-size: 250% 100%;
-  opacity: 0; transition: opacity .6s ease;
-}
-.case__frame--live.is-loading::after { opacity: 1; animation: tile-sweep 1.8s ease-in-out infinite; }
-@keyframes tile-sweep { from { background-position: 120% 0; } to { background-position: -120% 0; } }
 .case__live {
   position: absolute; bottom: var(--s-3); right: var(--s-3);
   display: inline-flex; align-items: center; gap: 6px;
@@ -884,7 +854,7 @@ body.menu-open { overflow: hidden; }
   .work__grid { gap: var(--s-5); }
   .case__frame { aspect-ratio: 2 / 1; }
   /* live previews: full width, 16:10 — the whole hero of the site shows */
-  .case__frame--live { aspect-ratio: 16 / 10; max-width: none; }
+  .case__frame--shot { aspect-ratio: 16 / 10; max-width: none; }
   .case__meta { margin-top: var(--s-3); padding-top: var(--s-2); }
   .case__name { font-size: 1rem; }
   .case__tag { font-size: 0.625rem; }
@@ -970,7 +940,7 @@ body.menu-open { overflow: hidden; }
   .studio__img { aspect-ratio: 2 / 1; }
   .values li { padding-block: 7px; }
   .case__frame { aspect-ratio: 21 / 9; }
-  .case__frame--live { aspect-ratio: 16 / 10; }
+  .case__frame--shot { aspect-ratio: 16 / 10; }
   .case__result { display: none; }
   .section, #kontakt { padding-block: 80px 18px; }
   .field textarea { min-height: 50px; }

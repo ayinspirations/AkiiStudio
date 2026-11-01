@@ -220,3 +220,9 @@ Fließtext-Stack zurück, der Hero rendert also, nur nicht in der Wunschschrift.
 `#start`, `#haltung`, `#arbeiten`, `#referenzen`, `#leistungen`, `#ansatz`, `#studio`, `#faq`, `#kontakt` –
 jede Sektion hat eine Überschrift (h1/h2). Direktaufruf wie `/#kontakt` öffnet die Sektion, beim Scrollen
 folgt die Adresszeile der aktuellen Sektion.
+
+## Arbeiten-Kacheln
+
+Die Kacheln zeigen Screenshots der Projekt-Startseiten (`assets/img/cases/<slug>.jpg` + `.webp`, Format 16:10,
+ideal 1600×1000). Sie laden mit der Seite – kein Ladezustand, keine eingebetteten Fremdseiten.
+Neuen Screenshot einfach unter gleichem Namen ablegen.

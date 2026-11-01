@@ -159,10 +159,17 @@ def img(name, alt, w=1600, h=1000, lazy=True, cls=""):
     return f'<img src="/assets/img/placeholder/{name}.jpg" alt="{alt}" width="{w}" height="{h}" decoding="async"{la}{c}>'
 
 
+def shot(slug, alt, lazy=True):
+    """Screenshot of a project's hero (assets/img/cases/<slug>.webp/.jpg)."""
+    la = ' loading="lazy"' if lazy else ''
+    return (f'<picture><source srcset="/assets/img/cases/{slug}.webp" type="image/webp">'
+            f'<img src="/assets/img/cases/{slug}.jpg" alt="{alt}" width="1600" height="1000" decoding="async"{la}></picture>')
+
+
 def card(slug):
     c = CASES[slug]
     return f"""    <a class="card" href="/case-studies/#{slug}">
-      {img(c['img'], c['name'] + ' — Case Study')}
+      {shot(slug, c['name'] + ' — Startseite der Website')}
       <div class="card__body"><span class="card__tag">{c['tag']}</span><h3>{c['name']}</h3><p>{c['text']}</p></div>
     </a>"""
 
@@ -623,7 +630,7 @@ def case_studies_page():
         cw = {"@type": "CreativeWork", "@id": f"{SITE}{path}#{s['slug']}", "name": s["name"],
               "description": html.unescape(s["lead"]), "creator": {"@id": ORG["@id"]},
               "dateCreated": dict(s["facts"])["Jahr"], "inLanguage": "de-DE",
-              "image": f"{SITE}/assets/img/placeholder/{s['img']}.jpg"}
+              "image": f"{SITE}/assets/img/cases/{s['slug']}.jpg"}
         if s["url"]:
             cw["url"] = s["url"]
         items.append({"@type": "ListItem", "position": i, "item": cw})
@@ -648,7 +655,7 @@ def case_studies_page():
         link = (f'<a class="more" href="{s["url"]}" target="_blank" rel="noopener">Website ansehen</a>'
                 if s["url"] else '<span class="card__tag">Konzept – nicht öffentlich</span>')
         blocks.append(f"""<section class="study" id="{s['slug']}" aria-labelledby="{s['slug']}-title">
-  <div class="study__media">{img(s['img'], 'Platzhalter: ' + s['name'] + ' — Projektansicht')}</div>
+  <div class="study__media">{shot(s['slug'], s['name'] + ' — Startseite der Website')}</div>
   <div class="study__head">
     <h2 id="{s['slug']}-title">{s['name']}</h2>
     <div><p class="lead">{s['lead']}</p><p style="margin-top:14px">{link}</p></div>
