@@ -1,6 +1,6 @@
 # akii studio
 
-> akii studio ist ein Studio für Webdesign und digitale Lösungen in Köln (Ehrenstraße 42, 50672 Köln). Es entwickelt Websites, Web-Apps und SaaS-Applikationen für den Mittelstand – Strategie, Design und Entwicklung aus einer Hand, zu Festpreisen.
+> akii studio ist ein Studio für Webdesign und digitale Lösungen in Leonberg bei Stuttgart (Paracelsusstr. 18, 71229 Leonberg). Es entwickelt Websites, Web-Apps und SaaS-Applikationen für den Mittelstand – Strategie, Design und Entwicklung aus einer Hand, zu Festpreisen.
 
 Grundsatz: Erst verstehen, dann lösen. Über zehn Jahre Erfahrung aus Digitalisierung, Prozessberatung und IT-Strategie in Konzernstrukturen. Bewusst nur wenige Projekte pro Jahr.
 
@@ -19,6 +19,6 @@ Grundsatz: Erst verstehen, dann lösen. Über zehn Jahre Erfahrung aus Digitalis
 
 ## Kontakt
 
-- E-Mail: hallo@akii.studio
-- Telefon: +49 221 998 21 40
-- Website: https://akii.studio/
+- E-Mail: hallo@akiistudio.de
+- Telefon: +49 173 7318640
+- Website: https://akiistudio.de/

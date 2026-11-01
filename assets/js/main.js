@@ -270,34 +270,39 @@
   sync();
 
   /* ---- Contact form ----
-     No backend here: we compose a prefilled mail to the studio so the
-     submission is real rather than a fake success state.            */
+     Submitted to Netlify Forms (data-netlify on the form). Sent via fetch
+     so the visitor stays on the page; without JS the form posts normally
+     and lands on /danke.html.                                         */
   const form = document.getElementById('form');
   const status = document.getElementById('status');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const data = Object.fromEntries(new FormData(form).entries());
+      const fd = new FormData(form);
+      const data = Object.fromEntries(fd.entries());
 
       if (!data.name?.trim() || !data.message?.trim() || !/^\S+@\S+\.\S+$/.test(data.email || '')) {
         status.textContent = 'Bitte Name, gültige E-Mail und Nachricht ausfüllen.';
         return;
       }
 
-      const body = [
-        `Name: ${data.name}`,
-        `E-Mail: ${data.email}`,
-        `Unternehmen: ${data.company || '—'}`,
-        `Budget: ${data.budget || '—'}`,
-        '',
-        data.message
-      ].join('\n');
-
-      window.location.href =
-        `mailto:hallo@akii.studio?subject=${encodeURIComponent('Projektanfrage — ' + data.name)}` +
-        `&body=${encodeURIComponent(body)}`;
-
-      status.textContent = 'E-Mail-Programm wird geöffnet …';
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      status.textContent = 'Wird gesendet …';
+      try {
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(fd).toString()
+        });
+        if (!res.ok) throw new Error(res.status);
+        form.reset();
+        status.textContent = 'Danke! Ihre Anfrage ist angekommen – Sie hören in Kürze von uns.';
+      } catch {
+        status.textContent = 'Das hat leider nicht geklappt. Bitte schreiben Sie direkt an hallo@akiistudio.de.';
+      } finally {
+        btn.disabled = false;
+      }
     });
   }
 

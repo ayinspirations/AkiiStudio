@@ -713,6 +713,8 @@ body.menu-open { overflow: hidden; }
   transform: rotate(45deg); pointer-events: none;
 }
 
+.form__note { font-size: 0.8125rem; line-height: 1.5; opacity: .7; max-width: 60ch; }
+.form__note a { text-decoration: underline; text-underline-offset: 2px; }
 .form__status {
   font-size: var(--fs-label); letter-spacing: var(--track-label);
   text-transform: uppercase; color: var(--ember);

@@ -23,4 +23,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://akii.studio/sitemap.xml
+Sitemap: https://akiistudio.de/sitemap.xml

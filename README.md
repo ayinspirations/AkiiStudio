@@ -199,4 +199,10 @@ Fließtext-Stack zurück, der Hero rendert also, nur nicht in der Wunschschrift.
 - Nav-Logo: `assets/img/logo-weiss.*` (über Hero und dunklen Sektionen), `logo-schwarz.*` über hellen
 - `<head>`: Canonical, Open Graph (`assets/img/og-image.jpg`, 1200×630), Twitter Card, JSON-LD (ProfessionalService, WebSite, FAQPage)
 - `robots.txt` (KI-Crawler erlaubt), `sitemap.xml`, `llms.txt` für KI-Suchsysteme
-- Domain überall `https://akii.studio/` — bei abweichender Domain in `index.html`, `robots.txt`, `sitemap.xml`, `llms.txt` ersetzen
+- Domain: `https://akiistudio.de/`
+
+## Deployment (Netlify)
+
+- `netlify.toml`: kein Build, Publish-Verzeichnis `.`, Header, Redirect www → ohne www
+- Kontaktformular über Netlify Forms (`name="kontakt"`), Danke-Seite `danke.html`
+- Rechtliches: `impressum.html`, `datenschutz.html`
