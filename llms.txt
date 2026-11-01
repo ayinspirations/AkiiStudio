@@ -6,6 +6,14 @@ Gegründet 2025 von Akan Yüksel. Grundsatz: Erst verstehen, dann lösen. Über 
 
 ## Leistungen
 
+Ausführliche Seiten zu jeder Leistung:
+- [Webdesign](https://akiistudio.de/leistungen/webdesign/)
+- [SEO & GEO](https://akiistudio.de/leistungen/seo-geo/)
+- [Digitale Lösungen](https://akiistudio.de/leistungen/digitale-loesungen/)
+- [Apps & SaaS](https://akiistudio.de/leistungen/apps-saas/)
+- [Case Studies](https://akiistudio.de/case-studies/)
+
+Kurzfassung:
 - Webdesign: Konzept, Gestaltung und Umsetzung auf Basis eines Design-Systems, mit Headless CMS, Fokus auf Core Web Vitals und Barrierefreiheit.
 - SEO & Agentic SEO: technisches SEO, Content-Struktur, Generative Engine Optimization (GEO) und Sichtbarkeit in KI-Assistenten.
 - Digitale Lösungen: Discovery, Prozessanalyse, Konzeption, Prototyping und Automatisierung.

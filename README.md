@@ -206,3 +206,17 @@ Fließtext-Stack zurück, der Hero rendert also, nur nicht in der Wunschschrift.
 - `netlify.toml`: kein Build, Publish-Verzeichnis `.`, Header, Redirect www → ohne www
 - Kontaktformular über Netlify Forms (`name="kontakt"`), Danke-Seite `danke.html`
 - Rechtliches: `impressum.html`, `datenschutz.html`
+
+## Unterseiten
+
+- `leistungen/<slug>/index.html` (Webdesign, SEO & GEO, Digitale Lösungen, Apps & SaaS) und `case-studies/index.html`
+- Erzeugt mit `python3 tools/build_pages.py` (Inhalte stehen als Daten im Skript). Nach Änderungen im Skript neu erzeugen –
+  direkte Änderungen an den HTML-Dateien werden beim nächsten Lauf überschrieben.
+- Normales Scrollen, eigenes Stylesheet `assets/css/pages.css`, Animationen in `assets/js/pages.js`
+- Platzhalterbilder in `assets/img/placeholder/` – durch echte Bilder gleichen Namens ersetzen (16:10 bzw. 16:9)
+
+## Startseite: Sektionen per Anker
+
+`#start`, `#haltung`, `#arbeiten`, `#referenzen`, `#leistungen`, `#ansatz`, `#studio`, `#faq`, `#kontakt` –
+jede Sektion hat eine Überschrift (h1/h2). Direktaufruf wie `/#kontakt` öffnet die Sektion, beim Scrollen
+folgt die Adresszeile der aktuellen Sektion.

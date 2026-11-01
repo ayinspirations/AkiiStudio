@@ -74,10 +74,10 @@
         "@type": "OfferCatalog",
         "name": "Leistungen",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Webdesign" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SEO & Agentic SEO" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digitale Lösungen" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Apps & SaaS-Applikationen" } }
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Webdesign", "url": "https://akiistudio.de/leistungen/webdesign/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SEO & Agentic SEO", "url": "https://akiistudio.de/leistungen/seo-geo/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digitale Lösungen", "url": "https://akiistudio.de/leistungen/digitale-loesungen/" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Apps & SaaS-Applikationen", "url": "https://akiistudio.de/leistungen/apps-saas/" } }
         ]
       }
     },
@@ -139,6 +139,7 @@
     <a href="#leistungen">Leistungen</a>
     <a href="#arbeiten">Arbeiten</a>
     <a href="#studio">Studio</a>
+    <a href="/case-studies/">Case Studies</a>
     <a href="#kontakt">Kontakt</a>
   </nav>
   <div class="drawer__foot">
@@ -151,7 +152,7 @@
 <main id="top">
 
 <!-- ============ HERO ============ -->
-<section data-panel class="hero">
+<section data-panel class="hero" id="start">
   <picture class="hero__media">
     <!-- srcset ist vorbereitet: sobald ein Export ab 2560px vorliegt, als
          aki_studio_design@2x.jpg ablegen und die Zeile einkommentieren.
@@ -178,14 +179,16 @@
 </section>
 
 <!-- ============ HALTUNG ============ -->
-<section data-panel class="section on-dark stmt">
+<section data-panel class="section on-dark stmt" id="haltung">
   <div class="section__head" style="margin-bottom:0">
+    <h2 class="sr-only">Unsere Haltung zu gutem Design</h2>
     <p class="stmt__quote">Gutes Design fällt nicht auf. <b>Es fällt weg — und übrig bleibt genau das, wonach jemand gesucht hat.</b></p>
   </div>
 </section>
 
 <!-- ============ BEST CASES 1 ============ -->
 <section data-panel class="section" id="arbeiten">
+  <h2 class="sr-only">Arbeiten und Referenzen</h2>
   <div class="work__grid">
     <a class="case" href="https://gg-manufaktur.de" target="_blank" rel="noopener">
       <div class="case__frame case__frame--live" data-host="gg-manufaktur.de">
@@ -217,7 +220,8 @@
 </section>
 
 <!-- ============ BEST CASES 2 ============ -->
-<section data-panel class="section on-dark tone-bark">
+<section data-panel class="section on-dark tone-bark" id="referenzen">
+  <h2 class="sr-only">Weitere Referenzen</h2>
   <div class="work__grid">
     <div class="case case--static">
       <div class="case__frame case__frame--live" data-host="Konzept">
@@ -244,6 +248,7 @@
       <p class="case__result">Künstlerischer Auftritt mit viel Raum für die Werke.</p>
     </a>
   </div>
+  <a class="work__all" href="/case-studies/">Alle Case Studies ansehen →</a>
 </section>
 
 <!-- ============ LEISTUNGEN ============ -->
@@ -262,6 +267,7 @@
           <ul class="svc__tags">
             <li>UI Design</li><li>Design Systems</li><li>Headless CMS</li><li>Core Web Vitals</li><li>Barrierefreiheit</li>
           </ul>
+          <a class="svc__more" href="/leistungen/webdesign/">Mehr zu Webdesign →</a>
         </div>
       </div>
       <span class="svc__plus" aria-hidden="true"></span>
@@ -276,6 +282,7 @@
           <ul class="svc__tags">
             <li>Technisches SEO</li><li>Content-Struktur</li><li>Generative Engine Optimization</li><li>LLM-Sichtbarkeit</li><li>Monitoring</li>
           </ul>
+          <a class="svc__more" href="/leistungen/seo-geo/">Mehr zu SEO &amp; GEO →</a>
         </div>
       </div>
       <span class="svc__plus" aria-hidden="true"></span>
@@ -290,6 +297,7 @@
           <ul class="svc__tags">
             <li>Discovery</li><li>Prozessanalyse</li><li>Konzeption</li><li>Prototyping</li><li>Automatisierung</li>
           </ul>
+          <a class="svc__more" href="/leistungen/digitale-loesungen/">Mehr zu digitalen Lösungen →</a>
         </div>
       </div>
       <span class="svc__plus" aria-hidden="true"></span>
@@ -304,6 +312,7 @@
           <ul class="svc__tags">
             <li>Web-Apps</li><li>SaaS Interfaces</li><li>Kundenportale</li><li>Dashboards</li><li>Design Ops</li>
           </ul>
+          <a class="svc__more" href="/leistungen/apps-saas/">Mehr zu Apps &amp; SaaS →</a>
         </div>
       </div>
       <span class="svc__plus" aria-hidden="true"></span>
@@ -312,7 +321,7 @@
 </section>
 
 <!-- ============ MANIFEST ============ -->
-<section data-panel class="section on-dark manifest">
+<section data-panel class="section on-dark manifest" id="ansatz">
   <div class="section__head">
     <h2 class="h2" style="max-width:14ch">Weniger,<br>aber besser.</h2>
   </div>
@@ -345,10 +354,10 @@
 
 
 <!-- ============ FAQ ============ -->
-<section data-panel class="section tone-sand">
+<section data-panel class="section tone-sand" id="faq">
   <div class="section__head">
       <h2 class="sr-only">Häufige Fragen</h2>
-      <div class="faq" id="faq">
+      <div class="faq" id="faq-list">
         <div class="faq__item">
           <button class="faq__q">Wie lange dauert ein typisches Projekt?<span class="faq__icon" aria-hidden="true"></span></button>
           <div class="faq__a"><div><p>Eine Landingpage liegt bei zwei bis drei Wochen, ein vollständiger Website-Relaunch bei sechs bis acht. Entscheidend ist meist nicht unsere Geschwindigkeit, sondern wie schnell Inhalte und Feedback von Ihrer Seite kommen — das planen wir im Kick-off gemeinsam ein.</p></div></div>
@@ -429,7 +438,7 @@
 </main>
 
 <!-- ============ FOOTER ============ -->
-<footer data-panel class="footer on-dark">
+<footer data-panel class="footer on-dark" id="footer">
   <div class="footer__card">
   <div class="footer__word">akii</div>
 
@@ -437,13 +446,15 @@
     <div class="footer__col">
       <span class="u-label">Studio</span>
       <a href="#studio">Über uns</a>
-      </div>
+      <a href="/case-studies/">Case Studies</a>
+      <a href="#faq">Häufige Fragen</a>
+    </div>
     <div class="footer__col">
       <span class="u-label">Leistungen</span>
-      <a href="#leistungen">Webdesign</a>
-      <a href="#leistungen">SEO &amp; Agentic SEO</a>
-      <a href="#leistungen">Digitale Lösungen</a>
-      <a href="#leistungen">Apps &amp; SaaS</a>
+      <a href="/leistungen/webdesign/">Webdesign</a>
+      <a href="/leistungen/seo-geo/">SEO &amp; GEO</a>
+      <a href="/leistungen/digitale-loesungen/">Digitale Lösungen</a>
+      <a href="/leistungen/apps-saas/">Apps &amp; SaaS</a>
     </div>
     <div class="footer__col">
       <span class="u-label">Kontakt</span>
@@ -462,7 +473,7 @@
   <div class="footer__bottom">
     <span>© 2025–<span id="year">2026</span> akii studio</span>
     <span><a href="/impressum.html">Impressum</a> &nbsp;·&nbsp; <a href="/datenschutz.html">Datenschutz</a></span>
-    <span>Design &amp; Code <a class="ember" href="#top">akii studio</a></span>
+    <span>Design &amp; Code <a class="ember" href="#start">akii studio</a></span>
   </div>
   </div>
 </footer>

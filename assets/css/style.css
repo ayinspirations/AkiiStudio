@@ -572,6 +572,18 @@ body.menu-open { overflow: hidden; }
 .svc__item.is-open .svc__plus::after { transform: rotate(0deg); }
 
 /* ---------- Work ---------- */
+.work__all {
+  justify-self: end; margin-top: var(--s-5);
+  font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase;
+  color: #C6B6A1; transition: color .3s ease;
+}
+.work__all:hover { color: var(--warm-cream); }
+.svc__more {
+  display: inline-block; margin-top: var(--s-4);
+  font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase;
+  color: var(--ember);
+}
+.svc__more:hover { text-decoration: underline; text-underline-offset: 3px; }
 .work__grid { display: grid; gap: var(--s-8) var(--s-5); }
 @media (min-width: 850px) { .work__grid { grid-template-columns: 1fr 1fr; } }
 

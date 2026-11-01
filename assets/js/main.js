@@ -126,6 +126,7 @@
     /* The list starts fully collapsed in the markup — no item carries
        is-open — so nothing flashes open before this script runs. */
     svc.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;      // "Mehr zu …" goes to the subpage
       const item = e.target.closest('.svc__item');
       if (!item) return;
       const wasOpen = item.classList.contains('is-open');
@@ -147,7 +148,7 @@
   }
 
   /* ---- FAQ accordion ---- */
-  const faq = document.getElementById('faq');
+  const faq = document.getElementById('faq-list');
   if (faq) {
     faq.querySelectorAll('.faq__q').forEach((btn) => {
       btn.setAttribute('aria-expanded', 'false');
@@ -251,8 +252,32 @@
        previews load only when their panel has been reached. */
     const landed = () => {
       const st = stops[index];
-      if (st) document.dispatchEvent(new CustomEvent('panel-landed', { detail: st.panel }));
+      if (!st) return;
+      document.dispatchEvent(new CustomEvent('panel-landed', { detail: st.panel }));
+      /* the address bar follows the section: /#leistungen, /#kontakt …
+         (replaceState — no history entry per scroll, no jump) */
+      const id = panels[st.panel].id;
+      const want = st.panel === 0 || !id ? location.pathname + location.search : '#' + id;
+      if ((st.panel === 0 || !id) ? location.hash : location.hash !== '#' + id) {
+        history.replaceState(null, '', want);
+      }
     };
+
+    /* Section addressed by a hash (#kontakt, #faq, a heading id …) */
+    const panelForHash = (hash) => {
+      if (!hash || hash === '#') return -1;
+      let target = null;
+      try { target = document.querySelector(decodeURIComponent(hash)); } catch (_) { return -1; }
+      if (!target) return -1;
+      const panel = target.closest('[data-panel]');
+      let i = panel ? panels.indexOf(panel) : -1;
+      if (i < 0) i = panels.findIndex((pnl) => target.contains(pnl));
+      return i;
+    };
+    window.addEventListener('hashchange', () => {
+      const i = panelForHash(location.hash);
+      if (i > -1 && stops[index] && stops[index].panel !== i) glideTo(firstStop(i));
+    });
 
     /* An embedded site can call scrollIntoView/focus while it loads, which
        would scroll this (locked) document and make the page jump. Pin it. */
@@ -261,7 +286,15 @@
     }, { passive: true });
 
     measure();
-    apply(stops[0].y);
+    /* arriving with a hash (e.g. /#kontakt from a subpage): open there */
+    const startPanel = panelForHash(location.hash);
+    if (startPanel > 0) {
+      index = Math.max(0, firstStop(startPanel));
+      apply(stops[index].y);
+      document.dispatchEvent(new CustomEvent('panel-target', { detail: startPanel }));
+    } else {
+      apply(stops[0].y);
+    }
     if (document.readyState === 'complete') setTimeout(landed, 300);
     else window.addEventListener('load', () => setTimeout(landed, 300), { once: true });
 

@@ -7,15 +7,45 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://akiistudio.de/leistungen/webdesign/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/leistungen/seo-geo/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/leistungen/digitale-loesungen/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/leistungen/apps-saas/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/case-studies/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://akiistudio.de/impressum.html</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.2</priority>
   </url>
   <url>
     <loc>https://akiistudio.de/datenschutz.html</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.2</priority>
   </url>
 </urlset>

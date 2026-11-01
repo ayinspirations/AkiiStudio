@@ -21,3 +21,14 @@
   to = "https://akiistudio.de/:splat"
   status = 301
   force = true
+
+# /leistungen hat keine eigene Übersicht – Besucher landen in der Leistungs-Sektion
+[[redirects]]
+  from = "/leistungen"
+  to = "/#leistungen"
+  status = 301
+
+[[redirects]]
+  from = "/leistungen/"
+  to = "/#leistungen"
+  status = 301
