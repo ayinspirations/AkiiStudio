@@ -263,7 +263,7 @@ h1, h2, h3, h4 { font-weight: 500; letter-spacing: var(--track-tight); line-heig
    the footer, black over the light panels. All three are stacked; only the
    opacity changes as the tone underneath changes. */
 .brand { display: grid; }
-.brand__logo { grid-area: 1 / 1; display: block; opacity: 0; transition: opacity .5s var(--ease); }
+.brand__logo { grid-area: 1 / 1; display: block; opacity: 0; transition: opacity .6s ease; will-change: opacity; }
 .brand__logo img { display: block; height: clamp(34px, 3.6vw, 48px); width: auto; }
 body[data-tone="hero"] .brand__logo--light,
 body[data-tone="dark"] .brand__logo--creme,
@@ -836,9 +836,10 @@ body.menu-open { overflow: hidden; }
 
   /* two stacked cases per screen — the frames carry the whole panel, so
      they are the first thing to give when the screen gets short */
-  .work__grid { gap: var(--s-4); }
+  .work__grid { gap: var(--s-5); }
   .case__frame { aspect-ratio: 2 / 1; }
-  .case__frame--live { aspect-ratio: 16 / 10; max-width: calc(30svh * 1.6); }
+  /* live previews: full width, 16:10 — the whole hero of the site shows */
+  .case__frame--live { aspect-ratio: 16 / 10; max-width: none; }
   .case__meta { margin-top: var(--s-3); padding-top: var(--s-2); }
   .case__name { font-size: 1rem; }
   .case__tag { font-size: 0.625rem; }
@@ -850,28 +851,34 @@ body.menu-open { overflow: hidden; }
   .footer__cols { grid-template-columns: 1fr 1fr; gap: var(--s-5); }
   .footer__col:nth-child(-n+2) { display: none; }   /* Studio, Leistungen */
   .footer__bottom { margin-top: var(--s-5); }
-  .footer__bottom span:last-child { display: none; } /* Design & Code */
+  .footer__bottom > span:last-child { display: none; } /* Design & Code */
 
   /* Nothing scrolls inside a panel any more, so Studio and Kontakt have to
      fit the screen outright — otherwise their lower half is unreachable.
      Everything below is compression, not omission: all fields are still
      there, just tighter. */
-  .section { padding-block: clamp(40px, 5vh, 60px); }
+  /* top padding clears the fixed logo (≈20px + 34px) with room to spare */
+  .section { padding-block: 92px 32px; }
 
   /* The section carries no .studio class — these have to hang off the id.
      The text column dissolves into the grid (display: contents) so the
      photo can sit between the copy and the three keywords, centred —
      on desktop the two-column arrangement is untouched. */
+  /* Phones: the photo leads, edge to edge, then heading, copy and the three
+     values underneath. */
   .studio__grid { gap: var(--s-3); }
   .studio__body { display: contents; }
-  #studio .prose { order: 2; }
-  #studio .values { order: 4; }
   .studio__img {
-    order: 3;
-    aspect-ratio: 3 / 2; width: 64%; justify-self: center;
-    margin-block: var(--s-2);
+    order: 1;
+    width: auto; max-height: none;
+    margin-inline: calc(var(--gut) * -1);
+    margin-bottom: var(--s-3);
+    aspect-ratio: 16 / 10;
+    border-radius: 0;
   }
-  #studio .h2 { font-size: clamp(1.45rem, 6.2vw, 1.9rem); order: 1; }
+  #studio .h2 { font-size: clamp(1.45rem, 6.2vw, 1.9rem); order: 2; margin-top: 0 !important; }
+  #studio .prose { order: 3; }
+  #studio .values { order: 4; }
   #studio .prose { font-size: 0.875rem; line-height: 1.45; }
   /* the follow-up sentence is desktop-only — phones keep the opening
      paragraph and win the room for the photo */
@@ -900,20 +907,30 @@ body.menu-open { overflow: hidden; }
   .contact__grid { gap: var(--s-4); }
   .form { gap: var(--s-3); }
   .form__row { gap: var(--s-3); }
+  /* Unternehmen + Budget share a row on phones — saves a full field height */
+  .form__row + .form__row { grid-template-columns: 1fr 1fr; }
+  .form__note { font-size: 0.75rem; }
   .field { gap: 4px; }
   .field input, .field select { padding: 8px 0; }
   .field textarea { min-height: 62px; padding: 8px 0; }
   .form__status { min-height: 0; }
   #kontakt .h2 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+  #kontakt { padding-top: 92px; padding-bottom: 32px; }
 }
 
 /* Short phones (and anything with browser chrome eating the viewport):
    the Studio copy is fixed and the panel cannot scroll, so the photo is
    what gives way — first in size, then altogether. */
 @media (max-width: 760px) and (max-height: 759px) {
-  .studio__img { width: 52%; }
+  .studio__img { aspect-ratio: 2 / 1; }
   .values li { padding-block: 7px; }
   .case__frame { aspect-ratio: 21 / 9; }
+  .case__frame--live { aspect-ratio: 16 / 10; }
+  .case__result { display: none; }
+  .section, #kontakt { padding-block: 80px 18px; }
+  .field textarea { min-height: 50px; }
+  #studio .prose { font-size: 0.8125rem; line-height: 1.4; }
+  .studio__img { margin-bottom: var(--s-2); }
   /* an open service still has to clear the fold on a 667pt screen */
   .svc__item { padding-block: var(--s-3); }
   .svc__desc { font-size: 0.8125rem; line-height: 1.4; }

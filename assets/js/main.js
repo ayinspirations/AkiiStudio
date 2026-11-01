@@ -142,7 +142,10 @@
     const DURATION = 1150;
     const EDGE_HOLD = 60;        // ignore stray events right after landing
 
-    let offsets = [];
+    /* Stops: every panel starts with one. A panel taller than the screen
+       (Kontakt or Studio on a short phone) gets further stops so its lower
+       part is reachable instead of cut off. */
+    let stops = [];              // [{ y, panel }]
     let current = 0;             // px currently applied
     let animating = false;
     let landedAt = 0;
@@ -151,8 +154,19 @@
       t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
     const measure = () => {
-      offsets = panels.map((p) => p.offsetTop);
+      const vh = window.innerHeight;
+      stops = [];
+      panels.forEach((p, i) => {
+        const top = p.offsetTop, end = top + p.offsetHeight;
+        stops.push({ y: top, panel: i });
+        let y = top;
+        while (y + vh < end - 4) {
+          y = Math.min(y + Math.round(vh * 0.8), end - vh);
+          stops.push({ y, panel: i });
+        }
+      });
     };
+    const firstStop = (panelIndex) => stops.findIndex((st) => st.panel === panelIndex);
 
     const apply = (y) => {
       current = y;
@@ -160,8 +174,8 @@
     };
 
     const glideTo = (i) => {
-      index = Math.max(0, Math.min(i, panels.length - 1));
-      const dest = offsets[index];
+      index = Math.max(0, Math.min(i, stops.length - 1));
+      const dest = stops[index].y;
       const from = current;
       const delta = dest - from;
       if (!delta) return;
@@ -189,7 +203,7 @@
     };
 
     measure();
-    apply(offsets[0]);
+    apply(stops[0].y);
 
     /* Every gesture drives the animation — nothing scrolls on its own. */
     window.addEventListener('wheel', (e) => {
@@ -220,7 +234,7 @@
       if (typing || document.body.classList.contains('menu-open')) return;
       const map = { ArrowDown: 1, PageDown: 1, ' ': 1, ArrowUp: -1, PageUp: -1 };
       if (e.key === 'Home') { e.preventDefault(); glideTo(0); return; }
-      if (e.key === 'End') { e.preventDefault(); glideTo(panels.length - 1); return; }
+      if (e.key === 'End') { e.preventDefault(); glideTo(stops.length - 1); return; }
       const dir = map[e.key];
       if (dir) { e.preventDefault(); advance(dir); }
     });
@@ -239,14 +253,33 @@
          wordmark and the footer credit — resolve to the first panel they
          contain, so those links land on the hero instead of doing nothing. */
       if (i < 0) i = panels.findIndex((pnl) => target.contains(pnl));
-      if (i > -1) glideTo(i);
+      if (i > -1) glideTo(firstStop(i));
     });
 
     window.addEventListener('resize', () => {
+      const panel = stops[index] ? stops[index].panel : 0;
       measure();
-      apply(offsets[index]);
+      index = Math.max(0, firstStop(panel));
+      apply(stops[index].y);
       sync();
     }, { passive: true });
+
+    /* Accordions (FAQ, services, values) change panel heights — re-measure
+       so the stops stay right, staying on the panel you are looking at. */
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(() => {
+        if (animating) return;
+        const panel = stops[index] ? stops[index].panel : 0;
+        measure();
+        let best = firstStop(panel), d = Infinity;
+        stops.forEach((st, k) => {
+          if (st.panel === panel && Math.abs(st.y - current) < d) { d = Math.abs(st.y - current); best = k; }
+        });
+        index = Math.max(0, best);
+        apply(stops[index].y);
+        sync();
+      }).observe(stage);
+    }
 
     /* keep the furniture in step with the transform */
     window.__paged = { sync: () => sync() };
@@ -308,16 +341,16 @@
 
   /* ---- Live previews of the case sites ----
      Each iframe renders the real site at desktop width and is scaled down
-     to fit its frame. Loaded only when its panel comes near the screen. */
+     to fit its 16:10 frame, so the whole hero shows — on phones too. */
   const lives = [...document.querySelectorAll('.case__frame--live')];
   if (lives.length) {
-    /* Virtual browser window: 1440×900 on desktop — the frame is 16:10, so
+    /* Virtual browser window: 1440×900 (1280×800 on phones) — 16:10 like the frame, so
        a hero built for 100vh fills the tile exactly with its nav bar.
        scrolling="no" removes the scrollbar; the extra pixel covers any
        sub-pixel seam at the right and bottom edge. */
     const fit = (frame) => {
       const f = frame.querySelector('iframe');
-      const vw = Number(frame.dataset.vw) || (window.innerWidth < 760 ? 1024 : 1440);
+      const vw = Number(frame.dataset.vw) || (window.innerWidth < 760 ? 1280 : 1440);
       const w = frame.clientWidth, h = frame.clientHeight;
       if (!w) return;
       const k = (w + 1) / vw;
@@ -328,20 +361,19 @@
     const ro = new ResizeObserver((entries) => entries.forEach((e) => fit(e.target)));
     lives.forEach((frame) => { fit(frame); ro.observe(frame); });
 
+    /* Load all previews right after the page itself has loaded, one after
+       another — by the time someone reaches the work panels the sites are
+       already rendered, instead of the tile appearing first and filling in
+       afterwards. */
     const load = (frame) => {
       const f = frame.querySelector('iframe');
       if (f.src) return;
       f.addEventListener('load', () => f.classList.add('is-loaded'), { once: true });
       f.src = f.dataset.src;
     };
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver((entries) => entries.forEach((e) => {
-        if (e.isIntersecting) { load(e.target); io.unobserve(e.target); }
-      }), { rootMargin: '100% 0px' });
-      lives.forEach((frame) => io.observe(frame));
-    } else {
-      lives.forEach(load);
-    }
+    const start = () => lives.forEach((frame, i) => setTimeout(() => load(frame), 250 + i * 400));
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
   }
 
   /* ---- Year ---- */
