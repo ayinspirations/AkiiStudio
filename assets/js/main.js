@@ -311,13 +311,18 @@
      to fit its frame. Loaded only when its panel comes near the screen. */
   const lives = [...document.querySelectorAll('.case__frame--live')];
   if (lives.length) {
+    /* Virtual browser window: 1440×900 on desktop — the frame is 16:10, so
+       a hero built for 100vh fills the tile exactly with its nav bar.
+       scrolling="no" removes the scrollbar; the extra pixel covers any
+       sub-pixel seam at the right and bottom edge. */
     const fit = (frame) => {
       const f = frame.querySelector('iframe');
-      const vw = window.innerWidth < 760 ? 1024 : 1280;
-      const k = frame.clientWidth / vw;
-      if (!k) return;
+      const vw = Number(frame.dataset.vw) || (window.innerWidth < 760 ? 1024 : 1440);
+      const w = frame.clientWidth, h = frame.clientHeight;
+      if (!w) return;
+      const k = (w + 1) / vw;
       f.style.width = vw + 'px';
-      f.style.height = Math.ceil(frame.clientHeight / k) + 'px';
+      f.style.height = Math.ceil(h / k + 2) + 'px';
       f.style.transform = 'scale(' + k + ')';
     };
     const ro = new ResizeObserver((entries) => entries.forEach((e) => fit(e.target)));
