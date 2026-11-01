@@ -616,9 +616,9 @@ body.menu-open { overflow: hidden; }
   opacity: 0; visibility: hidden;
   transition: opacity .6s ease, visibility 0s linear .6s;
 }
-.case__frame--live iframe.is-loaded {
+.case__frame--live iframe.is-loaded:not(.is-held) {
   opacity: 1; visibility: visible;
-  transition: opacity .6s ease, visibility 0s;
+  transition: opacity .7s ease, visibility 0s;
 }
 /* calm placeholder while a site loads: a slow light sweep over the tile */
 .case__frame--live::after {
@@ -828,11 +828,22 @@ body.menu-open { overflow: hidden; }
 .footer__bottom a.ember { color: var(--ember); }
 
 /* ---------- Reveal ---------- */
-.r { opacity: 0; transform: translateY(26px); }
-.is-in.r, .r.is-in { opacity: 1; transform: none; transition: opacity 1s var(--ease), transform 1s var(--ease); }
-.r-d1 { transition-delay: .08s; }
-.r-d2 { transition-delay: .16s; }
-.r-d3 { transition-delay: .24s; }
+/* Content rises into focus (main.js assigns .r and the stagger --rd).
+   Long, soft ease-out like Apple's product pages: quick start, slow settle. */
+:root { --ease-rise: cubic-bezier(0.16, 1, 0.3, 1); }
+.r {
+  opacity: 0;
+  transform: translate3d(0, 44px, 0);
+  transition: opacity .5s ease, transform .5s ease,
+              padding .6s var(--ease), background-color .6s var(--ease);
+}
+.r.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 1s ease var(--rd, 0s), transform 1.25s var(--ease-rise) var(--rd, 0s),
+              padding .6s var(--ease), background-color .6s var(--ease);
+}
+.r.r-reset { transition: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

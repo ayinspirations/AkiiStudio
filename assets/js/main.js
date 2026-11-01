@@ -63,25 +63,61 @@
     });
   }
 
-  /* ---- Scroll reveal ---- */
-  const reveals = document.querySelectorAll('.r');
+  /* ---- Reveal: content rises into focus -------------------------------
+     Apple-style: headings, copy, tiles, list rows and form fields rise from
+     below and fade in, one after another. Every time a panel is reached its
+     content comes up again; panels that have left the screen are quietly
+     reset so the next arrival animates too. Elements are picked by
+     selector, so new content picks this up without extra classes. */
+  const REVEAL = [
+    '.hero__word', '.hero__sup', '.cue',
+    '.stmt__quote', '.h2', '.prose', '.case', '.svc__item', '.manifest__body',
+    '.studio__img', '.values li', '.faq__item', '.field', '.form__note',
+    '.form > div:last-child', '.footer__word', '.footer__col', '.footer__bottom'
+  ].join(',');
+  const revealPanels = [...document.querySelectorAll('[data-panel]')];
+  const revealGroups = revealPanels.map((panel) => {
+    const els = [...panel.querySelectorAll(REVEAL)];
+    els.forEach((el, k) => {
+      el.classList.add('r');
+      el.style.setProperty('--rd', (Math.min(k, 9) * 0.075).toFixed(3) + 's');
+    });
+    return els;
+  });
+  const showPanel = (i) => (revealGroups[i] || []).forEach((el) => {
+    el.classList.remove('r-reset');
+    el.classList.add('is-in');
+  });
+  const resetPanel = (i) => (revealGroups[i] || []).forEach((el) => {
+    el.classList.add('r-reset');
+    el.classList.remove('is-in');
+  });
+
   if (reduced) {
-    reveals.forEach((el) => el.classList.add('is-in'));
+    revealGroups.flat().forEach((el) => el.classList.add('is-in'));
   } else {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-in');
-          io.unobserve(entry.target);
-        }
-      });
-    /* Deliberately shallow.
-       Panels are snapped to the viewport and never scroll internally, so
-       anything the observer refuses to count stays invisible for good.
-       The margin therefore only has to hold back the row the incoming
-       panel is still carrying below the fold — 8% does that. */
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
-    reveals.forEach((el) => io.observe(el));
+    /* the hero rises as soon as the page is painted */
+    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(() => showPanel(0), 120)));
+    /* paged: start as the incoming panel settles, finish just after landing */
+    let showTimer = null;
+    document.addEventListener('panel-target', (e) => {
+      clearTimeout(showTimer);
+      const i = e.detail;
+      showTimer = setTimeout(() => showPanel(i), 380);
+    });
+    document.addEventListener('panel-landed', (e) => {
+      const i = e.detail;
+      showPanel(i);
+      revealGroups.forEach((_, k) => { if (k !== i) resetPanel(k); });
+    });
+    /* fallback if paging is unavailable: reveal on visibility, once */
+    window.addEventListener('load', () => {
+      if (document.documentElement.classList.contains('paged')) return;
+      const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+        if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+      }), { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+      revealGroups.flat().forEach((el) => io.observe(el));
+    }, { once: true });
   }
 
   /* ---- Services accordion (one open at a time) ---- */
@@ -411,11 +447,20 @@
     };
 
     if (document.documentElement.classList.contains('paged')) {
+      /* While a work panel glides in, its previews stay hidden — a live site
+         starting to render mid-animation is what made the glide stutter.
+         The tiles rise as calm placeholders; once the panel has landed the
+         sites fade in. */
+      const framesOf = (i) => allPanels[i] ? [...allPanels[i].querySelectorAll('.case__frame--live iframe')] : [];
+      document.addEventListener('panel-target', (e) => {
+        framesOf(e.detail).forEach((f) => f.classList.add('is-held'));
+        loadPanel(e.detail);
+      });
       document.addEventListener('panel-landed', (e) => {
         const i = e.detail;
-        [0, 1, -1, 2, -2].forEach((d, k) => setTimeout(() => loadPanel(i + d), k * 150));
+        setTimeout(() => framesOf(i).forEach((f) => f.classList.remove('is-held')), 180);
+        [0, 1, -1, 2, -2].forEach((d, k) => setTimeout(() => loadPanel(i + d), 400 + k * 150));
       });
-      document.addEventListener('panel-target', (e) => loadPanel(e.detail));
     } else if ('IntersectionObserver' in window) {
       /* no paging (reduced motion): load a screen ahead of the frame */
       const io = new IntersectionObserver((entries) => entries.forEach((e) => {
