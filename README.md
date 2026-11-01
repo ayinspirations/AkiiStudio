@@ -223,6 +223,7 @@ folgt die Adresszeile der aktuellen Sektion.
 
 ## Arbeiten-Kacheln
 
-Die Kacheln zeigen Screenshots der Projekt-Startseiten (`assets/img/cases/<slug>.jpg` + `.webp`, Format 16:10,
-ideal 1600×1000). Sie laden mit der Seite – kein Ladezustand, keine eingebetteten Fremdseiten.
-Neuen Screenshot einfach unter gleichem Namen ablegen.
+Jede Kachel erscheint sofort mit einem Screenshot (`assets/img/cases/<slug>.jpg` + `.webp`, 16:10, ideal 1600×1000).
+Die Live-Seite lädt unsichtbar dahinter und blendet nach der Ankunft auf der Sektion über den Screenshot.
+`data-live="off"` am `.case__frame` lässt eine Kachel beim Standbild (aktuell GG Manufaktur, bis deren
+Cookie-Dialog eingebettet nicht mehr erscheint).

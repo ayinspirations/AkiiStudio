@@ -432,6 +432,59 @@
     });
   }
 
+  /* ---- Live previews over the screenshots ----
+     Each tile arrives with its screenshot, so it is never empty. The real
+     site loads hidden behind it — rendered at desktop size and scaled to
+     the tile — and once a work panel has landed and the site is ready, it
+     fades in over the screenshot: the picture comes alive.
+     While a panel glides, its live sites are hidden again (the screenshot
+     shows), because a site starting to render mid-glide makes it stutter.
+     data-live="off" on a frame keeps it a still image. */
+  const lives = [...document.querySelectorAll('.case__frame--shot')]
+    .filter((f) => f.dataset.live !== 'off' && f.querySelector('iframe'));
+  if (lives.length) {
+    const fit = (frame) => {
+      const f = frame.querySelector('iframe');
+      const vw = Number(frame.dataset.vw) || (window.innerWidth < 760 ? 1280 : 1440);
+      const w = frame.clientWidth, h = frame.clientHeight;
+      if (!w) return;
+      const k = (w + 1) / vw;
+      f.style.width = vw + 'px';
+      f.style.height = Math.ceil(h / k + 2) + 'px';
+      f.style.transform = 'scale(' + k + ')';
+    };
+    const ro = new ResizeObserver((entries) => entries.forEach((e) => fit(e.target)));
+    lives.forEach((frame) => { fit(frame); ro.observe(frame); });
+
+    const allPanels = [...document.querySelectorAll('[data-panel]')];
+    const load = (frame) => {
+      const f = frame.querySelector('iframe');
+      if (f.src) return;
+      f.addEventListener('load', () => setTimeout(() => f.classList.add('is-loaded'), 250), { once: true });
+      f.src = f.dataset.src;
+    };
+    const framesIn = (i) => allPanels[i] ? lives.filter((fr) => allPanels[i].contains(fr)) : [];
+
+    if (document.documentElement.classList.contains('paged')) {
+      document.addEventListener('panel-target', (e) => {
+        framesIn(e.detail).forEach((fr) => { fr.querySelector('iframe').classList.add('is-held'); load(fr); });
+      });
+      document.addEventListener('panel-landed', (e) => {
+        const i = e.detail;
+        setTimeout(() => framesIn(i).forEach((fr) => fr.querySelector('iframe').classList.remove('is-held')), 200);
+        /* the work panels near where you are load ahead, after the glide */
+        [0, 1, -1, 2, -2].forEach((d, k) => setTimeout(() => framesIn(i + d).forEach(load), 400 + k * 200));
+      });
+    } else if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+        if (en.isIntersecting) { load(en.target); io.unobserve(en.target); }
+      }), { rootMargin: '100% 0px' });
+      lives.forEach((fr) => io.observe(fr));
+    } else {
+      lives.forEach(load);
+    }
+  }
+
   /* ---- Year ---- */
   const year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
