@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="s-bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#F2ECE3"/>
+      <stop offset="60%" stop-color="#E4DACB"/>
+      <stop offset="100%" stop-color="#D3C6B4"/>
+    </linearGradient>
+    <linearGradient id="s-win" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#FFFDF7"/>
+      <stop offset="100%" stop-color="#F0E7D9"/>
+    </linearGradient>
+    <linearGradient id="s-floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DCD1C0"/>
+      <stop offset="100%" stop-color="#C9BCA9"/>
+    </linearGradient>
+    <filter id="s-soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+    <filter id="s-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="1250" fill="url(#s-bg)"/>
+
+  <!-- floor -->
+  <rect x="0" y="880" width="1000" height="370" fill="url(#s-floor)"/>
+  <rect x="0" y="880" width="1000" height="1" fill="#B7A996" opacity="0.6"/>
+
+  <!-- tall window with mullion -->
+  <rect x="118" y="120" width="404" height="700" fill="url(#s-win)"/>
+  <rect x="118" y="120" width="404" height="700" fill="none" stroke="#4A4038" stroke-width="4"/>
+  <line x1="320" y1="120" x2="320" y2="820" stroke="#4A4038" stroke-width="3"/>
+  <line x1="118" y1="470" x2="522" y2="470" stroke="#4A4038" stroke-width="2" opacity="0.6"/>
+
+  <!-- light spill from window onto floor -->
+  <polygon points="118,820 522,820 700,1250 40,1250" fill="#FFFBF2" opacity="0.55" filter="url(#s-soft)"/>
+
+  <!-- bench / console -->
+  <rect x="600" y="700" width="330" height="24" fill="#CFC2AE"/>
+  <rect x="620" y="724" width="16" height="120" fill="#C2B5A1"/>
+  <rect x="894" y="724" width="16" height="120" fill="#C2B5A1"/>
+  <ellipse cx="765" cy="866" rx="190" ry="26" fill="#8A7C6C" opacity="0.22" filter="url(#s-soft)"/>
+
+  <!-- objects on console -->
+  <path d="M700 700c-26 0-42-18-42-44 0-24 14-34 14-52 0-12-6-16-6-24 0-10 10-18 24-18s24 8 24 18c0 8-6 12-6 24 0 18 16 28 16 52 0 26-18 44-24 44z" fill="#B9AB97"/>
+  <rect x="770" y="640" width="86" height="60" fill="#DCD1BF"/>
+  <rect x="770" y="640" width="86" height="4" fill="#EFE6D8"/>
+  <rect x="866" y="662" width="34" height="38" fill="#C7B9A4"/>
+
+  <!-- framed print on wall -->
+  <rect x="640" y="230" width="250" height="320" fill="#F4EEE4" stroke="#BFB2A0" stroke-width="2"/>
+  <g stroke="#B0A18D" stroke-width="1.5" opacity="0.8">
+    <line x1="690" y1="330" x2="840" y2="330"/>
+    <line x1="690" y1="366" x2="808" y2="366"/>
+    <line x1="690" y1="402" x2="840" y2="402"/>
+    <line x1="690" y1="438" x2="760" y2="438"/>
+  </g>
+  <ellipse cx="765" cy="576" rx="130" ry="16" fill="#8A7C6C" opacity="0.13" filter="url(#s-soft)"/>
+
+  <!-- foliage -->
+  <g fill="#8E8170" opacity="0.34">
+    <path d="M120 1250c-14-120-2-232 30-322 10 106 4 216-8 322z"/>
+    <path d="M138 1020c-52-26-88-70-106-124 56 20 96 60 118 116z"/>
+    <path d="M170 950c40-38 62-88 68-146-48 36-76 84-86 140z"/>
+    <path d="M126 1122c-46-16-84-46-108-90 52 10 94 38 120 82z"/>
+  </g>
+
+  <rect width="1000" height="1250" filter="url(#s-grain)" opacity="0.17" style="mix-blend-mode:multiply"/>
+</svg>

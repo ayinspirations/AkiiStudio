@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="w3-bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#F5F0E8"/>
+      <stop offset="60%" stop-color="#E8DFD1"/>
+      <stop offset="100%" stop-color="#D6C9B6"/>
+    </linearGradient>
+    <linearGradient id="w3-arch" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#FFFCF6"/>
+      <stop offset="100%" stop-color="#E6DBC9"/>
+    </linearGradient>
+    <linearGradient id="w3-arch2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#D9CBB6"/>
+      <stop offset="100%" stop-color="#BFAF97"/>
+    </linearGradient>
+    <filter id="w3-soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="24"/></filter>
+    <filter id="w3-g" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.88" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#w3-bg)"/>
+  <rect x="0" y="700" width="1200" height="200" fill="#DCD0BD"/>
+
+  <!-- arch openings: identity / editorial -->
+  <path d="M200 700V400a160 160 0 0 1 320 0v300z" fill="url(#w3-arch)"/>
+  <path d="M244 700V400a116 116 0 0 1 232 0v300z" fill="#EFE6D6"/>
+  <path d="M640 700V330a150 150 0 0 1 300 0v370z" fill="url(#w3-arch2)"/>
+  <path d="M684 700V330a106 106 0 0 1 212 0v370z" fill="#CBBCA4"/>
+
+  <!-- typographic specimen inside left arch -->
+  <g fill="#3A2A1C" opacity="0.72">
+    <rect x="292" y="470" width="136" height="14" rx="2"/>
+    <rect x="292" y="502" width="100" height="8" rx="2" opacity="0.6"/>
+    <rect x="292" y="522" width="122" height="8" rx="2" opacity="0.6"/>
+    <rect x="292" y="542" width="78" height="8" rx="2" opacity="0.6"/>
+  </g>
+  <circle cx="790" cy="440" r="52" fill="#F2E9D9" opacity="0.85"/>
+  <circle cx="790" cy="440" r="52" fill="none" stroke="#8A7C6C" stroke-width="1" opacity="0.5"/>
+
+  <ellipse cx="360" cy="712" rx="220" ry="26" fill="#8A7C6C" opacity="0.2" filter="url(#w3-soft)"/>
+  <ellipse cx="790" cy="712" rx="210" ry="26" fill="#8A7C6C" opacity="0.22" filter="url(#w3-soft)"/>
+
+  <g stroke="#B5A794" stroke-width="1" opacity="0.45">
+    <line x1="0" y1="160" x2="1200" y2="160" stroke-dasharray="2 10"/>
+    <line x1="1040" y1="0" x2="1040" y2="900" stroke-dasharray="2 10"/>
+  </g>
+  <rect width="1200" height="900" filter="url(#w3-g)" opacity="0.16" style="mix-blend-mode:multiply"/>
+</svg>

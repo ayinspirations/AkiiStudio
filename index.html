@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>akii studio — Webdesign & Digitale Produkte</title>
+<meta name="description" content="akii studio gestaltet Websites und digitale Produkte für Marken, die Klarheit über Lautstärke stellen. Strategie, Design und Entwicklung aus einer Hand.">
+<meta name="theme-color" content="#F7F3ED">
+<meta property="og:title" content="akii studio — Webdesign & Digitale Produkte">
+<meta property="og:description" content="Digitale Räume, in denen Marken atmen können.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23332417'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial' font-size='19' fill='%23F0E4D2' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <a href="#top" class="brand" aria-label="akii — Startseite">
+    <span class="brand__mark">akii</span>
+  </a>
+
+  <nav class="rail" aria-label="Hauptnavigation">
+    <a class="rail__link" href="#arbeiten"><span class="rail__label">Arbeiten</span></a>
+    <a class="rail__link" href="#leistungen"><span class="rail__label">Leistungen</span></a>
+    <a class="rail__link" href="#studio"><span class="rail__label">Studio</span></a>
+    <a class="rail__link" href="#kontakt"><span class="rail__label">Kontakt</span></a>
+  </nav>
+
+  <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="drawer">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="drawer" id="drawer">
+  <nav class="drawer__nav" aria-label="Navigation">
+    <a href="#leistungen">Leistungen</a>
+    <a href="#arbeiten">Arbeiten</a>
+    <a href="#studio">Studio</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+  <div class="drawer__foot">
+    <a href="mailto:hallo@akii.studio">hallo@akii.studio</a>
+    <span>Ehrenstraße 42 · 50672 Köln</span>
+  </div>
+</div>
+
+<div id="stage">
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section data-panel class="hero">
+  <picture class="hero__media">
+    <!-- srcset ist vorbereitet: sobald ein Export ab 2560px vorliegt, als
+         aki_studio_design@2x.jpg ablegen und die Zeile einkommentieren.
+         srcset="assets/img/aki_studio_design.jpg 1672w,
+                 assets/img/aki_studio_design@2x.jpg 3840w"
+         sizes="100vw" -->
+    <img src="assets/img/aki_studio_design.jpg"
+         alt="Blick von oben auf einen Arbeitsplatz von akii studio: Laptop mit Entwurf, Notizbuch, Skizzen und Kaffee auf warmem Beton"
+         width="1672" height="941" fetchpriority="high" decoding="async">
+  </picture>
+
+  <h1 class="hero__title">
+    <span class="hero__word">digital</span><span class="hero__sup">solutions</span>
+  </h1>
+
+  <a class="cue" href="#arbeiten" aria-label="Weiter zum Inhalt">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 4v15M5.5 12.5 12 19l6.5-6.5" fill="none"
+            stroke="currentColor" stroke-width="1.25"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</section>
+
+<!-- ============ HALTUNG ============ -->
+<section data-panel class="section on-dark stmt">
+  <div class="section__head" style="margin-bottom:0">
+    <p class="stmt__quote r">Gutes Design fällt nicht auf. <b>Es fällt weg — und übrig bleibt genau das, wonach jemand gesucht hat.</b></p>
+  </div>
+</section>
+
+<!-- ============ BEST CASES 1 ============ -->
+<section data-panel class="section" id="arbeiten">
+  <div class="work__grid">
+    <a class="case r" href="#kontakt">
+      <div class="case__frame">
+        <img src="assets/img/work-01.svg" alt="Nordlicht Interiors — E-Commerce und Markenauftritt">
+        <div class="case__veil"></div>
+        <span class="case__open">Case ansehen →</span>
+      </div>
+      <div class="case__meta">
+        <h3 class="case__name">Nordlicht Interiors</h3>
+        <span class="case__tag">E-Commerce · 2026</span>
+      </div>
+      <p class="case__result">Relaunch des Shops inkl. Markensystem — +142 % organischer Traffic in acht Monaten.</p>
+    </a>
+    <a class="case r r-d1" href="#kontakt">
+      <div class="case__frame">
+        <img src="assets/img/work-02.svg" alt="Vela Health — digitales Produkt und Dashboard">
+        <div class="case__veil"></div>
+        <span class="case__open">Case ansehen →</span>
+      </div>
+      <div class="case__meta">
+        <h3 class="case__name">Vela Health</h3>
+        <span class="case__tag">Digitales Produkt · 2025</span>
+      </div>
+      <p class="case__result">Design-System und Patienten-Dashboard — Onboarding-Abbrüche um 38 % gesenkt.</p>
+    </a>
+  </div>
+</section>
+
+<!-- ============ BEST CASES 2 ============ -->
+<section data-panel class="section on-dark tone-bark">
+  <div class="work__grid">
+    <a class="case r" href="#kontakt">
+      <div class="case__frame">
+        <img src="assets/img/work-03.svg" alt="Atelier Marbach — Website und Corporate Identity">
+        <div class="case__veil"></div>
+        <span class="case__open">Case ansehen →</span>
+      </div>
+      <div class="case__meta">
+        <h3 class="case__name">Atelier Marbach</h3>
+        <span class="case__tag">Website &amp; Identity · 2025</span>
+      </div>
+      <p class="case__result">Kompletter Auftritt für ein Architekturbüro — vom Wortbild bis zur Projektdatenbank.</p>
+    </a>
+    <a class="case r r-d1" href="#kontakt">
+      <div class="case__frame">
+        <img src="assets/img/work-04.svg" alt="Kontur Capital — Corporate Website">
+        <div class="case__veil"></div>
+        <span class="case__open">Case ansehen →</span>
+      </div>
+      <div class="case__meta">
+        <h3 class="case__name">Kontur Capital</h3>
+        <span class="case__tag">Corporate Site · 2024</span>
+      </div>
+      <p class="case__result">Mehrsprachiger Auftritt mit Investoren-Portal — Ladezeit von 4,1 s auf 0,9 s.</p>
+    </a>
+  </div>
+</section>
+
+<!-- ============ LEISTUNGEN ============ -->
+<section data-panel class="section tone-linen" id="leistungen">
+  <div class="section__head">
+    <h2 class="h2 r" style="max-width:16ch">Alles aus einer Hand — von der Idee bis zum Launch.</h2>
+  </div>
+
+  <div class="svc" id="svc">
+    <article class="svc__item r">
+      <span class="svc__num">01</span>
+      <h3 class="svc__title">Webdesign</h3>
+      <div class="svc__panel">
+        <div>
+          <p class="svc__desc">Von der ersten Skizze bis zur fertigen Seite: Konzept, Gestaltung und Umsetzung aus einer Hand. Wir bauen auf einem Design-System auf, damit der Auftritt mitwachsen kann — angebunden an ein CMS, das Ihr Team ohne uns bedient.</p>
+          <ul class="svc__tags">
+            <li>UI Design</li><li>Design Systems</li><li>Headless CMS</li><li>Core Web Vitals</li><li>Barrierefreiheit</li>
+          </ul>
+        </div>
+      </div>
+      <span class="svc__plus" aria-hidden="true"></span>
+    </article>
+
+    <article class="svc__item r r-d1">
+      <span class="svc__num">02</span>
+      <h3 class="svc__title">SEO &amp; Agentic SEO</h3>
+      <div class="svc__panel">
+        <div>
+          <p class="svc__desc">Klassische Suchmaschinenoptimierung allein reicht nicht mehr. Neben Technik, Struktur und Inhalten bereiten wir Ihre Seite darauf vor, von KI-Systemen gefunden, verstanden und zitiert zu werden — dort, wo Ihre Kunden heute zuerst fragen.</p>
+          <ul class="svc__tags">
+            <li>Technisches SEO</li><li>Content-Struktur</li><li>Generative Engine Optimization</li><li>LLM-Sichtbarkeit</li><li>Monitoring</li>
+          </ul>
+        </div>
+      </div>
+      <span class="svc__plus" aria-hidden="true"></span>
+    </article>
+
+    <article class="svc__item r r-d2">
+      <span class="svc__num">03</span>
+      <h3 class="svc__title">Digitale Lösungen</h3>
+      <div class="svc__panel">
+        <div>
+          <p class="svc__desc">Bevor wir bauen, verstehen wir. Wir hören zu, sehen uns Ihre Abläufe an und legen das eigentliche Problem frei. Daraus entwickeln wir gemeinsam mit Ihnen eine maßgeschneiderte Lösung — statt eines Produkts von der Stange.</p>
+          <ul class="svc__tags">
+            <li>Discovery</li><li>Prozessanalyse</li><li>Konzeption</li><li>Prototyping</li><li>Automatisierung</li>
+          </ul>
+        </div>
+      </div>
+      <span class="svc__plus" aria-hidden="true"></span>
+    </article>
+
+    <article class="svc__item r r-d3">
+      <span class="svc__num">04</span>
+      <h3 class="svc__title">Apps &amp; SaaS-Applikationen</h3>
+      <div class="svc__panel">
+        <div>
+          <p class="svc__desc">Für Vorhaben, die über eine Website hinausgehen: Web-Apps, Kundenportale und SaaS-Plattformen. Wir denken in Nutzerflüssen und Zuständen, gestalten das Interface und begleiten die Entwicklung bis zum Release.</p>
+          <ul class="svc__tags">
+            <li>Web-Apps</li><li>SaaS Interfaces</li><li>Kundenportale</li><li>Dashboards</li><li>Design Ops</li>
+          </ul>
+        </div>
+      </div>
+      <span class="svc__plus" aria-hidden="true"></span>
+    </article>
+  </div>
+</section>
+
+<!-- ============ MANIFEST ============ -->
+<section data-panel class="section on-dark manifest">
+  <div class="section__head">
+    <h2 class="h2 r" style="max-width:14ch">Weniger,<br>aber besser.</h2>
+  </div>
+
+  <div class="manifest__copy">
+    <p class="manifest__body r">Die meisten Websites versuchen, alles gleichzeitig zu sagen. Wir arbeiten andersherum: Wir nehmen weg, bis nur noch das übrig bleibt, was wirklich trägt — und geben diesem Rest den Raum, den er verdient.</p>
+    <p class="manifest__body r r-d1">Das Ergebnis sind digitale Auftritte, die ruhig wirken und trotzdem verkaufen. Schnell geladen, sauber gebaut, jahrelang haltbar. Kein Trend-Recycling, sondern Gestaltung, die auch in fünf Jahren noch Bestand hat.</p>
+  </div>
+</section>
+
+<!-- ============ STUDIO ============ -->
+<section data-panel class="section" id="studio">
+  <div class="studio__grid">
+    <div class="studio__img r">
+      <img src="assets/img/akii_studio_team.jpeg" width="1536" height="1022" loading="lazy" decoding="async" alt="Das Studio von akii in Köln — Eingang mit Wandsignet und Blick in die hellen Räume">
+    </div>
+    <div class="studio__body">
+      <h2 class="h2 r r-d1" style="max-width:15ch">Erst verstehen. Dann lösen.</h2>
+      <p class="prose r r-d2" style="margin-top:var(--s-5)">Bevor eine Lösung gebaut wird, wird erstmal zugehört. Die meisten Digitalprojekte scheitern nicht an der Technik, sondern daran, dass das eigentliche Problem nie richtig verstanden wurde. Akii Studio bringt über zehn Jahre Erfahrung aus Digitalisierung, Prozessberatung und IT-Strategie in großen Konzernstrukturen mit — und nutzt sie, um für den Mittelstand Lösungen zu finden, die wirklich tragen.</p>
+      <p class="prose r r-d2" style="margin-top:var(--s-4)">Es werden bewusst nur wenige Projekte pro Jahr angenommen. Das hält den Fokus hoch und die Wege kurz.</p>
+
+      <ul class="values">
+        <li class="r"><span class="v-name">Klarheit</span><span class="v-desc"><span>Verständliche Angebote, feste Preise, keine versteckten Positionen.</span></span></li>
+        <li class="r r-d1"><span class="v-name">Ursache</span><span class="v-desc"><span>Erst verstehen, dann bauen. Es wird das eigentliche Problem gelöst — nicht nur das Symptom kaschiert.</span></span></li>
+        <li class="r r-d2"><span class="v-name">Wirkung</span><span class="v-desc"><span>Lösungen, die auch in einem Jahr noch tragen — nicht nur bis zum Launch glänzen.</span></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ FAQ ============ -->
+<section data-panel class="section tone-sand">
+  <div class="section__head">
+      <div class="faq" id="faq">
+        <div class="faq__item">
+          <button class="faq__q">Wie lange dauert ein typisches Projekt?<span class="faq__icon" aria-hidden="true"></span></button>
+          <div class="faq__a"><div><p>Eine Landingpage liegt bei zwei bis drei Wochen, ein vollständiger Website-Relaunch bei sechs bis acht. Entscheidend ist meist nicht unsere Geschwindigkeit, sondern wie schnell Inhalte und Feedback von Ihrer Seite kommen — das planen wir im Kick-off gemeinsam ein.</p></div></div>
+        </div>
+        <div class="faq__item">
+          <button class="faq__q">Arbeiten Sie mit Festpreisen?<span class="faq__icon" aria-hidden="true"></span></button>
+          <div class="faq__a"><div><p>Ja. Nach dem Discovery-Termin erhalten Sie ein Angebot mit festem Preis und festem Umfang. Kommen später zusätzliche Wünsche dazu, kalkulieren wir diese separat und transparent — es gibt keine Überraschungen auf der Schlussrechnung.</p></div></div>
+        </div>
+        <div class="faq__item">
+          <button class="faq__q">Können wir Inhalte selbst pflegen?<span class="faq__icon" aria-hidden="true"></span></button>
+          <div class="faq__a"><div><p>Das ist der Standard. Wir binden ein Headless CMS an, in dem sich alle Texte, Bilder und Seiten ohne Entwicklerhilfe ändern lassen. Zum Launch schulen wir Ihr Team und übergeben eine kurze, verständliche Dokumentation.</p></div></div>
+        </div>
+        <div class="faq__item">
+          <button class="faq__q">Übernehmen Sie auch bestehende Websites?<span class="faq__icon" aria-hidden="true"></span></button>
+          <div class="faq__a"><div><p>Gerne, sofern die technische Basis tragfähig ist. Wir starten mit einem Audit zu Performance, SEO und Gestaltung und sagen Ihnen ehrlich, ob sich eine Überarbeitung lohnt oder ein Neubau langfristig günstiger ist.</p></div></div>
+        </div>
+        <div class="faq__item">
+          <button class="faq__q">Was passiert nach dem Launch?<span class="faq__icon" aria-hidden="true"></span></button>
+          <div class="faq__a"><div><p>Die ersten 30 Tage nach dem Go-live sind inklusive — wir beheben alles, was auffällt. Danach können Sie uns monatlich für Weiterentwicklung, Optimierung und Support buchen, oder Sie übernehmen selbst. Beides ist völlig in Ordnung.</p></div></div>
+        </div>
+      </div>
+  </div>
+</section>
+
+<!-- ============ KONTAKT ============ -->
+<section data-panel class="section on-dark" id="kontakt">
+  <div class="section__head">
+    <h2 class="h2 r" style="max-width:14ch">Erzählen Sie uns von Ihrem Projekt.</h2>
+  </div>
+
+  <div class="contact__grid">
+    <form class="form" id="form" novalidate>
+      <div class="form__row">
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" placeholder="Vor- und Nachname" required>
+        </div>
+        <div class="field">
+          <label for="f-mail">E-Mail</label>
+          <input id="f-mail" name="email" type="email" placeholder="name@unternehmen.de" required>
+        </div>
+      </div>
+
+      <div class="form__row">
+        <div class="field">
+          <label for="f-comp">Unternehmen</label>
+          <input id="f-comp" name="company" type="text" placeholder="Optional">
+        </div>
+        <div class="field">
+          <label for="f-budget">Budgetrahmen</label>
+          <select id="f-budget" name="budget">
+            <option value="">Bitte wählen</option>
+            <option>5.000 – 10.000 €</option>
+            <option>10.000 – 25.000 €</option>
+            <option>25.000 – 50.000 €</option>
+            <option>über 50.000 €</option>
+            <option>Noch offen</option>
+          </select>
+          <span class="chev" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-msg">Nachricht</label>
+        <textarea id="f-msg" name="message" placeholder="Worum geht es? Ein paar Sätze genügen." required></textarea>
+      </div>
+
+      <p class="form__status" id="status" role="status" aria-live="polite"></p>
+      <div><button type="submit" class="btn btn--fill"><span class="btn__dot"></span>Anfrage senden</button></div>
+    </form>
+
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer data-panel class="footer on-dark">
+  <div class="footer__card">
+  <div class="footer__word">akii</div>
+
+  <div class="footer__cols">
+    <div class="footer__col">
+      <span class="u-label">Studio</span>
+      <a href="#studio">Über uns</a>
+      </div>
+    <div class="footer__col">
+      <span class="u-label">Leistungen</span>
+      <a href="#leistungen">Webdesign</a>
+      <a href="#leistungen">SEO &amp; Agentic SEO</a>
+      <a href="#leistungen">Digitale Lösungen</a>
+      <a href="#leistungen">Apps &amp; SaaS</a>
+    </div>
+    <div class="footer__col">
+      <span class="u-label">Kontakt</span>
+      <a href="mailto:hallo@akii.studio">hallo@akii.studio</a>
+      <a href="tel:+4922199821400">+49 221 998 21 40</a>
+      <a href="#kontakt">Projekt anfragen</a>
+    </div>
+    <div class="footer__col">
+      <span class="u-label">Social</span>
+      <a href="#" aria-label="Instagram">Instagram</a>
+      <a href="#" aria-label="LinkedIn">LinkedIn</a>
+      <a href="#" aria-label="Dribbble">Dribbble</a>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <span>© <span id="year">2026</span> akii studio</span>
+    <span><a href="#">Impressum</a> &nbsp;·&nbsp; <a href="#">Datenschutz</a></span>
+    <span>Design &amp; Code <a class="ember" href="#top">akii studio</a></span>
+  </div>
+  </div>
+</footer>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

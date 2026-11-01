@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="w1-bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#F1EAE0"/>
+      <stop offset="55%" stop-color="#E2D6C5"/>
+      <stop offset="100%" stop-color="#CDBEA9"/>
+    </linearGradient>
+    <radialGradient id="w1-glow" cx="0.3" cy="0.2" r="0.7">
+      <stop offset="0%" stop-color="#FFFCF5" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFFCF5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="w1-drape" x1="0" y1="0" x2="1" y2="0.3">
+      <stop offset="0%" stop-color="#EBDFCC"/>
+      <stop offset="45%" stop-color="#CDBBA0"/>
+      <stop offset="100%" stop-color="#A2907A"/>
+    </linearGradient>
+    <filter id="w1-soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="28"/></filter>
+    <filter id="w1-g" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#w1-bg)"/>
+  <rect width="1200" height="900" fill="url(#w1-glow)"/>
+  <rect x="0" y="640" width="1200" height="260" fill="#D8CBB8"/>
+  <ellipse cx="600" cy="700" rx="420" ry="70" fill="#8A7C6C" opacity="0.24" filter="url(#w1-soft)"/>
+
+  <!-- draped textile over a form -->
+  <path d="M360 640c0-160 40-260 120-300 66-34 176-34 244 0 82 40 122 140 122 300z" fill="url(#w1-drape)"/>
+  <path d="M480 640c-8-150 6-244 42-282-58 34-84 128-78 282z" fill="#F4ECDF" opacity="0.85"/>
+  <path d="M760 640c10-152-6-246-46-284 62 36 90 130 84 284z" fill="#8E7C64" opacity="0.5"/>
+  <path d="M600 340c-30 24-42 62-42 108 28-30 58-44 92-44-18-22-30-44-50-64z" fill="#F2E9DA" opacity="0.7"/>
+
+  <!-- small vessel companion -->
+  <path d="M900 640c-34 0-56-24-56-58 0-30 18-44 18-68 0-16-8-20-8-32 0-14 14-22 32-22s32 8 32 22c0 12-8 16-8 32 0 24 20 38 20 68 0 34-24 58-30 58z" fill="#9E8B72"/>
+  <ellipse cx="900" cy="646" rx="70" ry="10" fill="#8A7C6C" opacity="0.3" filter="url(#w1-soft)"/>
+
+  <g stroke="#B5A794" stroke-width="1" opacity="0.4">
+    <line x1="0" y1="200" x2="1200" y2="200" stroke-dasharray="2 10"/>
+  </g>
+  <rect width="1200" height="900" filter="url(#w1-g)" opacity="0.16" style="mix-blend-mode:multiply"/>
+</svg>
