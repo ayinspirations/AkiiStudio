@@ -614,11 +614,11 @@ body.menu-open { overflow: hidden; }
   transform-origin: 0 0;
   pointer-events: none;
   opacity: 0; visibility: hidden;
-  transition: opacity .9s ease, visibility 0s linear .9s;
+  transition: opacity .6s ease, visibility 0s linear .6s;
 }
 .case__frame--live iframe.is-loaded {
   opacity: 1; visibility: visible;
-  transition: opacity .9s ease, visibility 0s;
+  transition: opacity .6s ease, visibility 0s;
 }
 /* calm placeholder while a site loads: a slow light sweep over the tile */
 .case__frame--live::after {

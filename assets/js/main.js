@@ -182,6 +182,8 @@
     const glideTo = (i) => {
       index = Math.max(0, Math.min(i, stops.length - 1));
       const dest = stops[index].y;
+      /* a jump straight to a far panel (nav click): its previews start now */
+      document.dispatchEvent(new CustomEvent('panel-target', { detail: stops[index].panel }));
       const from = current;
       const delta = dest - from;
       if (!delta) return;
@@ -213,7 +215,7 @@
        previews load only when their panel has been reached. */
     const landed = () => {
       const st = stops[index];
-      if (st) document.dispatchEvent(new CustomEvent('panel-landed', { detail: panels[st.panel] }));
+      if (st) document.dispatchEvent(new CustomEvent('panel-landed', { detail: st.panel }));
     };
 
     /* An embedded site can call scrollIntoView/focus while it loads, which
@@ -224,6 +226,8 @@
 
     measure();
     apply(stops[0].y);
+    if (document.readyState === 'complete') setTimeout(landed, 300);
+    else window.addEventListener('load', () => setTimeout(landed, 300), { once: true });
 
     /* Every gesture drives the animation — nothing scrolls on its own. */
     window.addEventListener('wheel', (e) => {
@@ -381,11 +385,14 @@
     const ro = new ResizeObserver((entries) => entries.forEach((e) => fit(e.target)));
     lives.forEach((frame) => { fit(frame); ro.observe(frame); });
 
-    /* Load on arrival: a preview starts loading only once its panel has been
-       reached (after the glide has finished, so the animation never competes
-       with a site booting up). It stays invisible until the site has loaded
-       and had a moment to paint and settle, then fades in. Once loaded it is
-       kept, so coming back never reloads or flashes. */
+    /* Load ahead: on arriving at a panel, the previews in that panel and the
+       two panels either side are loaded in the background — after the glide
+       has finished, so the animation never competes with a site booting up.
+       By the time someone reaches a work panel its sites are ready. A jump
+       straight to a far panel starts that panel's previews at once.
+       A preview stays invisible until its site has loaded and painted, then
+       fades in; once loaded it is kept, so nothing reloads or flashes. */
+    const allPanels = [...document.querySelectorAll('[data-panel]')];
     const load = (frame) => {
       const f = frame.querySelector('iframe');
       if (f.src) return;
@@ -394,22 +401,26 @@
         setTimeout(() => {
           f.classList.add('is-loaded');
           frame.classList.remove('is-loading');
-        }, 450);
+        }, 120);
       }, { once: true });
       f.src = f.dataset.src;
     };
-    const loadIn = (panel) => {
-      if (!panel) return;
-      panel.querySelectorAll('.case__frame--live').forEach(load);
+    const loadPanel = (i) => {
+      const panel = allPanels[i];
+      if (panel) panel.querySelectorAll('.case__frame--live').forEach(load);
     };
 
     if (document.documentElement.classList.contains('paged')) {
-      document.addEventListener('panel-landed', (e) => loadIn(e.detail));
+      document.addEventListener('panel-landed', (e) => {
+        const i = e.detail;
+        [0, 1, -1, 2, -2].forEach((d, k) => setTimeout(() => loadPanel(i + d), k * 150));
+      });
+      document.addEventListener('panel-target', (e) => loadPanel(e.detail));
     } else if ('IntersectionObserver' in window) {
-      /* no paging (reduced motion): load when the frame is actually visible */
+      /* no paging (reduced motion): load a screen ahead of the frame */
       const io = new IntersectionObserver((entries) => entries.forEach((e) => {
         if (e.isIntersecting) { load(e.target); io.unobserve(e.target); }
-      }), { threshold: 0.35 });
+      }), { rootMargin: '100% 0px' });
       lives.forEach((frame) => io.observe(frame));
     } else {
       lives.forEach(load);
