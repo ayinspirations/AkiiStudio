@@ -115,9 +115,15 @@
   if (faq) {
     faq.querySelectorAll('.faq__q').forEach((btn) => {
       btn.setAttribute('aria-expanded', 'false');
+      /* one open at a time — the panel always fits the screen */
       btn.addEventListener('click', () => {
         const item = btn.closest('.faq__item');
-        const open = item.classList.toggle('is-open');
+        const open = !item.classList.contains('is-open');
+        faq.querySelectorAll('.faq__item.is-open').forEach((other) => {
+          other.classList.remove('is-open');
+          other.querySelector('.faq__q').setAttribute('aria-expanded', 'false');
+        });
+        item.classList.toggle('is-open', open);
         btn.setAttribute('aria-expanded', String(open));
       });
     });
