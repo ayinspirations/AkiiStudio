@@ -1,0 +1,24 @@
+# akii studio
+
+> akii studio ist ein Studio für Webdesign und digitale Lösungen in Köln (Ehrenstraße 42, 50672 Köln). Es entwickelt Websites, Web-Apps und SaaS-Applikationen für den Mittelstand – Strategie, Design und Entwicklung aus einer Hand, zu Festpreisen.
+
+Grundsatz: Erst verstehen, dann lösen. Über zehn Jahre Erfahrung aus Digitalisierung, Prozessberatung und IT-Strategie in Konzernstrukturen. Bewusst nur wenige Projekte pro Jahr.
+
+## Leistungen
+
+- Webdesign: Konzept, Gestaltung und Umsetzung auf Basis eines Design-Systems, mit Headless CMS, Fokus auf Core Web Vitals und Barrierefreiheit.
+- SEO & Agentic SEO: technisches SEO, Content-Struktur, Generative Engine Optimization (GEO) und Sichtbarkeit in KI-Assistenten.
+- Digitale Lösungen: Discovery, Prozessanalyse, Konzeption, Prototyping und Automatisierung.
+- Apps & SaaS-Applikationen: Web-Apps, Kundenportale, Dashboards und SaaS-Interfaces bis zum Release.
+
+## Rahmen
+
+- Landingpage: zwei bis drei Wochen; Website-Relaunch: sechs bis acht Wochen.
+- Festpreis nach dem Discovery-Termin.
+- 30 Tage Support nach dem Go-live inklusive, danach optional monatlich.
+
+## Kontakt
+
+- E-Mail: hallo@akii.studio
+- Telefon: +49 221 998 21 40
+- Website: https://akii.studio/

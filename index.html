@@ -3,21 +3,115 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>akii studio — Webdesign & Digitale Produkte</title>
-<meta name="description" content="akii studio gestaltet Websites und digitale Produkte für Marken, die Klarheit über Lautstärke stellen. Strategie, Design und Entwicklung aus einer Hand.">
-<meta name="theme-color" content="#F7F3ED">
-<meta property="og:title" content="akii studio — Webdesign & Digitale Produkte">
-<meta property="og:description" content="Digitale Räume, in denen Marken atmen können.">
+<title>akii studio — Webdesign, SEO &amp; digitale Lösungen aus Köln</title>
+<meta name="description" content="akii studio aus Köln gestaltet Websites, Web-Apps und digitale Lösungen für den Mittelstand. Webdesign, SEO &amp; Agentic SEO, SaaS — Strategie, Design und Entwicklung aus einer Hand.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://akii.studio/">
+<meta name="author" content="akii studio">
+<meta name="theme-color" content="#17100A">
+
+<!-- Favicon -->
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<!-- Open Graph / Social -->
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23332417'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial' font-size='19' fill='%23F0E4D2' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E">
+<meta property="og:site_name" content="akii studio">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://akii.studio/">
+<meta property="og:title" content="akii studio — Webdesign, SEO &amp; digitale Lösungen aus Köln">
+<meta property="og:description" content="Erst verstehen, dann lösen: Websites, Web-Apps und digitale Lösungen für den Mittelstand.">
+<meta property="og:image" content="https://akii.studio/assets/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="akii studio Logo über einem Arbeitsplatz mit Laptop und Skizzen">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="akii studio — Webdesign, SEO &amp; digitale Lösungen aus Köln">
+<meta name="twitter:description" content="Erst verstehen, dann lösen: Websites, Web-Apps und digitale Lösungen für den Mittelstand.">
+<meta name="twitter:image" content="https://akii.studio/assets/img/og-image.jpg">
+
+<!-- Local SEO / GEO -->
+<meta name="geo.region" content="DE-NW">
+<meta name="geo.placename" content="Köln">
+
+<link rel="preload" as="image" href="assets/img/logo-weiss.webp" type="image/webp">
 <link rel="stylesheet" href="assets/css/style.css">
+
+<!-- Strukturierte Daten (Google, Bing, KI-Suchsysteme) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://akii.studio/#organization",
+      "name": "akii studio",
+      "url": "https://akii.studio/",
+      "logo": "https://akii.studio/assets/img/logo-schwarz.png",
+      "image": "https://akii.studio/assets/img/og-image.jpg",
+      "description": "Studio für Webdesign, SEO & Agentic SEO, digitale Lösungen sowie Apps und SaaS-Applikationen für den Mittelstand.",
+      "email": "hallo@akii.studio",
+      "telephone": "+49 221 998 21 40",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Ehrenstraße 42",
+        "postalCode": "50672",
+        "addressLocality": "Köln",
+        "addressRegion": "NRW",
+        "addressCountry": "DE"
+      },
+      "geo": { "@type": "GeoCoordinates", "latitude": 50.9383, "longitude": 6.9406 },
+      "areaServed": ["DE", "AT", "CH"],
+      "knowsAbout": ["Webdesign", "UI Design", "Design Systems", "Headless CMS", "Technisches SEO", "Generative Engine Optimization", "LLM-Sichtbarkeit", "Web-Apps", "SaaS", "Prozessanalyse", "Digitalisierung"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Leistungen",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Webdesign" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SEO & Agentic SEO" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digitale Lösungen" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Apps & SaaS-Applikationen" } }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://akii.studio/#website",
+      "url": "https://akii.studio/",
+      "name": "akii studio",
+      "inLanguage": "de-DE",
+      "publisher": { "@id": "https://akii.studio/#organization" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Wie lange dauert ein typisches Projekt?", "acceptedAnswer": { "@type": "Answer", "text": "Eine Landingpage liegt bei zwei bis drei Wochen, ein vollständiger Website-Relaunch bei sechs bis acht. Entscheidend ist meist, wie schnell Inhalte und Feedback kommen — das wird im Kick-off gemeinsam eingeplant." } },
+        { "@type": "Question", "name": "Arbeiten Sie mit Festpreisen?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Nach dem Discovery-Termin gibt es ein Angebot mit festem Preis und festem Umfang. Zusätzliche Wünsche werden separat und transparent kalkuliert." } },
+        { "@type": "Question", "name": "Können wir Inhalte selbst pflegen?", "acceptedAnswer": { "@type": "Answer", "text": "Ja, das ist der Standard. Ein Headless CMS wird angebunden, in dem sich Texte, Bilder und Seiten ohne Entwicklerhilfe ändern lassen. Zum Launch gibt es eine Schulung und eine kurze Dokumentation." } },
+        { "@type": "Question", "name": "Übernehmen Sie auch bestehende Websites?", "acceptedAnswer": { "@type": "Answer", "text": "Gerne, sofern die technische Basis tragfähig ist. Am Anfang steht ein Audit zu Performance, SEO und Gestaltung mit einer ehrlichen Empfehlung: Überarbeitung oder Neubau." } },
+        { "@type": "Question", "name": "Was passiert nach dem Launch?", "acceptedAnswer": { "@type": "Answer", "text": "Die ersten 30 Tage nach dem Go-live sind inklusive. Danach kann Weiterentwicklung, Optimierung und Support monatlich gebucht werden — oder Sie übernehmen selbst." } }
+      ]
+    }
+  ]
+}
+</script>
 </head>
-<body>
+<body data-tone="hero" data-rail-tone="hero">
 
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
-  <a href="#top" class="brand" aria-label="akii — Startseite">
-    <span class="brand__mark">akii</span>
+  <a href="#top" class="brand" aria-label="akii studio — Startseite">
+    <picture class="brand__logo brand__logo--light">
+      <source srcset="assets/img/logo-weiss.webp" type="image/webp">
+      <img src="assets/img/logo-weiss.png" alt="akii studio" width="480" height="221">
+    </picture>
+    <picture class="brand__logo brand__logo--dark" aria-hidden="true">
+      <source srcset="assets/img/logo-schwarz.webp" type="image/webp">
+      <img src="assets/img/logo-schwarz.png" alt="" width="480" height="222">
+    </picture>
   </a>
 
   <nav class="rail" aria-label="Hauptnavigation">
@@ -63,6 +157,7 @@
 
   <h1 class="hero__title">
     <span class="hero__word">digital</span><span class="hero__sup">solutions</span>
+    <span class="sr-only">akii studio — Webdesign, SEO und digitale Lösungen aus Köln</span>
   </h1>
 
   <a class="cue" href="#arbeiten" aria-label="Weiter zum Inhalt">
@@ -86,7 +181,7 @@
   <div class="work__grid">
     <a class="case r" href="#kontakt">
       <div class="case__frame">
-        <img src="assets/img/work-01.svg" alt="Nordlicht Interiors — E-Commerce und Markenauftritt">
+        <img src="assets/img/work-01.svg" loading="lazy" decoding="async" alt="Nordlicht Interiors — E-Commerce und Markenauftritt">
         <div class="case__veil"></div>
         <span class="case__open">Case ansehen →</span>
       </div>
@@ -98,7 +193,7 @@
     </a>
     <a class="case r r-d1" href="#kontakt">
       <div class="case__frame">
-        <img src="assets/img/work-02.svg" alt="Vela Health — digitales Produkt und Dashboard">
+        <img src="assets/img/work-02.svg" loading="lazy" decoding="async" alt="Vela Health — digitales Produkt und Dashboard">
         <div class="case__veil"></div>
         <span class="case__open">Case ansehen →</span>
       </div>
@@ -116,7 +211,7 @@
   <div class="work__grid">
     <a class="case r" href="#kontakt">
       <div class="case__frame">
-        <img src="assets/img/work-03.svg" alt="Atelier Marbach — Website und Corporate Identity">
+        <img src="assets/img/work-03.svg" loading="lazy" decoding="async" alt="Atelier Marbach — Website und Corporate Identity">
         <div class="case__veil"></div>
         <span class="case__open">Case ansehen →</span>
       </div>
@@ -128,7 +223,7 @@
     </a>
     <a class="case r r-d1" href="#kontakt">
       <div class="case__frame">
-        <img src="assets/img/work-04.svg" alt="Kontur Capital — Corporate Website">
+        <img src="assets/img/work-04.svg" loading="lazy" decoding="async" alt="Kontur Capital — Corporate Website">
         <div class="case__veil"></div>
         <span class="case__open">Case ansehen →</span>
       </div>
@@ -242,6 +337,7 @@
 <!-- ============ FAQ ============ -->
 <section data-panel class="section tone-sand">
   <div class="section__head">
+      <h2 class="sr-only">Häufige Fragen</h2>
       <div class="faq" id="faq">
         <div class="faq__item">
           <button class="faq__q">Wie lange dauert ein typisches Projekt?<span class="faq__icon" aria-hidden="true"></span></button>
