@@ -886,17 +886,17 @@ body.menu-open { overflow: hidden; }
      The text column dissolves into the grid (display: contents) so the
      photo can sit between the copy and the three keywords, centred —
      on desktop the two-column arrangement is untouched. */
-  /* Phones: the photo leads, edge to edge, then heading, copy and the three
-     values underneath. */
+  /* Phones: the photo leads as a rounded tile spanning the text column
+     (same inset left and right as the copy), then heading, copy and the
+     three values underneath. */
   .studio__grid { gap: var(--s-3); }
   .studio__body { display: contents; }
   .studio__img {
     order: 1;
-    width: auto; max-height: none;
-    margin-inline: calc(var(--gut) * -1);
+    width: 100%; max-height: none;
     margin-bottom: var(--s-3);
     aspect-ratio: 16 / 10;
-    border-radius: 0;
+    border-radius: var(--r-card);
   }
   #studio .h2 { font-size: clamp(1.45rem, 6.2vw, 1.9rem); order: 2; margin-top: 0 !important; }
   #studio .prose { order: 3; }
