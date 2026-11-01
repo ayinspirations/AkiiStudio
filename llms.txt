@@ -2,7 +2,7 @@
 
 > akii studio ist ein Studio für Webdesign und digitale Lösungen in Leonberg bei Stuttgart (Paracelsusstr. 18, 71229 Leonberg). Es entwickelt Websites, Web-Apps und SaaS-Applikationen für den Mittelstand – Strategie, Design und Entwicklung aus einer Hand, zu Festpreisen.
 
-Grundsatz: Erst verstehen, dann lösen. Über zehn Jahre Erfahrung aus Digitalisierung, Prozessberatung und IT-Strategie in Konzernstrukturen. Bewusst nur wenige Projekte pro Jahr.
+Gegründet 2025 von Akan Yüksel. Grundsatz: Erst verstehen, dann lösen. Über zehn Jahre Erfahrung aus Digitalisierung, Prozessberatung und IT-Strategie in Konzernstrukturen. Bewusst nur wenige Projekte pro Jahr.
 
 ## Leistungen
 
@@ -16,6 +16,13 @@ Grundsatz: Erst verstehen, dann lösen. Über zehn Jahre Erfahrung aus Digitalis
 - Landingpage: zwei bis drei Wochen; Website-Relaunch: sechs bis acht Wochen.
 - Festpreis nach dem Discovery-Termin.
 - 30 Tage Support nach dem Go-live inklusive, danach optional monatlich.
+
+## Referenzen
+
+- GG Manufaktur (2026): https://gg-manufaktur.de
+- SKV Rutesheim (2026): https://skvrutesheimhomepage.vercel.app
+- AngebotGo (2025): https://angebotgo.de
+- Lina Soul (2025): https://linasoul.art
 
 ## Kontakt
 

@@ -306,6 +306,39 @@
     });
   }
 
+  /* ---- Live previews of the case sites ----
+     Each iframe renders the real site at desktop width and is scaled down
+     to fit its frame. Loaded only when its panel comes near the screen. */
+  const lives = [...document.querySelectorAll('.case__frame--live')];
+  if (lives.length) {
+    const fit = (frame) => {
+      const f = frame.querySelector('iframe');
+      const vw = window.innerWidth < 760 ? 1024 : 1280;
+      const k = frame.clientWidth / vw;
+      if (!k) return;
+      f.style.width = vw + 'px';
+      f.style.height = Math.ceil(frame.clientHeight / k) + 'px';
+      f.style.transform = 'scale(' + k + ')';
+    };
+    const ro = new ResizeObserver((entries) => entries.forEach((e) => fit(e.target)));
+    lives.forEach((frame) => { fit(frame); ro.observe(frame); });
+
+    const load = (frame) => {
+      const f = frame.querySelector('iframe');
+      if (f.src) return;
+      f.addEventListener('load', () => f.classList.add('is-loaded'), { once: true });
+      f.src = f.dataset.src;
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { load(e.target); io.unobserve(e.target); }
+      }), { rootMargin: '100% 0px' });
+      lives.forEach((frame) => io.observe(frame));
+    } else {
+      lives.forEach(load);
+    }
+  }
+
   /* ---- Year ---- */
   const year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
