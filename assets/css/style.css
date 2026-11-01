@@ -259,15 +259,16 @@ h1, h2, h3, h4 { font-weight: 500; letter-spacing: var(--track-tight); line-heig
   font-size: clamp(1.35rem, 1.8vw, 1.7rem);
   font-weight: 400; letter-spacing: 0.02em; line-height: 1;
 }
-/* Logo: white over the hero and dark panels, black over light panels so it
-   never disappears on cream. Both are stacked; only the opacity changes. */
+/* Logo: white over the hero image, cream over the dark brown panels and
+   the footer, black over the light panels. All three are stacked; only the
+   opacity changes as the tone underneath changes. */
 .brand { display: grid; }
-.brand__logo { grid-area: 1 / 1; display: block; transition: opacity .5s var(--ease); }
+.brand__logo { grid-area: 1 / 1; display: block; opacity: 0; transition: opacity .5s var(--ease); }
 .brand__logo img { display: block; height: clamp(34px, 3.6vw, 48px); width: auto; }
-.brand__logo--dark { opacity: 0; }
-body:not([data-tone="hero"]):not([data-tone="dark"]) .brand__logo--light,
-body.menu-open .brand__logo--light { opacity: 0; }
-body:not([data-tone="hero"]):not([data-tone="dark"]) .brand__logo--dark,
+body[data-tone="hero"] .brand__logo--light,
+body[data-tone="dark"] .brand__logo--creme,
+body:not([data-tone="hero"]):not([data-tone="dark"]) .brand__logo--dark { opacity: 1; }
+body.menu-open .brand__logo { opacity: 0; }
 body.menu-open .brand__logo--dark { opacity: 1; }
 
 .sr-only {
@@ -709,7 +710,14 @@ body.menu-open { overflow: hidden; }
 .faq__a > div { overflow: hidden; }
 .faq__a p { color: var(--drift); max-width: 62ch; padding-bottom: var(--s-5); }
 
-/* ---------- Contact ---------- */
+/* ---------- Contact ----------
+   The densest panel: more room at the top so the heading clears the logo,
+   and a smaller heading/textarea so the whole form still fits one screen. */
+#kontakt { padding-top: clamp(112px, 15vh, 150px); padding-bottom: clamp(48px, 7vh, 96px); }
+#kontakt .section__head { margin-bottom: clamp(var(--s-4), 3vh, var(--s-6)); }
+#kontakt .h2 { font-size: clamp(2rem, 4.2vw, 3.75rem); }
+#kontakt .form { gap: clamp(var(--s-3), 2.2vh, var(--s-5)); }
+#kontakt .field textarea { min-height: 84px; }
 .contact__grid { display: grid; gap: var(--s-8); max-width: 880px; }
 
 .form { display: grid; gap: var(--s-5); }

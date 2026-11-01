@@ -196,7 +196,7 @@ Fließtext-Stack zurück, der Hero rendert also, nur nicht in der Wunschschrift.
 ## SEO, GEO & Favicon
 
 - Favicon aus `assets/akii_studio_logo_schwarz_creme.png` → `favicon.ico`, `assets/icons/*`, `site.webmanifest`
-- Nav-Logo: `assets/img/logo-weiss.*` (über Hero und dunklen Sektionen), `logo-schwarz.*` über hellen
+- Nav-Logo: `logo-weiss.*` über dem Hero, `logo-creme.*` über dunklen Sektionen, `logo-schwarz.*` über hellen
 - `<head>`: Canonical, Open Graph (`assets/img/og-image.jpg`, 1200×630), Twitter Card, JSON-LD (ProfessionalService, WebSite, FAQPage)
 - `robots.txt` (KI-Crawler erlaubt), `sitemap.xml`, `llms.txt` für KI-Suchsysteme
 - Domain: `https://akiistudio.de/`
