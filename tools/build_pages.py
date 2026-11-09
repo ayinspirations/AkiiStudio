@@ -46,7 +46,7 @@ CASES = {
 }
 
 
-def head(title, desc, path, ld, og_img="assets/img/og-image.jpg", robots="index, follow, max-image-preview:large", og_type="website"):
+def head(title, desc, path, ld, og_img="assets/img/og-image.jpg", robots="index, follow, max-image-preview:large", og_type="website", extra=""):
     url = f"{SITE}{path}"
     return f"""<!doctype html>
 <html lang="de">
@@ -81,7 +81,7 @@ def head(title, desc, path, ld, og_img="assets/img/og-image.jpg", robots="index,
 <meta name="geo.placename" content="Leonberg">
 <link rel="stylesheet" href="/assets/css/style.css">
 <link rel="stylesheet" href="/assets/css/pages.css">
-<script type="application/ld+json">
+{extra}<script type="application/ld+json">
 {json.dumps({"@context": "https://schema.org", "@graph": ld}, ensure_ascii=False, indent=2)}
 </script>
 </head>
@@ -301,7 +301,9 @@ def service_page(d):
     <a class="pill pill--lg" href="/#kontakt">Projekt anfragen</a>
     <a class="more" href="/case-studies/">Case Studies ansehen</a>
   </div>
-  <div class="phero__media">{img(d['hero_img'], d['hero_alt'], lazy=False)}</div>
+  <div class="phero__media phero__media--demo">
+    <div class="demo-slot" data-stageshow="{d['slug']}" role="img" aria-label="{d['demo_alt']}"></div>
+  </div>
 </header>
 
 <section class="psec" id="ueberblick" aria-labelledby="ueberblick-title">
@@ -367,7 +369,9 @@ def service_page(d):
 """
     os.makedirs(f"leistungen/{d['slug']}", exist_ok=True)
     with open(f"leistungen/{d['slug']}/index.html", "w") as f:
-        f.write(head(d["title"], d["desc"], path, ld) + body + footer())
+        demo = ('<link rel="stylesheet" href="/assets/stageshow/demos.css">\n'
+                '<script src="/assets/stageshow/demos.js" defer></script>\n')
+        f.write(head(d["title"], d["desc"], path, ld, extra=demo) + body + footer())
 
 
 SVC_IMG = [("webdesign", "ph-01"), ("seo-geo", "ph-04"), ("digitale-loesungen", "ph-06"), ("apps-saas", "ph-08")]
@@ -380,7 +384,7 @@ SVC_TEASER = [
 
 PAGES = [
     dict(
-        slug="webdesign", name="Webdesign", serviceType="Webdesign und Website-Entwicklung",
+        slug="webdesign", demo_alt="Animation: Im CMS wird die Überschrift einer Website geändert, die Seite aktualisiert sich live und wird veröffentlicht.", name="Webdesign", serviceType="Webdesign und Website-Entwicklung",
         title="Webdesign Agentur Leonberg &amp; Stuttgart | akii studio",
         desc="Webdesign aus Leonberg bei Stuttgart: schnelle, barrierefreie Websites mit Headless CMS – Konzept, Design und Entwicklung zum Festpreis.",
         eyebrow="Webdesign", h1="Websites, die wirken.",
@@ -436,7 +440,7 @@ PAGES = [
         cta_p="Erzählen Sie uns von Ihrem Vorhaben. Sie erhalten innerhalb von zwei Werktagen eine Rückmeldung.",
     ),
     dict(
-        slug="seo-geo", name="SEO &amp; GEO", serviceType="Suchmaschinenoptimierung und Generative Engine Optimization",
+        slug="seo-geo", demo_alt="Animation: Ein KI-Assistent beantwortet die Frage nach Küchen nach Maß in Leonberg und nennt das Unternehmen samt Website als Quelle.", name="SEO &amp; GEO", serviceType="Suchmaschinenoptimierung und Generative Engine Optimization",
         title="SEO &amp; GEO Agentur Stuttgart – Google &amp; KI-Suche | akii",
         desc="SEO und Generative Engine Optimization aus Leonberg bei Stuttgart: technisches SEO, Local SEO und Inhalte, die Google und ChatGPT zitieren.",
         eyebrow="SEO &amp; Agentic SEO", h1="Gefunden werden. Von Google und KI.",
@@ -491,7 +495,7 @@ PAGES = [
         cta_p="Wir prüfen Ihre Website und zeigen, wo Sie in Google und KI-Antworten stehen – und was die wichtigsten nächsten Schritte sind.",
     ),
     dict(
-        slug="digitale-loesungen", name="Digitale Lösungen", serviceType="Digitalisierung, Prozessanalyse und Automatisierung",
+        slug="digitale-loesungen", demo_alt="Animation: Anfragen aus dem Kontaktformular landen automatisch im CRM, der Zähler für automatisch erfasste Anfragen steigt.", name="Digitale Lösungen", serviceType="Digitalisierung, Prozessanalyse und Automatisierung",
         title="Digitalisierung &amp; Automatisierung Mittelstand | akii studio",
         desc="Digitalisierung für den Mittelstand aus Leonberg bei Stuttgart: Prozessanalyse, Automatisierung, Schnittstellen und individuelle Tools.",
         eyebrow="Digitale Lösungen", h1="Erst verstehen. Dann digitalisieren.",
@@ -546,7 +550,7 @@ PAGES = [
         cta_p="Erzählen Sie uns davon. Im Erstgespräch finden wir heraus, ob und wie wir helfen können.",
     ),
     dict(
-        slug="apps-saas", name="Apps &amp; SaaS", serviceType="Web-App- und SaaS-Entwicklung",
+        slug="apps-saas", demo_alt="Animation: Ein Kundenportal-Dashboard zeigt den Umsatz der letzten 14 Tage, der Mauszeiger fährt über das Diagramm und liest Tageswerte ab.", name="Apps &amp; SaaS", serviceType="Web-App- und SaaS-Entwicklung",
         title="Web-App &amp; SaaS Entwicklung Stuttgart | akii studio",
         desc="Web-Apps, Kundenportale und SaaS-Produkte aus Leonberg bei Stuttgart: Konzeption, UX/UI-Design und Entwicklung vom MVP bis zum Release.",
         eyebrow="Apps &amp; SaaS-Applikationen", h1="Von der Idee zur Plattform.",

@@ -234,3 +234,13 @@ Cookie-Dialog eingebettet nicht mehr erscheint).
   Neuen Artikel als Eintrag in `ARTICLES` ergänzen, dann `python3 tools/build_pages.py` und `sitemap.xml` / `llms.txt` erweitern.
 - `ueber-uns/` – Über-uns-Seite mit Person- und AboutPage-Schema (E-E-A-T)
 - `404.html` – Netlify liefert sie automatisch für unbekannte URLs aus
+
+## Animierte Produkt-Demos (stageshow)
+
+Die vier Leistungsseiten zeigen im Kopfbereich animierte Produkt-Szenen statt Platzhalterbildern.
+
+- Quellen: `stageshow/demos/akii-*` (React + stageshow-Kit unter `stageshow/kit`, MIT-Lizenz in `stageshow/LICENSE-stageshow`)
+- Fertiges Bundle (wird committet, Netlify braucht keinen Build): `assets/stageshow/demos.js` + `demos.css`
+- Neu bauen nach Änderungen: `cd stageshow && npm install && npm run build`
+- Einbindung: `<div data-stageshow="webdesign">` (bzw. `seo-geo`, `digitale-loesungen`, `apps-saas`) – erzeugt durch `tools/build_pages.py`
+- Prüfprotokoll: `stageshow/REHEARSAL.md`

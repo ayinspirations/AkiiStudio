@@ -1,0 +1,94 @@
+/* Inset 64 from the sides, the gutter on top, off the bottom just under the
+   composer, which ends one gutter above the stage's edge */
+.ag .ag-win {
+  position: absolute;
+  top: 40px;
+  left: 64px;
+  width: 592px;
+  height: 430px;
+  box-shadow: var(--ss-shadow-hero);
+}
+
+.ag .ag-body {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100%;
+  padding: 16px 24px 70px;
+  background: var(--ss-surface);
+}
+
+.ag .ag-thread {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 14px;
+  min-height: 0;
+  padding-bottom: 20px;
+  overflow: hidden;
+}
+
+.ag .ag-turn--past { display: grid; gap: 8px; }
+.ag .ag-past-q { justify-self: end; }
+
+.ag .ag-q { display: flex; justify-content: flex-end; }
+.ag .ag-q .ss-text {
+  max-width: 76%;
+  white-space: normal;
+  text-wrap: pretty;
+  padding: 8px 14px;
+  border-radius: 16px;
+  background: var(--ss-ink-1);
+  color: var(--ss-text-strong);
+  font-size: 13px;
+}
+
+.ag .ag-a { display: grid; gap: 12px; opacity: 0; transition: opacity 0.25s ease; }
+.ag .ag-a[data-on] { opacity: 1; }
+
+.ag .ag-thinking { color: var(--ss-text); font-size: 13px; }
+
+.ag .ag-stream {
+  color: var(--ss-text-strong);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+/* The business the answer names: the one emphasis, said once */
+.ag .ag-stream .ss-stream__w[data-mark] { font-weight: 600; background: none; color: var(--ss-text-strong); box-shadow: none; }
+
+.ag .ag-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  opacity: 0;
+  translate: 0 4px;
+  transition: opacity 0.35s ease, translate 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ag .ag-sources[data-on] { opacity: 1; translate: 0 0; }
+.ag .ag-sources { will-change: transform; }
+
+.ag .ag-source {
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--ss-line);
+  color: var(--ss-text);
+  font-size: 11px;
+}
+/* The business's own site, cited first: its surface, in the accent */
+.ag .ag-source--own {
+  background: var(--ss-accent-soft);
+  box-shadow: none;
+  color: var(--ss-accent-text);
+  font-weight: 500;
+}
+
+/* Narrow: one gutter each side, the past turn gone, the composer kept */
+.ag .ss-stage[data-layout='compact'] .ag-win {
+  top: 16px;
+  left: 16px;
+  width: 326px;
+  height: 384px;
+}
+/* the composer ends a gutter above the stage's edge; the window runs on */
+.ag .ss-stage[data-layout='compact'] .ag-body { padding: 12px 14px 76px; }
+.ag .ss-stage[data-layout='compact'] .ag-turn--past { display: none; }
+.ag .ss-stage[data-layout='compact'] .ag-stream { font-size: 12.5px; }

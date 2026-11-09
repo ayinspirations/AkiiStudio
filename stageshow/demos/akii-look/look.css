@@ -1,0 +1,19 @@
+/* akii studio's look for its service-page demos: warm neutrals, one ember
+   accent, the site's own type stack. Every akii demo stage carries .akii. */
+.akii .ss-stage {
+  --ss-accent: #C2551F;
+  --ss-accent-2: #D9743F;
+  --ss-accent-soft: #F6E3D7;
+  --ss-accent-text: #9C4116;
+  --ss-font: "Helvetica Neue", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --ss-radius-md: 8px;
+  --ss-radius-lg: 12px;
+  --ss-radius-window: 14px;
+  overflow: hidden;
+  /* the colored stage: the demo's own ground, like the photo tile it replaces */
+  background:
+    radial-gradient(120% 90% at 85% 0%, #F3E4D4 0%, rgba(243, 228, 212, 0) 60%),
+    radial-gradient(90% 80% at 0% 100%, #E7DBCB 0%, rgba(231, 219, 203, 0) 65%),
+    #EFE8DE;
+  border-radius: 24px;
+}

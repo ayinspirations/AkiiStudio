@@ -1,0 +1,372 @@
+/* All rules belong to this example, including its responsive variants. */
+.am {
+  & .ss-stage {
+    --gutter: 40px;
+    /* Arrivals are already moving on their first frame; travel eases out of rest */
+    --am-arrive: cubic-bezier(0.25, 0.8, 0.25, 1);
+    --am-travel: cubic-bezier(0.45, 0, 0.1, 1);
+    overflow: hidden;
+    font: 12px/1.4 var(--ss-font);
+    color: var(--ss-text-strong);
+  }
+
+
+  .am-strong { font-weight: 600; }
+  .am-muted { color: var(--ss-text); }
+
+  /* ---- The dashboard: pinned top and left of center, off the right and bottom ---- */
+
+  .am-window {
+    position: absolute;
+    top: var(--gutter);
+    left: 150px;
+    width: 620px;
+    height: 440px;
+    background: var(--ss-surface);
+    border-radius: 10px;
+    box-shadow: var(--ss-shadow-hero);
+  }
+
+  .am-scenes {
+    display: grid;
+    height: 100%;
+  }
+
+  /* Two companies on the same product, stacked: the scene change is a crossfade
+     of everything below the browser chrome, which stays put */
+  .am-scene {
+    display: flex;
+    grid-area: 1 / 1;
+    min-height: 0;
+    opacity: 0;
+    transition: opacity 0.45s ease 0.1s;
+  }
+
+  /* The incoming scene leads, so the window is never half empty mid-change */
+  .am-scene[data-on] {
+    opacity: 1;
+    transition: opacity 0.45s ease;
+  }
+
+  .am-side {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: 4px;
+    width: 150px;
+    padding: 16px 10px;
+    border-right: 1px solid var(--ss-line);
+    background: var(--ss-canvas);
+  }
+
+  .am-org {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 26px;
+    margin-bottom: 10px;
+    padding: 0 6px;
+    font-size: 12.5px;
+  }
+
+  .am-tile {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    background: #23304d;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .am-tile[data-scene='1'] { background: #e8833a; }
+
+  .am-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 26px;
+    padding: 0 6px;
+    border-radius: 6px;
+  }
+
+  .am-nav[data-on] { background: var(--ss-ink-2); }
+
+  .am-main {
+    flex: 1;
+    min-width: 0;
+    /* The window runs 36px past the stage's right edge: the content stops a
+       gutter short of what is visible, not of the window */
+    padding: 18px calc(22px + 36px) 18px 22px;
+  }
+
+  .am-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .am-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .am-mrr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--ss-line);
+    border-radius: 10px;
+  }
+
+  .am-mrr__text {
+    display: grid;
+    gap: 2px;
+  }
+
+  .am-mrr__value {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- Subscribers: newest on top ---- */
+
+  .am-row {
+    display: grid;
+    flex-shrink: 0;
+    grid-template-columns: 22px minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 10px;
+    height: 42px;
+    padding: 0 4px;
+    border-bottom: 1px solid var(--ss-line);
+    /* Pushed down as each new row opens: a layer keeps the text with its box */
+    will-change: transform;
+  }
+
+  .am-row--old {
+    grid-template-columns: 22px minmax(0, 1fr) 52px;
+  }
+
+  /* The kit's Avatar in the product's soft tints */
+  .am-av {
+    background: #e7e4fb;
+    color: #4b45b8;
+    font-size: 10.5px;
+    font-weight: 600;
+  }
+
+  .am-av[data-i='1'] { background: #dff1ea; color: #23744f; }
+  .am-av[data-scene='1'] { background: #fde9da; color: #b05a1c; }
+
+  .am-name { font-weight: 500; }
+  .am-plan { color: var(--ss-text); }
+
+  /* The row's words arrive with the chip; the pill is the chip itself, so it
+     shows the instant the flying one is gone, with no fade between them */
+  .am-row > :not(.am-pill) {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .am-row[data-landed] > :not(.am-pill) {
+    opacity: 1;
+    transition: opacity 0.45s ease 0.05s;
+  }
+
+  .am-row--old > * { opacity: 1 !important; }
+
+  .am-pill {
+    justify-self: end;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: var(--ss-accent-soft);
+    color: var(--ss-accent);
+    font-size: 11.5px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    visibility: hidden;
+  }
+
+  .am-row[data-landed] > .am-pill { visibility: visible; }
+
+  /* In flight it lifts off the page: a white chip with the same words. Over
+     the last of its flight it lowers into the soft pill (fill eases to the
+     tint, the lift and ring fade), so it lands already looking like the row's
+     pill and the handover is invisible */
+  .am-pill--chip {
+    display: inline-block;
+    visibility: visible;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(194, 85, 31, 0.2), 0 6px 16px -4px rgba(50, 50, 93, 0.3);
+  }
+
+  .ss-fly[data-go] .am-pill--chip {
+    /* The tint over the row's white, as one opaque color */
+    background: #F6E3D7;
+    box-shadow: 0 0 0 1px rgba(194, 85, 31, 0), 0 0 0 -4px rgba(50, 50, 93, 0);
+    transition: background-color 0.35s ease 0.5s, box-shadow 0.35s ease 0.5s;
+  }
+
+  /* ---- The checkout: straddles the dashboard's sidebar ---- */
+
+  .am-checkout {
+    position: absolute;
+    top: 148px;
+    left: var(--gutter);
+    display: grid;
+    gap: 14px;
+    width: 236px;
+    padding: 18px;
+    border-radius: 12px;
+    background: var(--ss-surface);
+    box-shadow: var(--ss-shadow-satellite);
+    opacity: 0;
+    transform: translateX(-14px);
+    will-change: transform;
+    transition: opacity 0.22s ease, transform 0.4s var(--am-travel);
+  }
+
+  .am-checkout[data-in] {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.6s ease 0.28s, transform 0.9s var(--am-arrive) 0.28s;
+  }
+
+  .am-checkout__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+  }
+
+  .am-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .am-price .am-muted {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .am-fields {
+    display: grid;
+    border: 1px solid var(--ss-line-strong, rgba(0, 0, 0, 0.1));
+    border-radius: 8px;
+  }
+
+  .am-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 10px;
+  }
+
+  .am-field + .am-field { border-top: 1px solid var(--ss-line); }
+
+  .am-pay {
+    display: grid;
+    place-items: center;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--ss-accent);
+    color: #fff;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+
+  .am-pay[data-state='paid'],
+  .am-pay[data-state='done'] { background: #2F8A57; }
+
+  .am-done {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .am-head-tile { display: none; }
+
+  /* ---- Compact (below 600): the dashboard on top, the checkout over its
+     filler rows at the bottom, so the chip flies up into the list ---- */
+
+  & .ss-stage[data-layout='compact'] {
+    --gutter: 16px;
+  }
+
+  /* Narrow: the CRM at the gutter, off the right and bottom; the topic sits
+     right after the name, so the bleed only ever cuts filler. The form is
+     one slim bar over the filler rows at the foot, and the topic flies up
+     from its button into the list */
+  [data-layout='compact'] .am-window {
+    top: var(--gutter);
+    left: var(--gutter);
+    width: 420px;
+    height: 480px;
+  }
+  [data-layout='compact'] .am-side,
+  [data-layout='compact'] .am-plan,
+  [data-layout='compact'] .am-chart { display: none; }
+  [data-layout='compact'] .am-main { padding: 14px 16px; }
+  [data-layout='compact'] .am-mrr { padding: 10px 14px; }
+  [data-layout='compact'] .am-mrr__value { font-size: 22px; }
+  [data-layout='compact'] .am-row { grid-template-columns: 22px max-content max-content; }
+
+  [data-layout='compact'] .am-checkout {
+    top: auto;
+    bottom: var(--gutter);
+    left: var(--gutter);
+    right: var(--gutter);
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 12px 12px 16px;
+  }
+  [data-layout='compact'] .am-checkout__head,
+  [data-layout='compact'] .am-fields { display: none; }
+  [data-layout='compact'] .am-from { font-size: 15px; }
+  [data-layout='compact'] .am-pay { width: 124px; height: 34px; }
+}
+
+.am {
+  .am-from { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
+  .am-topic { font-size: 12px; color: var(--ss-text-strong); }
+  .am-scene { opacity: 1; }
+  .am-av[data-i='0'] { background: #F6E3D7; color: #9C4116; }
+}
+
+.am {
+  /* the ground is its own layer under both surfaces, as in the gold */
+  & .ss-stage { background: none; }
+  .am-ground {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(120% 90% at 85% 0%, #F3E4D4 0%, rgba(243, 228, 212, 0) 60%),
+      radial-gradient(90% 80% at 0% 100%, #E7DBCB 0%, rgba(231, 219, 203, 0) 65%),
+      #EFE8DE;
+  }
+  .am-pay { line-height: 1; }
+}

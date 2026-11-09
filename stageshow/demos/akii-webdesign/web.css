@@ -1,0 +1,149 @@
+/* The website: inset from the sides, off the bottom */
+.aw .aw-win {
+  position: absolute;
+  top: 40px;
+  left: 64px;
+  width: 520px;
+  height: 470px;
+  box-shadow: var(--ss-shadow-hero);
+}
+
+.aw .aw-site {
+  height: 100%;
+  padding: 18px 24px;
+  background: #FBF8F3;
+  display: grid;
+  align-content: start;
+  gap: 22px;
+}
+
+.aw .aw-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.aw .aw-brand {
+  color: #2C2119;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.aw .aw-links { display: inline-flex; gap: 14px; }
+
+.aw .aw-copy { display: grid; gap: 14px; max-width: 250px; }
+
+/* Two lines reserved, so typing never changes the hero's height */
+.aw .aw-headline {
+  min-height: calc(2 * 1.1em);
+  color: #2C2119;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.aw .aw-lines { display: grid; gap: 8px; }
+
+.aw .aw-cta {
+  justify-self: start;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #2C2119;
+  color: #F7F3ED;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.aw .aw-image {
+  height: 96px;
+  border-radius: 12px;
+  background:
+    radial-gradient(80% 70% at 30% 30%, #D8B48C 0%, rgba(216, 180, 140, 0) 70%),
+    linear-gradient(160deg, #B98A5E, #7A5537);
+}
+
+.aw .aw-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* The CMS panel: smaller, in front, over the website's right margin */
+.aw .aw-panel {
+  position: absolute;
+  /* one gutter (40) to the right and bottom; straddles the window's edge
+     over its margin and the filler tiles, never the headline */
+  right: 40px;
+  bottom: 40px;
+  width: 336px;
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--ss-surface);
+  box-shadow: var(--ss-shadow-satellite);
+}
+
+.aw .aw-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.aw .aw-panel__name { display: inline-flex; align-items: center; gap: 8px; }
+/* wide enough to read as a bar, not a padded box, at every label */
+.aw .aw-publish { min-width: 124px; justify-content: center; }
+
+.aw .aw-title {
+  color: var(--ss-text-strong);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Select-all: the field's words take the selection color for a beat */
+.aw .aw-field[data-selected] .ss-field__chars { background: var(--ss-accent-soft); border-radius: 2px; }
+
+.aw .aw-quiet { display: grid; gap: 8px; }
+
+/* the hero image as the CMS lists it: a thumbnail of the same picture */
+.aw .aw-media {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px var(--ss-line);
+}
+.aw .aw-thumb {
+  flex: none;
+  width: 52px;
+  height: 38px;
+  border-radius: 6px;
+  background:
+    radial-gradient(80% 70% at 30% 30%, #D8B48C 0%, rgba(216, 180, 140, 0) 70%),
+    linear-gradient(160deg, #B98A5E, #7A5537);
+}
+.aw .aw-media__lines { display: grid; gap: 8px; }
+
+
+/* Narrow: the website on top at the one gutter, running off the bottom;
+   the panel laid over its lower half, over the filler tiles only, so the
+   headline it edits stays in view above it */
+.aw .ss-stage[data-layout='compact'] .aw-win {
+  top: 16px;
+  left: 16px;
+  width: 326px;
+  height: 520px;
+}
+.aw .ss-stage[data-layout='compact'] .aw-panel {
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  width: auto;
+}
+.aw .ss-stage[data-layout='compact'] .aw-media,
+.aw .ss-stage[data-layout='compact'] .aw-quiet { display: none; }
+.aw .ss-stage[data-layout='compact'] .aw-publish { min-width: 0; }
