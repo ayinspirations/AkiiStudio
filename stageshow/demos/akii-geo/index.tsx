@@ -64,7 +64,7 @@ export default function AkiiGeo() {
       className="akii ag"
     >
       {(s, _rect, layout) => (
-        <Window title={layout === 'compact' ? undefined : 'Assistent'} className="ag-win">
+        <Window title="Assistent" className="ag-win">
           <div className="ag-body">
             <div className="ag-thread">
               <div className="ag-turn--past">

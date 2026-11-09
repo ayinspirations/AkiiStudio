@@ -17,3 +17,6 @@
     #EFE8DE;
   border-radius: 24px;
 }
+
+/* No window dots: the bar keeps only what explains the screen (address or title) */
+.akii .ss-window__lights { display: none; }

@@ -290,7 +290,7 @@ def service_page(d):
     checks = "\n".join(f"    <li>{c}</li>" for c in d["checks"])
     cases = "\n".join(card(c) for c in d["cases"])
 
-    body = f"""{gnav(d['slug'])}{lnav(d['name'], [('ueberblick', 'Überblick'), ('ablauf', 'Ablauf'), ('umfang', 'Leistungsumfang'), ('referenzen', 'Referenzen'), ('faq', 'FAQ')])}
+    body = f"""{gnav(d['slug'])}
 <main id="inhalt">
 {crumbs(crumb_items)}
 <header class="phero">
@@ -680,7 +680,7 @@ def case_studies_page():
 </section>
 """)
     anchors = [(s["slug"], s["name"]) for s in STUDIES]
-    body = f"""{gnav('case-studies')}{lnav('Case Studies', anchors)}
+    body = f"""{gnav('case-studies')}
 <main id="inhalt">
 {crumbs(crumb_items)}
 <header class="phero">

@@ -107,7 +107,7 @@ export default function AkiiDashboard() {
         const hy = hx === null ? null : (yOn(plot.current?.querySelector<SVGPathElement>('.ss-chart__line'), hx) ?? pts[s.day ?? 0]!.y)
         const p = hx === null || hy === null ? null : { x: hx, y: hy }
         return (
-          <Window className="cs-win">
+          <Window title="Kundenportal" className="cs-win">
             <div className="cs-body">
               <div className="cs-head">
                 <div className="cs-label">
