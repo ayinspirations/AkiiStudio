@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Generates the service pages and the case-studies page for akiistudio.de.
 Run from the repo root:  python3 build_pages.py"""
-import json, os, html
+import json, os, html, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from content_wissen import ARTICLES, PUBLISHED
 
 SITE = "https://akiistudio.de"
 TODAY = "2026-11-01"
@@ -44,7 +46,7 @@ CASES = {
 }
 
 
-def head(title, desc, path, ld, og_img="assets/img/og-image.jpg"):
+def head(title, desc, path, ld, og_img="assets/img/og-image.jpg", robots="index, follow, max-image-preview:large", og_type="website"):
     url = f"{SITE}{path}"
     return f"""<!doctype html>
 <html lang="de">
@@ -53,7 +55,7 @@ def head(title, desc, path, ld, og_img="assets/img/og-image.jpg"):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="robots" content="{robots}">
 <link rel="canonical" href="{url}">
 <meta name="author" content="akii studio">
 <meta name="theme-color" content="#F7F3ED">
@@ -62,7 +64,7 @@ def head(title, desc, path, ld, og_img="assets/img/og-image.jpg"):
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16-v2.png">
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-v2.png">
 <link rel="manifest" href="/site.webmanifest?v=2">
-<meta property="og:type" content="website">
+<meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="akii studio">
 <meta property="og:locale" content="de_DE">
 <meta property="og:url" content="{url}">
@@ -95,6 +97,8 @@ def gnav(current):
         links.append(f'<a href="/leistungen/{slug}/"{cur}>{label}</a>')
     cur = ' aria-current="page"' if current == "case-studies" else ""
     links.append(f'<a href="/case-studies/"{cur}>Case Studies</a>')
+    cur = ' aria-current="page"' if current == "wissen" else ""
+    links.append(f'<a href="/wissen/"{cur}>Ratgeber</a>')
     links.append('<a class="gnav__cta" href="/#kontakt">Projekt anfragen</a>')
     return f"""<header class="gnav">
   <a class="gnav__logo" href="/" aria-label="akii studio — Startseite">
@@ -156,6 +160,9 @@ def faq_ld(faqs, path):
 def img(name, alt, w=1600, h=1000, lazy=True, cls=""):
     la = ' loading="lazy"' if lazy else ' fetchpriority="high"'
     c = f' class="{cls}"' if cls else ""
+    # placeholder graphics carry no information: decorative until real photos arrive
+    if alt.startswith("Platzhalter"):
+        alt = ""
     return f'<img src="/assets/img/placeholder/{name}.jpg" alt="{alt}" width="{w}" height="{h}" decoding="async"{la}{c}>'
 
 
@@ -191,8 +198,9 @@ def footer():
     <div>
       <h2>Studio</h2>
       <ul>
+        <li><a href="/ueber-uns/">Über akii studio</a></li>
         <li><a href="/case-studies/">Case Studies</a></li>
-        <li><a href="/#studio">Über akii</a></li>
+        <li><a href="/wissen/">Ratgeber Digitalisierung</a></li>
         <li><a href="/#faq">Häufige Fragen</a></li>
       </ul>
     </div>
@@ -345,6 +353,7 @@ def service_page(d):
 {faq_html(d['faqs'])}
 </section>
 
+{related_articles(d['slug'])}
 {cta(d['cta_h'], d['cta_p'])}
 <section class="psec" aria-labelledby="mehr-title">
   <div class="psec__head">
@@ -692,8 +701,292 @@ def case_studies_page():
         f.write(head(title, desc, path, ld) + body + footer())
 
 
+# ---------------------------------------------------------------------------
+# Ratgeber (/wissen/), Artikel, Über uns, 404
+# ---------------------------------------------------------------------------
+AUTHOR = {"@type": "Person", "@id": f"{SITE}/ueber-uns/#akan-yueksel", "name": "Akan Yüksel",
+          "jobTitle": "Gründer & Inhaber, akii studio",
+          "url": f"{SITE}/ueber-uns/", "worksFor": {"@id": ORG["@id"]}}
+WEBSITE_LD = {"@type": "WebSite", "@id": f"{SITE}/#website", "url": f"{SITE}/", "name": "akii studio",
+              "inLanguage": "de-DE", "publisher": {"@id": ORG["@id"]}}
+MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August",
+          "September", "Oktober", "November", "Dezember"]
+
+
+def date_de(iso):
+    return f"{int(iso[8:10])}. {MONTHS[int(iso[5:7]) - 1]} {iso[:4]}"
+
+
+def slugify(text):
+    t = html.unescape(re.sub("<[^>]+>", "", text)).lower()
+    for a, b in (("ä", "ae"), ("ö", "oe"), ("ü", "ue"), ("ß", "ss")):
+        t = t.replace(a, b)
+    return re.sub(r"[^a-z0-9]+", "-", t).strip("-")[:60]
+
+
+def render_body(blocks):
+    out, toc = [], []
+    for b in blocks:
+        if isinstance(b, str):
+            out.append(f"  <p>{b}</p>")
+        elif b[0] in ("h2", "h3"):
+            anchor = slugify(b[1])
+            out.append(f'  <{b[0]} id="{anchor}">{b[1]}</{b[0]}>')
+            if b[0] == "h2":
+                toc.append((anchor, b[1]))
+        elif b[0] in ("ul", "ol"):
+            out.append(f"  <{b[0]}>" + "".join(f"<li>{x}</li>" for x in b[1]) + f"</{b[0]}>")
+        elif b[0] == "tip":
+            out.append(f'  <aside class="note"><p>{b[1]}</p></aside>')
+    return "\n".join(out), toc
+
+
+def words(blocks):
+    parts = []
+    for b in blocks:
+        if isinstance(b, str):
+            parts.append(b)
+        elif isinstance(b[1], list):
+            parts.extend(b[1])
+        else:
+            parts.append(b[1])
+    return len(re.sub("<[^>]+>", " ", " ".join(parts)).split())
+
+
+def minutes(a):
+    return max(1, round(words(a["body"]) / 200))
+
+
+def article_card(a):
+    return f"""    <a class="card" href="/wissen/{a['slug']}/">
+      {img(a['img'], '')}
+      <div class="card__body"><span class="card__tag">{a['eyebrow']} · {minutes(a)} Min. Lesezeit</span><h3>{a['title']}</h3><p>{a['desc']}</p></div>
+    </a>"""
+
+
+def related_articles(service_slug, exclude=None, title="Ratgeber zum Thema."):
+    rel = [a for a in ARTICLES if a["service"] == service_slug and a["slug"] != exclude][:3]
+    if len(rel) < 3:
+        rel += [a for a in ARTICLES if a not in rel and a["slug"] != exclude][: 3 - len(rel)]
+    cards = "\n".join(article_card(a) for a in rel)
+    return f"""<section class="psec" aria-labelledby="ratgeber-title">
+  <div class="psec__head">
+    <h2 id="ratgeber-title">{title}</h2>
+    <p>Wissen aus der Praxis – verständlich aufbereitet. Alle Artikel im <a class="more" href="/wissen/">Ratgeber</a></p>
+  </div>
+  <div class="cards">
+{cards}
+  </div>
+</section>
+"""
+
+
+def article_page(a):
+    path = f"/wissen/{a['slug']}/"
+    svc_name = dict(SERVICES)[a["service"]]
+    crumb_items = [("Startseite", "/"), ("Ratgeber", "/wissen/"), (a["eyebrow"], None)]
+    body_html, toc = render_body(a["body"])
+    modified = a.get("modified", PUBLISHED)
+    art_ld = {"@type": "BlogPosting", "@id": f"{SITE}{path}#article", "headline": html.unescape(a["title"]),
+              "description": html.unescape(a["desc"]), "inLanguage": "de-DE",
+              "datePublished": a.get("published", PUBLISHED), "dateModified": modified,
+              "author": {"@id": AUTHOR["@id"]}, "publisher": {"@id": ORG["@id"]},
+              "mainEntityOfPage": {"@id": f"{SITE}{path}#webpage"},
+              "image": f"{SITE}/assets/img/og-image.jpg", "wordCount": words(a["body"]),
+              "about": {"@id": f"{SITE}/leistungen/{a['service']}/#service"}}
+    page_ld = {"@type": "WebPage", "@id": f"{SITE}{path}#webpage", "url": f"{SITE}{path}",
+               "name": html.unescape(a["seo_title"]), "isPartOf": {"@id": f"{SITE}/#website"},
+               "breadcrumb": {"@id": f"{SITE}{path}#breadcrumb"}, "inLanguage": "de-DE"}
+    ld = [ORG, WEBSITE_LD, AUTHOR, page_ld, art_ld, crumbs_ld(crumb_items, path)]
+    toc_html = "".join(f'<li><a href="#{i}">{t}</a></li>' for i, t in toc)
+    faqs = "".join(f"<h3>{q}</h3><p>{an}</p>" for q, an in a["faqs"])
+    cta_text = (f'Wir unterstützen Sie dabei – mehr zu unserer Leistung '
+                f'<a class="more" href="/leistungen/{a["service"]}/">{svc_name}</a>')
+    body = f"""{gnav('wissen')}
+<main id="inhalt">
+{crumbs(crumb_items)}
+<article class="article">
+  <header class="article__head">
+    <span class="eyebrow">{a['eyebrow']}</span>
+    <h1>{a['title']}</h1>
+    <p class="article__lead">{a['lead']}</p>
+    <p class="article__meta">Von <a href="/ueber-uns/" rel="author">Akan Yüksel</a> · <time datetime="{modified}">{date_de(modified)}</time> · {minutes(a)} Min. Lesezeit</p>
+  </header>
+  <nav class="toc" aria-label="Inhalt"><span>Inhalt</span><ol>{toc_html}<li><a href="#haeufige-fragen">Häufige Fragen</a></li></ol></nav>
+  <div class="prose-body">
+{body_html}
+  <h2 id="haeufige-fragen">Häufige Fragen</h2>
+  {faqs}
+  </div>
+  <aside class="author">
+    <p><strong>Über den Autor:</strong> Akan Yüksel ist Gründer von akii studio in Leonberg bei Stuttgart und bringt über zehn Jahre Erfahrung aus Digitalisierung, Prozessberatung und IT-Strategie mit. <a href="/ueber-uns/">Mehr über akii studio</a></p>
+  </aside>
+</article>
+
+{cta('Sie möchten das umsetzen?', cta_text)}
+{related_articles(a['service'], exclude=a['slug'], title='Weiterlesen.')}
+</main>
+"""
+    os.makedirs(f"wissen/{a['slug']}", exist_ok=True)
+    with open(f"wissen/{a['slug']}/index.html", "w") as f:
+        f.write(head(a["seo_title"] + " | akii", a["desc"], path, ld, og_type="article") + body + footer())
+
+
+def wissen_hub():
+    path = "/wissen/"
+    crumb_items = [("Startseite", "/"), ("Ratgeber", None)]
+    items = [{"@type": "ListItem", "position": i, "url": f"{SITE}/wissen/{a['slug']}/", "name": html.unescape(a["title"])}
+             for i, a in enumerate(ARTICLES, 1)]
+    page_ld = {"@type": "CollectionPage", "@id": f"{SITE}{path}#webpage", "url": f"{SITE}{path}",
+               "name": "Ratgeber Digitalisierung, Webdesign & SEO", "inLanguage": "de-DE",
+               "isPartOf": {"@id": f"{SITE}/#website"}, "breadcrumb": {"@id": f"{SITE}{path}#breadcrumb"},
+               "mainEntity": {"@type": "ItemList", "itemListElement": items}}
+    ld = [ORG, WEBSITE_LD, page_ld, crumbs_ld(crumb_items, path)]
+    groups = {}
+    for a in ARTICLES:
+        groups.setdefault(a["service"], []).append(a)
+    sections = []
+    for slug, name in SERVICES:
+        if slug not in groups:
+            continue
+        cards = "\n".join(article_card(a) for a in groups[slug])
+        sections.append(f"""<section class="psec psec--tight" id="{slug}" aria-labelledby="{slug}-title">
+  <div class="psec__head psec__head--left">
+    <h2 id="{slug}-title">{name}</h2>
+    <p><a class="more" href="/leistungen/{slug}/">Zur Leistung {name}</a></p>
+  </div>
+  <div class="cards cards--grid">
+{cards}
+  </div>
+</section>
+""")
+    body = f"""{gnav('wissen')}
+<main id="inhalt">
+{crumbs(crumb_items)}
+<header class="phero">
+  <span class="eyebrow">Ratgeber</span>
+  <h1>Digitalisierung, verständlich erklärt.</h1>
+  <p class="phero__lead">Praxiswissen zu Digitalisierung, Automatisierung, Webdesign und Sichtbarkeit in Google und KI – für Unternehmen, die es richtig machen wollen.</p>
+</header>
+{''.join(sections)}
+{cta('Lieber direkt sprechen?', 'Erzählen Sie uns, was Sie vorhaben – im kostenlosen Erstgespräch klären wir, wo es hakt und was sich lohnt.')}
+</main>
+"""
+    os.makedirs("wissen", exist_ok=True)
+    with open("wissen/index.html", "w") as f:
+        f.write(head("Ratgeber Digitalisierung, Webdesign &amp; SEO | akii studio",
+                     "Ratgeber für den Mittelstand: Digitalisierung starten, Prozesse automatisieren, Website-Kosten, Relaunch, BFSG und Sichtbarkeit in Google und KI.",
+                     path, ld) + body + footer())
+
+
+def about_page():
+    path = "/ueber-uns/"
+    crumb_items = [("Startseite", "/"), ("Über uns", None)]
+    person = dict(AUTHOR)
+    person.update({"description": "Gründer von akii studio. Über zehn Jahre Erfahrung aus Digitalisierung, Prozessberatung und IT-Strategie in großen Konzernstrukturen.",
+                   "knowsAbout": ["Digitalisierung", "Prozessberatung", "IT-Strategie", "Webdesign", "Suchmaschinenoptimierung", "Automatisierung"],
+                   "address": {"@type": "PostalAddress", "addressLocality": "Leonberg", "addressRegion": "Baden-Württemberg", "addressCountry": "DE"}})
+    page_ld = {"@type": "AboutPage", "@id": f"{SITE}{path}#webpage", "url": f"{SITE}{path}",
+               "name": "Über akii studio", "inLanguage": "de-DE", "isPartOf": {"@id": f"{SITE}/#website"},
+               "about": {"@id": ORG["@id"]}, "mainEntity": {"@id": AUTHOR["@id"]},
+               "breadcrumb": {"@id": f"{SITE}{path}#breadcrumb"}}
+    ld = [ORG, WEBSITE_LD, person, page_ld, crumbs_ld(crumb_items, path)]
+    tiles = "\n".join(tile(t) for t in [
+        dict(size="half", tone="dark", eyebrow="Erfahrung", h="Über zehn Jahre Digitalisierung.",
+             p="Digitalisierung, Prozessberatung und IT-Strategie in großen Konzernstrukturen – dieses Wissen fließt in jedes Projekt für den Mittelstand.", big="10+"),
+        dict(size="half", tone="linen", eyebrow="Arbeitsweise", h="Wenige Projekte. Volle Aufmerksamkeit.",
+             p="Es werden bewusst nur wenige Projekte pro Jahr angenommen. Sie haben einen festen Ansprechpartner von der ersten Idee bis nach dem Launch."),
+        dict(size="third", eyebrow="Klarheit", h="Feste Preise.", p="Verständliche Angebote mit festem Umfang, keine versteckten Positionen."),
+        dict(size="third", eyebrow="Ursache", h="Erst verstehen.", p="Es wird das eigentliche Problem gelöst – nicht nur das Symptom kaschiert."),
+        dict(size="third", eyebrow="Wirkung", h="Lösungen, die tragen.", p="Ergebnisse, die auch in einem Jahr noch funktionieren – nicht nur zum Launch glänzen."),
+    ])
+    svc_cards = "\n".join(f"""    <a class="card" href="/leistungen/{s}/">
+      {img(dict(SVC_IMG)[s], '')}
+      <div class="card__body"><span class="card__tag">Leistung</span><h3>{l}</h3><p>{dict(SVC_TEASER)[s]}</p></div>
+    </a>""" for s, l in SERVICES)
+    body = f"""{gnav('')}
+<main id="inhalt">
+{crumbs(crumb_items)}
+<header class="phero">
+  <span class="eyebrow">Über uns</span>
+  <h1>Erst verstehen. Dann lösen.</h1>
+  <p class="phero__lead">akii studio ist ein Studio für Webdesign, Digitalisierung und digitale Lösungen in Leonberg bei Stuttgart – gegründet 2025 von Akan Yüksel.</p>
+  <div class="phero__media"><picture><source type="image/webp" srcset="/assets/img/akii_studio_team.webp"><img src="/assets/img/akii_studio_team.jpeg" alt="Das Studio von akii in Leonberg — Eingang mit Wandsignet" width="1536" height="1022" fetchpriority="high"></picture></div>
+</header>
+
+<section class="psec" id="geschichte" aria-labelledby="geschichte-title">
+  <div class="psec__head">
+    <h2 id="geschichte-title">Warum es akii studio gibt.</h2>
+  </div>
+  <div class="prose-body prose-body--center">
+    <p>Die meisten Digitalprojekte scheitern nicht an der Technik, sondern daran, dass das eigentliche Problem nie richtig verstanden wurde. Genau das hat Akan Yüksel in über zehn Jahren Digitalisierung, Prozessberatung und IT-Strategie in großen Konzernstrukturen immer wieder erlebt.</p>
+    <p>Mit akii studio bringt er dieses Wissen zu mittelständischen Unternehmen, Selbstständigen und Vereinen – ohne Konzern-Overhead, dafür mit kurzen Wegen und einem Ansprechpartner. Jedes Projekt beginnt mit Zuhören: Wie läuft Ihre Arbeit heute? Wo geht Zeit verloren? Was soll am Ende besser sein?</p>
+    <p>Daraus entstehen Websites, die Anfragen bringen, Automatisierungen, die Handarbeit sparen, und Anwendungen, die genau zu Ihren Abläufen passen.</p>
+  </div>
+</section>
+
+<section class="psec" id="werte" aria-labelledby="werte-title">
+  <div class="psec__head">
+    <h2 id="werte-title">Wofür akii studio steht.</h2>
+  </div>
+  <div class="bento">
+{tiles}
+  </div>
+</section>
+
+<section class="psec" id="leistungen" aria-labelledby="leistungen-title">
+  <div class="psec__head">
+    <h2 id="leistungen-title">Womit wir helfen.</h2>
+  </div>
+  <div class="cards">
+{svc_cards}
+  </div>
+</section>
+
+<section class="psec" id="region" aria-labelledby="region-title">
+  <div class="psec__head">
+    <h2 id="region-title">Aus der Region Stuttgart.</h2>
+    <p>Das Studio sitzt in Leonberg – zwischen Stuttgart, Böblingen, Sindelfingen und Rutesheim. Termine finden vor Ort oder per Video statt, Projekte begleiten wir deutschlandweit.</p>
+  </div>
+</section>
+
+{cta('Lernen wir uns kennen.', 'Im kostenlosen Erstgespräch klären wir, wo Sie stehen und wie wir helfen können.')}
+</main>
+"""
+    os.makedirs("ueber-uns", exist_ok=True)
+    with open("ueber-uns/index.html", "w") as f:
+        f.write(head("Über uns – akii studio, Leonberg bei Stuttgart",
+                     "akii studio aus Leonberg bei Stuttgart: gegründet 2025 von Akan Yüksel, über zehn Jahre Erfahrung in Digitalisierung, Prozessberatung und IT-Strategie.",
+                     path, ld) + body + footer())
+
+
+def not_found_page():
+    body = f"""{gnav('')}
+<main id="inhalt">
+<header class="phero phero--404">
+  <span class="eyebrow">Fehler 404</span>
+  <h1>Diese Seite gibt es nicht.</h1>
+  <p class="phero__lead">Vielleicht hilft einer dieser Wege weiter:</p>
+  <div class="phero__ctas">
+    <a class="pill pill--lg" href="/">Zur Startseite</a>
+    <a class="more" href="/wissen/">Zum Ratgeber</a>
+    <a class="more" href="/#kontakt">Kontakt</a>
+  </div>
+</header>
+</main>
+"""
+    with open("404.html", "w") as f:
+        f.write(head("Seite nicht gefunden | akii studio", "Diese Seite existiert nicht.", "/404.html",
+                     [ORG], robots="noindex, follow") + body + footer())
+
+
 if __name__ == "__main__":
     for p in PAGES:
         service_page(p)
     case_studies_page()
+    for a in ARTICLES:
+        article_page(a)
+    wissen_hub()
+    about_page()
+    not_found_page()
     print("ok")

@@ -327,3 +327,53 @@ a.card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -28px rgba(2
   .rv { opacity: 1; transform: none; }
   .phero__media img { transform: none; }
 }
+
+/* ---------- Ratgeber-Artikel ---------- */
+.article { max-width: 760px; margin: 0 auto; padding: clamp(40px, 7vh, 88px) var(--gut) 0; box-sizing: content-box; }
+.article__head h1 {
+  margin-top: 10px;
+  font-size: clamp(2.2rem, 5.4vw, 3.9rem);
+  font-weight: 600; line-height: 1.06; letter-spacing: -0.04em;
+}
+.article__lead { margin-top: 20px; font-size: clamp(1.15rem, 1.8vw, 1.45rem); line-height: 1.45; color: var(--drift); letter-spacing: -0.012em; }
+.article__meta { margin-top: 20px; font-size: .875rem; color: var(--drift); }
+.article__meta a { color: var(--walnut); text-decoration: underline; text-underline-offset: 3px; }
+
+.toc {
+  margin-top: clamp(32px, 5vh, 48px);
+  padding: 22px 26px; border-radius: 20px; background: var(--linen);
+}
+.toc span { font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--drift); }
+.toc ol { margin-top: 10px; padding-left: 1.2em; display: grid; gap: 6px; font-size: .9375rem; }
+.toc a:hover { color: var(--ember); }
+
+.prose-body { max-width: 720px; margin-top: clamp(32px, 5vh, 52px); font-size: clamp(1.0625rem, 1.2vw, 1.1875rem); line-height: 1.7; }
+.prose-body--center { margin-left: auto; margin-right: auto; }
+.prose-body > * + * { margin-top: 1.1em; }
+.prose-body h2 {
+  margin-top: 2.2em; scroll-margin-top: 80px;
+  font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.03em;
+}
+.prose-body h3 { margin-top: 1.6em; scroll-margin-top: 80px; font-size: 1.25rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em; }
+.prose-body ul, .prose-body ol { padding-left: 1.3em; display: grid; gap: .5em; }
+.prose-body li::marker { color: var(--ember); }
+.prose-body a { color: var(--ember); text-decoration: underline; text-underline-offset: 3px; }
+.prose-body strong { font-weight: 600; }
+.note {
+  padding: 20px 24px; border-radius: 18px;
+  background: #fff; border-left: 3px solid var(--ember);
+}
+.note p { font-size: 1rem; line-height: 1.6; }
+.author {
+  margin-top: clamp(40px, 6vh, 64px); padding: 22px 24px; border-radius: 20px;
+  background: var(--linen); font-size: .9375rem; line-height: 1.6;
+}
+.author a { color: var(--ember); text-decoration: underline; text-underline-offset: 3px; }
+
+.psec--tight { padding-top: clamp(56px, 9vh, 104px); }
+.psec__head--left { text-align: left; margin-left: 0; margin-bottom: clamp(24px, 4vh, 40px); }
+.psec__head--left p { margin-left: 0; }
+.phero--404 { padding-bottom: clamp(64px, 12vh, 140px); }
+/* hub: fixed columns, so a topic with one article keeps a normal card size */
+@media (min-width: 760px) { .cards--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1080px) { .cards--grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

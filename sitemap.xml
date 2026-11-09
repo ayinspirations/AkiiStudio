@@ -2,50 +2,87 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://akiistudio.de/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-09</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://akiistudio.de/leistungen/webdesign/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-09</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://akiistudio.de/leistungen/seo-geo/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-09</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://akiistudio.de/leistungen/digitale-loesungen/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-09</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://akiistudio.de/leistungen/apps-saas/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-09</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://akiistudio.de/case-studies/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-09</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://akiistudio.de/ueber-uns/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/wissen/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/wissen/digitalisierung-mittelstand/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/wissen/prozesse-automatisieren/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/wissen/was-kostet-eine-website/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/wissen/website-relaunch-checkliste/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/wissen/sichtbar-in-ki-suche-geo/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/wissen/bfsg-barrierefreie-website/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://akiistudio.de/wissen/individuelle-software-oder-standardsoftware/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://akiistudio.de/impressum.html</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>yearly</changefreq>
+    <lastmod>2026-11-09</lastmod>
     <priority>0.2</priority>
   </url>
   <url>
     <loc>https://akiistudio.de/datenschutz.html</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>yearly</changefreq>
+    <lastmod>2026-11-09</lastmod>
     <priority>0.2</priority>
   </url>
 </urlset>

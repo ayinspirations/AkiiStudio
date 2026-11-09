@@ -22,7 +22,8 @@
     '.phero .eyebrow', '.phero h1', '.phero__lead', '.phero__ctas',
     '.psec__head > *', '.tile', '.steps li', '.checks li', '.card',
     '.statement p', '.faq__item', '.cta__inner', '.study__media',
-    '.study__head > *', '.facts', '.crumbs'
+    '.study__head > *', '.facts', '.crumbs',
+    '.article__head > *', '.toc', '.author'
   ].join(',');
   const items = [...document.querySelectorAll(SEL)];
   if (reduced || !('IntersectionObserver' in window)) {

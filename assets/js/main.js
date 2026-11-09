@@ -70,7 +70,7 @@
      reset so the next arrival animates too. Elements are picked by
      selector, so new content picks this up without extra classes. */
   const REVEAL = [
-    '.hero__word', '.hero__sup', '.cue',
+    '.hero__word', '.hero__sup', '.hero__kicker', '.cue',
     '.stmt__quote', '.h2', '.prose', '.case', '.svc__item', '.manifest__body',
     '.studio__img', '.values li', '.faq__item', '.field', '.form__note',
     '.form > div:last-child', '.footer__word', '.footer__col', '.footer__bottom'
@@ -440,8 +440,12 @@
      While a panel glides, its live sites are hidden again (the screenshot
      shows), because a site starting to render mid-glide makes it stutter.
      data-live="off" on a frame keeps it a still image. */
-  const lives = [...document.querySelectorAll('.case__frame--shot')]
-    .filter((f) => f.dataset.live !== 'off' && f.querySelector('iframe'));
+  /* Phones keep the screenshots: a live site costs several megabytes of
+     mobile data and competes with this page for the connection. */
+  const liveAllowed = window.matchMedia('(min-width: 900px)').matches &&
+    !(navigator.connection && navigator.connection.saveData);
+  const lives = liveAllowed ? [...document.querySelectorAll('.case__frame--shot')]
+    .filter((f) => f.dataset.live !== 'off' && f.querySelector('iframe')) : [];
   if (lives.length) {
     const fit = (frame) => {
       const f = frame.querySelector('iframe');
@@ -472,8 +476,9 @@
       document.addEventListener('panel-landed', (e) => {
         const i = e.detail;
         setTimeout(() => framesIn(i).forEach((fr) => fr.querySelector('iframe').classList.remove('is-held')), 200);
-        /* the work panels near where you are load ahead, after the glide */
-        [0, 1, -1, 2, -2].forEach((d, k) => setTimeout(() => framesIn(i + d).forEach(load), 400 + k * 200));
+        /* only the panel you are on and the next one load — never from the
+           hero, so the first visit stays light */
+        [0, 1].forEach((d, k) => setTimeout(() => framesIn(i + d).forEach(load), 400 + k * 250));
       });
     } else if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => entries.forEach((en) => {

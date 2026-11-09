@@ -3,8 +3,16 @@
   publish = "."
   command = ""
 
+# Bilder und Icons 7 Tage cachen. CSS/JS bewusst nicht: sie tragen keine
+# Versionsnummer im Namen – Netlifys Standard (Revalidierung per ETag) sorgt
+# dafür, dass Änderungen sofort ankommen.
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/assets/icons/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
 
@@ -14,6 +22,7 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
 
 # www -> ohne www (eine Hauptadresse ist besser für SEO)
 [[redirects]]
@@ -32,3 +41,12 @@
   from = "/leistungen/"
   to = "/#leistungen"
   status = 301
+
+# Startseite nur unter einer Adresse
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+# Fehlerseite: Netlify liefert /404.html automatisch für unbekannte URLs aus

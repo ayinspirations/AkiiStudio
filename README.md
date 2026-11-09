@@ -227,3 +227,10 @@ Jede Kachel erscheint sofort mit einem Screenshot (`assets/img/cases/<slug>.jpg`
 Die Live-Seite lädt unsichtbar dahinter und blendet nach der Ankunft auf der Sektion über den Screenshot.
 `data-live="off"` am `.case__frame` lässt eine Kachel beim Standbild (aktuell GG Manufaktur, bis deren
 Cookie-Dialog eingebettet nicht mehr erscheint).
+
+## Ratgeber, Über uns, 404
+
+- `wissen/` (Übersicht) und `wissen/<slug>/` (Artikel) – Inhalte in `tools/content_wissen.py`, Layout in `tools/build_pages.py`.
+  Neuen Artikel als Eintrag in `ARTICLES` ergänzen, dann `python3 tools/build_pages.py` und `sitemap.xml` / `llms.txt` erweitern.
+- `ueber-uns/` – Über-uns-Seite mit Person- und AboutPage-Schema (E-E-A-T)
+- `404.html` – Netlify liefert sie automatisch für unbekannte URLs aus

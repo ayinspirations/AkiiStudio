@@ -12,12 +12,23 @@ Ausführliche Seiten zu jeder Leistung:
 - [Digitale Lösungen](https://akiistudio.de/leistungen/digitale-loesungen/)
 - [Apps & SaaS](https://akiistudio.de/leistungen/apps-saas/)
 - [Case Studies](https://akiistudio.de/case-studies/)
+- [Über akii studio](https://akiistudio.de/ueber-uns/)
 
 Kurzfassung:
 - Webdesign: Konzept, Gestaltung und Umsetzung auf Basis eines Design-Systems, mit Headless CMS, Fokus auf Core Web Vitals und Barrierefreiheit.
 - SEO & Agentic SEO: technisches SEO, Content-Struktur, Generative Engine Optimization (GEO) und Sichtbarkeit in KI-Assistenten.
 - Digitale Lösungen: Discovery, Prozessanalyse, Konzeption, Prototyping und Automatisierung.
 - Apps & SaaS-Applikationen: Web-Apps, Kundenportale, Dashboards und SaaS-Interfaces bis zum Release.
+
+## Ratgeber
+
+- [Digitalisierung im Mittelstand: Wo anfangen? Ein Leitfaden in 6 Schritten](https://akiistudio.de/wissen/digitalisierung-mittelstand/): Digitalisierung im Mittelstand richtig starten: In 6 Schritten von der Bestandsaufnahme zur ersten Lösung – mit typischen Fehlern, Beispielen und Prioritäten.
+- [Prozesse automatisieren: 9 Beispiele aus dem Mittelstand](https://akiistudio.de/wissen/prozesse-automatisieren/): Welche Prozesse lassen sich automatisieren? 9 praxisnahe Beispiele für kleine und mittlere Unternehmen – von Rechnungseingang bis Terminbuchung, mit Werkzeugen und Aufwand.
+- [Was kostet eine professionelle Website 2026?](https://akiistudio.de/wissen/was-kostet-eine-website/): Was kostet eine professionelle Website 2026? Kostenfaktoren, typische Projektarten und laufende Kosten im Überblick – plus Tipps, wie Sie Angebote richtig vergleichen.
+- [Website-Relaunch: Checkliste in 12 Schritten – ohne Rankings zu verlieren](https://akiistudio.de/wissen/website-relaunch-checkliste/): Website-Relaunch planen: 12 Schritte von der Analyse über Weiterleitungen bis zum Go-live – damit Sie Rankings und Anfragen behalten statt verlieren.
+- [In ChatGPT und Google AI Overviews gefunden werden: GEO einfach erklärt](https://akiistudio.de/wissen/sichtbar-in-ki-suche-geo/): Generative Engine Optimization (GEO) verständlich erklärt: Wie Unternehmen in ChatGPT, Perplexity und Google AI Overviews genannt werden – mit 8 konkreten Maßnahmen.
+- [Barrierefreiheitsstärkungsgesetz (BFSG): Was gilt für Ihre Website?](https://akiistudio.de/wissen/bfsg-barrierefreie-website/): Seit 28. Juni 2025 gilt das Barrierefreiheitsstärkungsgesetz. Wer betroffen ist, welche Ausnahmen es gibt und wie Sie Ihre Website barrierefrei machen – verständlich erklärt.
+- [Individuelle Software oder Standardsoftware? Eine Entscheidungshilfe](https://akiistudio.de/wissen/individuelle-software-oder-standardsoftware/): Individualsoftware oder Standardlösung? Vor- und Nachteile, Kosten und 6 Fragen, mit denen Sie die richtige Entscheidung für Ihr Unternehmen treffen.
 
 ## Rahmen
 
