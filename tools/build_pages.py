@@ -99,7 +99,8 @@ def gnav(current):
     links.append(f'<a href="/case-studies/"{cur}>Case Studies</a>')
     cur = ' aria-current="page"' if current == "wissen" else ""
     links.append(f'<a href="/wissen/"{cur}>Ratgeber</a>')
-    links.append('<a class="gnav__cta" href="/#kontakt">Projekt anfragen</a>')
+    # the CTA sits in the menu only on phones; on wider screens it has its own column
+    links.append('<a class="gnav__cta gnav__cta--menu" href="/#kontakt">Projekt anfragen</a>')
     return f"""<header class="gnav">
   <a class="gnav__logo" href="/" aria-label="akii studio — Startseite">
     <img src="/assets/img/logo-schwarz.png" alt="akii studio" width="480" height="221">
@@ -107,6 +108,7 @@ def gnav(current):
   <nav class="gnav__links" aria-label="Hauptnavigation">
     {chr(10).join('    ' + l for l in links).strip()}
   </nav>
+  <a class="gnav__cta gnav__cta--bar" href="/#kontakt">Projekt anfragen</a>
   <button class="gnav__burger" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
 """
@@ -272,12 +274,12 @@ def service_page(d):
     page_ld = {"@type": "WebPage", "@id": f"{SITE}{path}#webpage", "url": f"{SITE}{path}",
                "name": html.unescape(d["title"]), "description": html.unescape(d["desc"]),
                "inLanguage": "de-DE", "isPartOf": {"@id": f"{SITE}/#website"},
-               "about": {"@id": f"{SITE}{path}#service"}, "breadcrumb": {"@id": f"{SITE}{path}#breadcrumb"},
+               "about": {"@id": f"{SITE}{path}#service"},
                "primaryImageOfPage": f"{SITE}/assets/img/placeholder/{d['hero_img']}.jpg",
                "dateModified": TODAY}
     website_ld = {"@type": "WebSite", "@id": f"{SITE}/#website", "url": f"{SITE}/", "name": "akii studio",
                   "inLanguage": "de-DE", "publisher": {"@id": ORG["@id"]}}
-    ld = [ORG, website_ld, page_ld, service_ld, crumbs_ld(crumb_items, path), faq_ld(d["faqs"], path)]
+    ld = [ORG, website_ld, page_ld, service_ld, faq_ld(d["faqs"], path)]
 
     others = [(s, l) for s, l in SERVICES if s != d["slug"]]
     other_cards = "\n".join(f"""    <a class="card" href="/leistungen/{s}/">
@@ -292,7 +294,6 @@ def service_page(d):
 
     body = f"""{gnav(d['slug'])}
 <main id="inhalt">
-{crumbs(crumb_items)}
 <header class="phero">
   <span class="eyebrow">{d['eyebrow']}</span>
   <h1>{d['h1']}</h1>
@@ -649,11 +650,11 @@ def case_studies_page():
         items.append({"@type": "ListItem", "position": i, "item": cw})
     page_ld = {"@type": "CollectionPage", "@id": f"{SITE}{path}#webpage", "url": f"{SITE}{path}",
                "name": "Case Studies – akii studio", "inLanguage": "de-DE",
-               "isPartOf": {"@id": f"{SITE}/#website"}, "breadcrumb": {"@id": f"{SITE}{path}#breadcrumb"},
+               "isPartOf": {"@id": f"{SITE}/#website"},
                "mainEntity": {"@type": "ItemList", "itemListElement": items}, "dateModified": TODAY}
     website_ld = {"@type": "WebSite", "@id": f"{SITE}/#website", "url": f"{SITE}/", "name": "akii studio",
                   "inLanguage": "de-DE", "publisher": {"@id": ORG["@id"]}}
-    ld = [ORG, website_ld, page_ld, crumbs_ld(crumb_items, path)]
+    ld = [ORG, website_ld, page_ld]
     title = "Case Studies – Websites &amp; digitale Projekte | akii studio"
     desc = "Case Studies von akii studio: Websites und digitale Projekte für eine eSport-Agentur, einen Sportverein, eine Künstlerin und eine Praxis."
 
@@ -682,7 +683,6 @@ def case_studies_page():
     anchors = [(s["slug"], s["name"]) for s in STUDIES]
     body = f"""{gnav('case-studies')}
 <main id="inhalt">
-{crumbs(crumb_items)}
 <header class="phero">
   <span class="eyebrow">Case Studies</span>
   <h1>Arbeiten, die tragen.</h1>
@@ -799,16 +799,14 @@ def article_page(a):
               "image": f"{SITE}/assets/img/og-image.jpg", "wordCount": words(a["body"]),
               "about": {"@id": f"{SITE}/leistungen/{a['service']}/#service"}}
     page_ld = {"@type": "WebPage", "@id": f"{SITE}{path}#webpage", "url": f"{SITE}{path}",
-               "name": html.unescape(a["seo_title"]), "isPartOf": {"@id": f"{SITE}/#website"},
-               "breadcrumb": {"@id": f"{SITE}{path}#breadcrumb"}, "inLanguage": "de-DE"}
-    ld = [ORG, WEBSITE_LD, AUTHOR, page_ld, art_ld, crumbs_ld(crumb_items, path)]
+               "name": html.unescape(a["seo_title"]), "isPartOf": {"@id": f"{SITE}/#website"}, "inLanguage": "de-DE"}
+    ld = [ORG, WEBSITE_LD, AUTHOR, page_ld, art_ld]
     toc_html = "".join(f'<li><a href="#{i}">{t}</a></li>' for i, t in toc)
     faqs = "".join(f"<h3>{q}</h3><p>{an}</p>" for q, an in a["faqs"])
     cta_text = (f'Wir unterstützen Sie dabei – mehr zu unserer Leistung '
                 f'<a class="more" href="/leistungen/{a["service"]}/">{svc_name}</a>')
     body = f"""{gnav('wissen')}
 <main id="inhalt">
-{crumbs(crumb_items)}
 <article class="article">
   <header class="article__head">
     <span class="eyebrow">{a['eyebrow']}</span>
@@ -843,9 +841,9 @@ def wissen_hub():
              for i, a in enumerate(ARTICLES, 1)]
     page_ld = {"@type": "CollectionPage", "@id": f"{SITE}{path}#webpage", "url": f"{SITE}{path}",
                "name": "Ratgeber Digitalisierung, Webdesign & SEO", "inLanguage": "de-DE",
-               "isPartOf": {"@id": f"{SITE}/#website"}, "breadcrumb": {"@id": f"{SITE}{path}#breadcrumb"},
+               "isPartOf": {"@id": f"{SITE}/#website"},
                "mainEntity": {"@type": "ItemList", "itemListElement": items}}
-    ld = [ORG, WEBSITE_LD, page_ld, crumbs_ld(crumb_items, path)]
+    ld = [ORG, WEBSITE_LD, page_ld]
     groups = {}
     for a in ARTICLES:
         groups.setdefault(a["service"], []).append(a)
@@ -866,7 +864,6 @@ def wissen_hub():
 """)
     body = f"""{gnav('wissen')}
 <main id="inhalt">
-{crumbs(crumb_items)}
 <header class="phero">
   <span class="eyebrow">Ratgeber</span>
   <h1>Digitalisierung, verständlich erklärt.</h1>
@@ -892,9 +889,8 @@ def about_page():
                    "address": {"@type": "PostalAddress", "addressLocality": "Leonberg", "addressRegion": "Baden-Württemberg", "addressCountry": "DE"}})
     page_ld = {"@type": "AboutPage", "@id": f"{SITE}{path}#webpage", "url": f"{SITE}{path}",
                "name": "Über akii studio", "inLanguage": "de-DE", "isPartOf": {"@id": f"{SITE}/#website"},
-               "about": {"@id": ORG["@id"]}, "mainEntity": {"@id": AUTHOR["@id"]},
-               "breadcrumb": {"@id": f"{SITE}{path}#breadcrumb"}}
-    ld = [ORG, WEBSITE_LD, person, page_ld, crumbs_ld(crumb_items, path)]
+               "about": {"@id": ORG["@id"]}, "mainEntity": {"@id": AUTHOR["@id"]}}
+    ld = [ORG, WEBSITE_LD, person, page_ld]
     tiles = "\n".join(tile(t) for t in [
         dict(size="half", tone="dark", eyebrow="Erfahrung", h="Über zehn Jahre Digitalisierung.",
              p="Digitalisierung, Prozessberatung und IT-Strategie in großen Konzernstrukturen – dieses Wissen fließt in jedes Projekt für den Mittelstand.", big="10+"),
@@ -910,7 +906,6 @@ def about_page():
     </a>""" for s, l in SERVICES)
     body = f"""{gnav('')}
 <main id="inhalt">
-{crumbs(crumb_items)}
 <header class="phero">
   <span class="eyebrow">Über uns</span>
   <h1>Erst verstehen. Dann lösen.</h1>
